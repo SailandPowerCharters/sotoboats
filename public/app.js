@@ -8,7 +8,7 @@ const helmData = {
     href: "#charter",
     heroCta: "Explore charters",
     intro: "Charter, buy, sell and enjoy the Mediterranean with one trusted local team.",
-    image: "radial-gradient(circle at 72% 40%, rgba(33, 78, 118, 0.58) 0%, rgba(12, 31, 49, 0) 38%), linear-gradient(120deg, rgba(6, 23, 37, 0.18), rgba(7, 25, 40, 0.18)), url(\"https://images.pexels.com/photos/8436330/pexels-photo-8436330.jpeg?auto=compress&cs=tinysrgb&w=1800\") center center / cover no-repeat"
+    image: "radial-gradient(circle at 72% 40%, rgba(48, 103, 148, 0.26) 0%, rgba(12, 31, 49, 0) 42%), linear-gradient(120deg, rgba(6, 23, 37, 0.05), rgba(7, 25, 40, 0.04)), url(\"https://images.pexels.com/photos/8436330/pexels-photo-8436330.jpeg?auto=compress&cs=tinysrgb&w=1800\") center center / cover no-repeat"
   },
   sale: {
     rotation: -90,
@@ -19,7 +19,7 @@ const helmData = {
     href: "#sale",
     heroCta: "View boats for sale",
     intro: "Discover boats for sale with local guidance, clear communication and a personal brokerage service.",
-    image: "radial-gradient(circle at 72% 40%, rgba(33, 78, 118, 0.58) 0%, rgba(12, 31, 49, 0) 38%), linear-gradient(120deg, rgba(6, 23, 37, 0.18), rgba(7, 25, 40, 0.18)), url(\"https://images.pexels.com/photos/1295036/pexels-photo-1295036.jpeg?auto=compress&cs=tinysrgb&w=1800\") center center / cover no-repeat"
+    image: "radial-gradient(circle at 72% 40%, rgba(48, 103, 148, 0.26) 0%, rgba(12, 31, 49, 0) 42%), linear-gradient(120deg, rgba(6, 23, 37, 0.05), rgba(7, 25, 40, 0.04)), url(\"https://images.pexels.com/photos/1295036/pexels-photo-1295036.jpeg?auto=compress&cs=tinysrgb&w=1800\") center center / cover no-repeat"
   },
   services: {
     rotation: -180,
@@ -30,7 +30,7 @@ const helmData = {
     href: "#services",
     heroCta: "Marine services",
     intro: "Practical marine support and trusted local coordination for owners on the Costa del Sol.",
-    image: "radial-gradient(circle at 72% 40%, rgba(33, 78, 118, 0.58) 0%, rgba(12, 31, 49, 0) 38%), linear-gradient(120deg, rgba(6, 23, 37, 0.18), rgba(7, 25, 40, 0.18)), url(\"https://images.pexels.com/photos/163236/luxury-yacht-boat-speed-water-163236.jpeg?auto=compress&cs=tinysrgb&w=1800\") center center / cover no-repeat"
+    image: "radial-gradient(circle at 72% 40%, rgba(48, 103, 148, 0.26) 0%, rgba(12, 31, 49, 0) 42%), linear-gradient(120deg, rgba(6, 23, 37, 0.05), rgba(7, 25, 40, 0.04)), url(\"https://images.pexels.com/photos/163236/luxury-yacht-boat-speed-water-163236.jpeg?auto=compress&cs=tinysrgb&w=1800\") center center / cover no-repeat"
   },
   sell: {
     rotation: -270,
@@ -41,7 +41,7 @@ const helmData = {
     href: "#sell",
     heroCta: "Request a valuation",
     intro: "Present your boat properly, reach serious buyers and let Sotoboats manage the process from start to finish.",
-    image: "radial-gradient(circle at 72% 40%, rgba(33, 78, 118, 0.58) 0%, rgba(12, 31, 49, 0) 38%), linear-gradient(120deg, rgba(6, 23, 37, 0.18), rgba(7, 25, 40, 0.18)), url(\"https://images.pexels.com/photos/860868/pexels-photo-860868.jpeg?auto=compress&cs=tinysrgb&w=1800\") center center / cover no-repeat"
+    image: "radial-gradient(circle at 72% 40%, rgba(48, 103, 148, 0.26) 0%, rgba(12, 31, 49, 0) 42%), linear-gradient(120deg, rgba(6, 23, 37, 0.05), rgba(7, 25, 40, 0.04)), url(\"https://images.pexels.com/photos/860868/pexels-photo-860868.jpeg?auto=compress&cs=tinysrgb&w=1800\") center center / cover no-repeat"
   }
 };
 

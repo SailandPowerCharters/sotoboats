@@ -1,6 +1,6 @@
 {
   "name": "sotoboats",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Sotoboats premium charter, brokerage and marine services website",
   "main": "server.js",
   "scripts": {

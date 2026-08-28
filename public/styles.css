@@ -129,11 +129,15 @@ button { font: inherit; }
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(4, 14, 25, 0.94) 0%, rgba(6, 23, 38, 0.86) 35%, rgba(7, 25, 40, 0.58) 62%, rgba(7, 25, 40, 0.52) 100%),
-    linear-gradient(180deg, rgba(4, 14, 25, 0.22), rgba(4, 14, 25, 0.68));
+    linear-gradient(90deg, rgba(4, 14, 25, 0.78) 0%, rgba(6, 23, 38, 0.68) 34%, rgba(7, 25, 40, 0.34) 62%, rgba(7, 25, 40, 0.20) 100%),
+    linear-gradient(180deg, rgba(4, 14, 25, 0.08), rgba(4, 14, 25, 0.34));
 }
 
-.hero-copy { max-width: 650px; }
+.hero-copy {
+  max-width: 650px;
+  padding: 28px 30px 30px 0;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.18);
+}
 
 .eyebrow {
   margin: 0 0 14px;

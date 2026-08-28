@@ -163,3 +163,74 @@ window.addEventListener("load", () => {
     );
   }, 650);
 });
+
+
+// ===== Charter journey =====
+function formatDateShort(date){
+  return new Intl.DateTimeFormat("en-GB",{day:"numeric",month:"short"}).format(date);
+}
+function startOfToday(){
+  const d=new Date(); d.setHours(0,0,0,0); return d;
+}
+function renderFourWeeks(){
+  const container=document.getElementById("dynamicWeeks");
+  if(!container)return;
+  const today=startOfToday();
+  container.innerHTML="";
+  for(let i=0;i<4;i++){
+    const start=new Date(today); start.setDate(today.getDate()+(i*7));
+    const end=new Date(start); end.setDate(start.getDate()+6);
+    const week=document.createElement("div");
+    week.className="week"+(i===0?" active-week":"");
+    week.innerHTML=`<span>${i===0?"THIS WEEK":`WEEK ${i+1}`}</span><strong>${i===0?"Confirmed":"To be advised"}</strong><small>${i===0?"Live availability":"Check availability"}</small><div class="week-date">${formatDateShort(start)} – ${formatDateShort(end)}</div>`;
+    container.appendChild(week);
+  }
+}
+function setMinimumCharterDate(){
+  const input=document.getElementById("charterDate"); if(!input)return;
+  const d=startOfToday();
+  input.min=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+}
+document.querySelectorAll(".filter-pill").forEach(button=>{
+  button.addEventListener("click",()=>{
+    const filter=button.dataset.filter;
+    document.querySelectorAll(".filter-pill").forEach(btn=>btn.classList.toggle("active",btn===button));
+    document.querySelectorAll(".charter-card").forEach(card=>{
+      card.classList.toggle("filtered-out",filter!=="all"&&card.dataset.type!==filter);
+    });
+  });
+});
+document.querySelectorAll(".card-enquire").forEach(button=>{
+  button.addEventListener("click",()=>{
+    const form=document.getElementById("charterEnquiryForm");
+    const notes=form?.querySelector('textarea[name="notes"]');
+    if(notes)notes.value=`I'm interested in the ${button.dataset.boat}. `;
+    document.getElementById("find-a-boat")?.scrollIntoView({behavior:"smooth",block:"start"});
+  });
+});
+const charterForm=document.getElementById("charterEnquiryForm");
+if(charterForm){
+  charterForm.addEventListener("submit",event=>{
+    event.preventDefault();
+    const data=new FormData(charterForm);
+    const date=data.get("date")||"Not specified";
+    const lines=[
+      "NEW CHARTER ENQUIRY","",
+      `Date: ${date}`,
+      `Guests: ${data.get("guests")||"Not specified"}`,
+      `Departure area: ${data.get("location")||"Not specified"}`,
+      `Budget: ${data.get("budget")||"Not specified"}`,
+      `Experience: ${data.get("type")||"No preference"}`,
+      `Duration: ${data.get("duration")||"No preference"}`,
+      `Notes: ${data.get("notes")||"None"}`,"",
+      `Name: ${data.get("name")||""}`,
+      `Phone / WhatsApp: ${data.get("phone")||""}`,
+      `Email: ${data.get("email")||""}`
+    ];
+    const success=document.getElementById("formSuccess");
+    if(success)success.hidden=false;
+    window.location.href=`mailto:info@sotoboats.com?subject=${encodeURIComponent("New Sotoboats Charter Enquiry")}&body=${encodeURIComponent(lines.join("\n"))}`;
+  });
+}
+renderFourWeeks();
+setMinimumCharterDate();

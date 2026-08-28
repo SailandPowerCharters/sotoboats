@@ -56,24 +56,88 @@
         <div class="helm-label">Choose your route</div>
 
         <div class="helm-shell">
-          <div class="helm-wheel" id="helmWheel" aria-hidden="true">
-            <div class="wheel-ring outer-ring"></div>
-            <div class="wheel-ring inner-ring"></div>
+          <div class="helm-wheel-wrap">
+            <svg class="helm-wheel" id="helmWheel" viewBox="0 0 500 500" aria-hidden="true" role="presentation">
+              <defs>
+                <radialGradient id="woodCore" cx="35%" cy="30%" r="90%">
+                  <stop offset="0%" stop-color="#2e5578"/>
+                  <stop offset="55%" stop-color="#163451"/>
+                  <stop offset="100%" stop-color="#0b1d2f"/>
+                </radialGradient>
+                <linearGradient id="brass" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#f3ddb8"/>
+                  <stop offset="30%" stop-color="#d7b071"/>
+                  <stop offset="55%" stop-color="#b88b48"/>
+                  <stop offset="100%" stop-color="#7f5926"/>
+                </linearGradient>
+                <linearGradient id="brassDark" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#f1dcba"/>
+                  <stop offset="50%" stop-color="#bc904f"/>
+                  <stop offset="100%" stop-color="#835a2b"/>
+                </linearGradient>
+                <radialGradient id="hubGloss" cx="30%" cy="25%" r="80%">
+                  <stop offset="0%" stop-color="#1c4670"/>
+                  <stop offset="55%" stop-color="#0f2c47"/>
+                  <stop offset="100%" stop-color="#091928"/>
+                </radialGradient>
+                <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+                  <feDropShadow dx="0" dy="16" stdDeviation="14" flood-color="#000000" flood-opacity="0.35"/>
+                </filter>
+                <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
+                  <feDropShadow dx="0" dy="0" stdDeviation="12" flood-color="#d9b77a" flood-opacity="0.35"/>
+                </filter>
+              </defs>
 
-            <div class="spoke spoke-1"><span class="handle"></span></div>
-            <div class="spoke spoke-2"><span class="handle"></span></div>
-            <div class="spoke spoke-3"><span class="handle"></span></div>
-            <div class="spoke spoke-4"><span class="handle"></span></div>
-            <div class="spoke spoke-5"><span class="handle"></span></div>
-            <div class="spoke spoke-6"><span class="handle"></span></div>
-            <div class="spoke spoke-7"><span class="handle"></span></div>
-            <div class="spoke spoke-8"><span class="handle"></span></div>
+              <g filter="url(#shadow)">
+                <circle cx="250" cy="250" r="146" fill="none" stroke="url(#brassDark)" stroke-width="12" opacity="0.38"/>
+                <circle cx="250" cy="250" r="126" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="4"/>
 
-            <div class="hub">
-              <div class="hub-crown">⌃</div>
-              <div class="hub-s">S</div>
-              <div class="hub-wave">≈</div>
-            </div>
+                <g class="wheel-structure" filter="url(#softGlow)">
+                  <circle cx="250" cy="250" r="122" fill="none" stroke="url(#brass)" stroke-width="22"/>
+                  <circle cx="250" cy="250" r="88" fill="none" stroke="rgba(232,211,174,0.28)" stroke-width="5"/>
+
+                  <g transform="rotate(0 250 250)">
+                    <rect x="244" y="76" width="12" height="174" rx="6" fill="url(#brassDark)"/>
+                    <rect x="237" y="36" width="26" height="58" rx="13" fill="url(#brass)"/>
+                  </g>
+                  <g transform="rotate(45 250 250)">
+                    <rect x="244" y="76" width="12" height="174" rx="6" fill="url(#brassDark)"/>
+                    <rect x="237" y="36" width="26" height="58" rx="13" fill="url(#brass)"/>
+                  </g>
+                  <g transform="rotate(90 250 250)">
+                    <rect x="244" y="76" width="12" height="174" rx="6" fill="url(#brassDark)"/>
+                    <rect x="237" y="36" width="26" height="58" rx="13" fill="url(#brass)"/>
+                  </g>
+                  <g transform="rotate(135 250 250)">
+                    <rect x="244" y="76" width="12" height="174" rx="6" fill="url(#brassDark)"/>
+                    <rect x="237" y="36" width="26" height="58" rx="13" fill="url(#brass)"/>
+                  </g>
+                  <g transform="rotate(180 250 250)">
+                    <rect x="244" y="76" width="12" height="174" rx="6" fill="url(#brassDark)"/>
+                    <rect x="237" y="36" width="26" height="58" rx="13" fill="url(#brass)"/>
+                  </g>
+                  <g transform="rotate(225 250 250)">
+                    <rect x="244" y="76" width="12" height="174" rx="6" fill="url(#brassDark)"/>
+                    <rect x="237" y="36" width="26" height="58" rx="13" fill="url(#brass)"/>
+                  </g>
+                  <g transform="rotate(270 250 250)">
+                    <rect x="244" y="76" width="12" height="174" rx="6" fill="url(#brassDark)"/>
+                    <rect x="237" y="36" width="26" height="58" rx="13" fill="url(#brass)"/>
+                  </g>
+                  <g transform="rotate(315 250 250)">
+                    <rect x="244" y="76" width="12" height="174" rx="6" fill="url(#brassDark)"/>
+                    <rect x="237" y="36" width="26" height="58" rx="13" fill="url(#brass)"/>
+                  </g>
+                </g>
+
+                <circle cx="250" cy="250" r="72" fill="url(#hubGloss)" stroke="url(#brass)" stroke-width="8"/>
+                <circle cx="250" cy="250" r="51" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="3"/>
+              </g>
+
+              <text x="250" y="214" text-anchor="middle" font-size="15" fill="#d8b67a">⌃</text>
+              <text x="250" y="268" text-anchor="middle" font-family="Playfair Display, serif" font-size="60" fill="#f4e4c5">S</text>
+              <text x="250" y="305" text-anchor="middle" font-size="17" fill="#d8b67a">≈</text>
+            </svg>
           </div>
 
           <button class="helm-option option-top active" data-key="charter" aria-label="Choose Charter">
@@ -102,22 +166,10 @@
     </section>
 
     <section class="intro-strip">
-      <div>
-        <span class="stat">LOCAL</span>
-        <p>Based in Estepona Port</p>
-      </div>
-      <div>
-        <span class="stat">FAST</span>
-        <p>Human help, not endless searching</p>
-      </div>
-      <div>
-        <span class="stat">CURATED</span>
-        <p>Trusted boats, owners and experiences</p>
-      </div>
-      <div>
-        <span class="stat">ONE STOP</span>
-        <p>Charters, services and holiday extras</p>
-      </div>
+      <div><span class="stat">LOCAL</span><p>Based in Estepona Port</p></div>
+      <div><span class="stat">FAST</span><p>Human help, not endless searching</p></div>
+      <div><span class="stat">CURATED</span><p>Trusted boats, owners and experiences</p></div>
+      <div><span class="stat">ONE STOP</span><p>Charters, services and holiday extras</p></div>
     </section>
 
     <section class="section section-light" id="charter">
@@ -168,26 +220,10 @@
         </div>
 
         <div class="week-grid">
-          <div class="week active-week">
-            <span>THIS WEEK</span>
-            <strong>Confirmed</strong>
-            <small>Live availability</small>
-          </div>
-          <div class="week">
-            <span>WEEK 2</span>
-            <strong>To be advised</strong>
-            <small>Check availability</small>
-          </div>
-          <div class="week">
-            <span>WEEK 3</span>
-            <strong>To be advised</strong>
-            <small>Check availability</small>
-          </div>
-          <div class="week">
-            <span>WEEK 4</span>
-            <strong>To be advised</strong>
-            <small>Check availability</small>
-          </div>
+          <div class="week active-week"><span>THIS WEEK</span><strong>Confirmed</strong><small>Live availability</small></div>
+          <div class="week"><span>WEEK 2</span><strong>To be advised</strong><small>Check availability</small></div>
+          <div class="week"><span>WEEK 3</span><strong>To be advised</strong><small>Check availability</small></div>
+          <div class="week"><span>WEEK 4</span><strong>To be advised</strong><small>Check availability</small></div>
         </div>
       </div>
     </section>
@@ -196,40 +232,21 @@
       <div class="section-heading">
         <p class="eyebrow">BOATS FOR SALE</p>
         <h2>Find your next boat.</h2>
-        <p class="section-lead">
-          A cleaner, more personal way to browse boats available through Sotoboats and our local network.
-        </p>
+        <p class="section-lead">A cleaner, more personal way to browse boats available through Sotoboats and our local network.</p>
       </div>
 
       <div class="card-grid three">
         <article class="listing-card">
           <img src="https://images.pexels.com/photos/1295036/pexels-photo-1295036.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Luxury motor yacht for sale" />
-          <div class="listing-body">
-            <span>FEATURED LISTING</span>
-            <h3>Princess V50</h3>
-            <p>Puerto Banús · 12 guests · 2 cabins</p>
-            <strong>Price on application</strong>
-          </div>
+          <div class="listing-body"><span>FEATURED LISTING</span><h3>Princess V50</h3><p>Puerto Banús · 12 guests · 2 cabins</p><strong>Price on application</strong></div>
         </article>
-
         <article class="listing-card">
           <img src="https://images.pexels.com/photos/1796736/pexels-photo-1796736.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="White yacht in marina" />
-          <div class="listing-body">
-            <span>NEW TO MARKET</span>
-            <h3>Sunseeker Portofino 47</h3>
-            <p>Marbella · Mediterranean specification</p>
-            <strong>Enquire for details</strong>
-          </div>
+          <div class="listing-body"><span>NEW TO MARKET</span><h3>Sunseeker Portofino 47</h3><p>Marbella · Mediterranean specification</p><strong>Enquire for details</strong></div>
         </article>
-
         <article class="listing-card">
           <img src="https://images.pexels.com/photos/163236/luxury-yacht-boat-speed-water-163236.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Yacht on clear water" />
-          <div class="listing-body">
-            <span>SOTOBOATS SELECTION</span>
-            <h3>Fairline Targa 48</h3>
-            <p>Estepona · Fully prepared for the season</p>
-            <strong>Enquire for details</strong>
-          </div>
+          <div class="listing-body"><span>SOTOBOATS SELECTION</span><h3>Fairline Targa 48</h3><p>Estepona · Fully prepared for the season</p><strong>Enquire for details</strong></div>
         </article>
       </div>
     </section>
@@ -239,14 +256,10 @@
         <div class="broker-copy">
           <p class="eyebrow dark">SELL YOUR BOAT</p>
           <h2>Local knowledge. Serious buyers. Straightforward brokerage.</h2>
-          <p>
-            From valuation and photography to qualified enquiries and handover, Sotoboats can manage the sale from start to finish.
-          </p>
+          <p>From valuation and photography to qualified enquiries and handover, Sotoboats can manage the sale from start to finish.</p>
           <a class="btn btn-navy" href="#contact">Request a valuation</a>
         </div>
-        <div class="broker-image">
-          <img src="https://images.pexels.com/photos/860868/pexels-photo-860868.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="Luxury yacht moored in a marina" />
-        </div>
+        <div class="broker-image"><img src="https://images.pexels.com/photos/860868/pexels-photo-860868.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="Luxury yacht moored in a marina" /></div>
       </div>
     </section>
 
@@ -257,26 +270,10 @@
       </div>
 
       <div class="service-grid">
-        <div class="service-card">
-          <span>01</span>
-          <h3>Maintenance &amp; repairs</h3>
-          <p>Coordinate trusted local support and routine maintenance.</p>
-        </div>
-        <div class="service-card">
-          <span>02</span>
-          <h3>Boat preparation</h3>
-          <p>Cleaning, detailing and pre-charter or pre-sale preparation.</p>
-        </div>
-        <div class="service-card">
-          <span>03</span>
-          <h3>Owner support</h3>
-          <p>Local help for owners who are away from the Costa del Sol.</p>
-        </div>
-        <div class="service-card">
-          <span>04</span>
-          <h3>Delivery &amp; logistics</h3>
-          <p>Practical assistance moving vessels, equipment and supplies.</p>
-        </div>
+        <div class="service-card"><span>01</span><h3>Maintenance &amp; repairs</h3><p>Coordinate trusted local support and routine maintenance.</p></div>
+        <div class="service-card"><span>02</span><h3>Boat preparation</h3><p>Cleaning, detailing and pre-charter or pre-sale preparation.</p></div>
+        <div class="service-card"><span>03</span><h3>Owner support</h3><p>Local help for owners who are away from the Costa del Sol.</p></div>
+        <div class="service-card"><span>04</span><h3>Delivery &amp; logistics</h3><p>Practical assistance moving vessels, equipment and supplies.</p></div>
       </div>
     </section>
 
@@ -285,9 +282,7 @@
       <div class="experience-copy">
         <p class="eyebrow">MORE THAN BOATS</p>
         <h2>Your holiday concierge at Estepona Port.</h2>
-        <p>
-          Water experiences, beach equipment, paddleboards, bikes, baby equipment and practical extras for your villa or Airbnb stay.
-        </p>
+        <p>Water experiences, beach equipment, paddleboards, bikes, baby equipment and practical extras for your villa or Airbnb stay.</p>
         <a class="btn btn-gold" href="#contact">Ask what's available</a>
       </div>
     </section>
@@ -298,12 +293,7 @@
         <h2>Estepona to Gibraltar — and everywhere between.</h2>
       </div>
       <div class="destination-row">
-        <span>ESTEPONA</span>
-        <span>SOTOGRANDE</span>
-        <span>DUQUESA</span>
-        <span>MARBELLA</span>
-        <span>PUERTO BANÚS</span>
-        <span>GIBRALTAR</span>
+        <span>ESTEPONA</span><span>SOTOGRANDE</span><span>DUQUESA</span><span>MARBELLA</span><span>PUERTO BANÚS</span><span>GIBRALTAR</span>
       </div>
     </section>
 
@@ -311,9 +301,7 @@
       <div>
         <p class="eyebrow">SOTOBOATS · ESTEPONA PORT</p>
         <h2>Tell us what you want to do.</h2>
-        <p>
-          Charter, purchase, sale, marine service or holiday experience — start with one message.
-        </p>
+        <p>Charter, purchase, sale, marine service or holiday experience — start with one message.</p>
       </div>
       <div class="contact-actions">
         <a class="btn btn-gold" href="https://wa.me/" target="_blank" rel="noopener">WhatsApp Sotoboats</a>
@@ -325,10 +313,7 @@
   <footer>
     <div class="footer-brand">
       <span class="brand-mark small">S</span>
-      <div>
-        <strong>SOTOBOATS</strong>
-        <small>Estepona · Costa del Sol</small>
-      </div>
+      <div><strong>SOTOBOATS</strong><small>Estepona · Costa del Sol</small></div>
     </div>
     <p>Charters · Boats for Sale · Brokerage · Marine Services · Holiday Experiences</p>
     <p class="copyright">© <span id="year"></span> Sotoboats. All rights reserved.</p>

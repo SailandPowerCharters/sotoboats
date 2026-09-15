@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sotoboats Owner Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/portal/portal.css">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <a class="portal-brand" href="/">
+      <div class="brand-anchor">⚓</div>
+      <div><strong>SOTOBOATS</strong><small>OWNER PORTAL</small></div>
+    </a>
+    <nav>
+      <button class="nav-item active" data-view="dashboard">⌂ <span>Dashboard</span></button>
+      <button class="nav-item" data-view="boats">⛵ <span>My Boats</span></button>
+      <button class="nav-item" data-view="availability">▣ <span>Availability</span></button>
+      <button class="nav-item" data-view="opportunities">◉ <span>Charter Opportunities</span></button>
+      <button class="nav-item" data-view="bids">⚑ <span>My Bids</span></button>
+    </nav>
+    <div class="sidebar-card">
+      <span>MORE JOURNEYS</span>
+      <strong>Brighter horizons.</strong>
+      <p>Keep your boat working harder when you're not using it.</p>
+    </div>
+    <button class="logout-btn" id="logoutBtn">Log out</button>
+  </aside>
+
+  <main class="main">
+    <section class="login-screen" id="loginScreen">
+      <div class="login-card">
+        <div class="login-copy">
+          <p class="eyebrow">SOTOBOATS OWNER NETWORK</p>
+          <h1>Turn your boat into more opportunities.</h1>
+          <p>Manage your boats, availability, charter requests and bids from one place.</p>
+        </div>
+        <form id="loginForm">
+          <label>Email<input type="email" name="email" placeholder="owner@example.com" required></label>
+          <label>Password<input type="password" name="password" placeholder="••••••••" required></label>
+          <button type="submit">Enter Owner Portal</button>
+          <div class="login-message" id="loginMessage"></div>
+        </form>
+      </div>
+    </section>
+
+    <section class="portal-screen hidden" id="portalScreen">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">OWNER PORTAL</p>
+          <h1 id="welcomeTitle">Welcome back.</h1>
+          <p id="welcomeSub">Fresh opportunities are waiting.</p>
+        </div>
+        <div class="top-actions">
+          <span class="status-pill">● Ready to sail</span>
+          <div class="user-chip"><span id="userInitial">S</span><div><strong id="userName">Owner</strong><small>Boat Owner</small></div></div>
+        </div>
+      </header>
+
+      <section class="view active" id="view-dashboard">
+        <div class="hero-panel">
+          <div class="hero-copy">
+            <span class="hero-kicker">THIS WEEK</span>
+            <h2><span id="opportunityCount">0</span> charter opportunities on deck.</h2>
+            <p>Fresh requests, quick bids and a clearer view of what's happening with your boat.</p>
+          </div>
+          <div class="hero-quote">Good boats.<br>Better days.</div>
+        </div>
+
+        <div class="dashboard-grid">
+          <section class="card card-large">
+            <div class="card-heading">
+              <div><span class="tag gold">FRESH REQUEST</span><h3>Latest Charter Opportunity</h3></div>
+              <button class="link-btn" data-go="opportunities">View all</button>
+            </div>
+            <div id="latestOpportunity" class="empty-state">No opportunities yet.</div>
+          </section>
+
+          <section class="card">
+            <div class="card-heading"><h3>My Boats</h3><button class="link-btn" data-go="boats">Manage</button></div>
+            <div id="boatSummary" class="empty-state">No boats added yet.</div>
+          </section>
+
+          <section class="card performance-card">
+            <span>OWNER NETWORK</span>
+            <strong>Ready for more?</strong>
+            <p>Keep availability up to date so Sotoboats can match you to the right requests.</p>
+          </section>
+
+          <section class="card">
+            <div class="card-heading"><h3>Availability</h3><button class="link-btn" data-go="availability">Update</button></div>
+            <div id="availabilitySummary" class="availability-list"></div>
+          </section>
+
+          <section class="card">
+            <div class="card-heading"><h3>My Bid Status</h3><button class="link-btn" data-go="bids">View all</button></div>
+            <div id="bidSummary" class="bid-list"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="view-boats">
+        <div class="section-head">
+          <div><p class="eyebrow">MY FLEET</p><h2>My Boats</h2><p>Add and manage boats available to the Sotoboats network.</p></div>
+        </div>
+        <div class="split-layout">
+          <div class="card">
+            <h3>Add a boat</h3>
+            <form id="boatForm" class="stack-form">
+              <div class="two-col">
+                <label>Boat name<input name="name" required></label>
+                <label>Boat type<input name="boatType" placeholder="Motor yacht"></label>
+              </div>
+              <div class="two-col">
+                <label>Marina<input name="marina" placeholder="Estepona"></label>
+                <label>Capacity<input type="number" name="capacity" min="1"></label>
+              </div>
+              <div class="two-col">
+                <label>Cabins<input type="number" name="cabins" min="0"></label>
+                <label>Image URL<input name="imageUrl" placeholder="https://..."></label>
+              </div>
+              <div class="two-col">
+                <label>Half-day price (€)<input type="number" name="halfDayPrice" min="0" step="0.01"></label>
+                <label>Full-day price (€)<input type="number" name="fullDayPrice" min="0" step="0.01"></label>
+              </div>
+              <button type="submit">Add boat</button>
+            </form>
+          </div>
+          <div id="boatsGrid" class="boats-grid"></div>
+        </div>
+      </section>
+
+      <section class="view" id="view-availability">
+        <div class="section-head">
+          <div><p class="eyebrow">STAY CURRENT</p><h2>Availability</h2><p>Confirm this week and set the following three weeks to advised or unavailable.</p></div>
+        </div>
+        <div id="availabilityManager" class="availability-manager"></div>
+      </section>
+
+      <section class="view" id="view-opportunities">
+        <div class="section-head">
+          <div><p class="eyebrow">FRESH CHARTERS</p><h2>Charter Opportunities</h2><p>Review requests sent to you and bid only when the fit is right.</p></div>
+        </div>
+        <div id="opportunitiesList" class="opportunity-grid"></div>
+      </section>
+
+      <section class="view" id="view-bids">
+        <div class="section-head">
+          <div><p class="eyebrow">YOUR ACTIVITY</p><h2>My Bids</h2><p>Track submitted, awaiting review, won and lost opportunities.</p></div>
+        </div>
+        <div id="bidsTable" class="card"></div>
+      </section>
+    </section>
+  </main>
+</div>
+
+<dialog id="bidDialog">
+  <form method="dialog" class="dialog-card" id="bidForm">
+    <button class="dialog-close" value="cancel" aria-label="Close">×</button>
+    <p class="eyebrow">SUBMIT A BID</p>
+    <h3 id="bidDialogTitle">Charter Opportunity</h3>
+    <input type="hidden" name="opportunityId">
+    <label>Choose boat<select name="boatId" id="bidBoatSelect"></select></label>
+    <div class="two-col">
+      <label>Your price (€)<input type="number" name="bidPrice" min="1" step="0.01" required></label>
+      <label>Departure marina<input name="departureMarina"></label>
+    </div>
+    <label>What is included?<input name="includes" placeholder="Skipper, drinks, fuel allowance..."></label>
+    <label>Notes<textarea name="notes" rows="3"></textarea></label>
+    <label class="check-row"><input type="checkbox" name="availabilityConfirmed"> I confirm the boat and crew are available</label>
+    <button type="submit" class="primary-btn">Send bid</button>
+    <div id="bidMessage" class="form-message"></div>
+  </form>
+</dialog>
+
+<script src="/portal/portal.js"></script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sotoboats Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+<div class="admin-shell">
+  <aside class="admin-sidebar">
+    <a href="/" class="brand"><span>⚓</span><div><strong>SOTOBOATS</strong><small>CONTROL CENTRE</small></div></a>
+    <nav>
+      <button class="nav active" data-view="dashboard">Dashboard</button>
+      <button class="nav" data-view="opportunities">Charter Requests</button>
+      <button class="nav" data-view="owners">Owners</button>
+      <button class="nav" data-view="bids">Bids</button>
+    </nav>
+    <button id="adminLogout" class="logout">Log out</button>
+  </aside>
+
+  <main>
+    <section id="adminLogin" class="admin-login">
+      <form id="adminLoginForm" class="login-box">
+        <p class="eyebrow">SOTOBOATS ADMIN</p>
+        <h1>Control Centre</h1>
+        <p>Manage owners, charter opportunities and incoming bids.</p>
+        <label>Email<input type="email" name="email" required></label>
+        <label>Password<input type="password" name="password" required></label>
+        <button type="submit">Enter Admin</button>
+        <div id="adminLoginMessage" class="message"></div>
+      </form>
+    </section>
+
+    <section id="adminApp" class="hidden">
+      <header class="admin-topbar">
+        <div><p class="eyebrow">SOTOBOATS</p><h1>Charter Control Centre</h1></div>
+        <span class="admin-pill">● Live network</span>
+      </header>
+
+      <section class="view active" id="view-dashboard">
+        <div class="stats-grid">
+          <div class="stat"><span>OWNERS</span><strong id="statOwners">0</strong></div>
+          <div class="stat"><span>BOATS</span><strong id="statBoats">0</strong></div>
+          <div class="stat"><span>OPEN REQUESTS</span><strong id="statOpps">0</strong></div>
+          <div class="stat"><span>BIDS</span><strong id="statBids">0</strong></div>
+        </div>
+        <div class="content-grid">
+          <section class="card">
+            <div class="card-head"><h2>Create Charter Opportunity</h2></div>
+            <form id="opportunityForm" class="form">
+              <div class="two"><label>Title<input name="title" placeholder="Family day charter" required></label><label>Date<input type="date" name="charterDate" required></label></div>
+              <div class="two"><label>Start time<input type="time" name="startTime"></label><label>End time<input type="time" name="endTime"></label></div>
+              <div class="two"><label>Guests<input type="number" name="guests" min="1"></label><label>Departure area<input name="departureArea" placeholder="Estepona"></label></div>
+              <div class="two"><label>Preferred boat type<input name="preferredBoatType" placeholder="Motor yacht"></label><label>Extras<input name="extras" placeholder="Skipper + drinks"></label></div>
+              <div class="two"><label>Budget min (€)<input type="number" name="budgetMin" min="0"></label><label>Budget max (€)<input type="number" name="budgetMax" min="0"></label></div>
+              <label>Notes<textarea name="notes" rows="3"></textarea></label>
+              <label>Bid deadline<input type="datetime-local" name="bidDeadline"></label>
+              <button type="submit">Create opportunity</button>
+              <div id="opportunityMessage" class="message"></div>
+            </form>
+          </section>
+          <section class="card">
+            <div class="card-head"><h2>Latest Requests</h2><button class="link" data-go="opportunities">View all</button></div>
+            <div id="latestOpps"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="view-opportunities">
+        <div class="section-head"><div><p class="eyebrow">CHARTER REQUESTS</p><h2>Broadcast opportunities</h2><p>Create a request, then send it to all active registered owners.</p></div></div>
+        <div id="opportunitiesAdmin" class="request-list"></div>
+      </section>
+
+      <section class="view" id="view-owners">
+        <div class="section-head"><div><p class="eyebrow">OWNER NETWORK</p><h2>Registered Owners</h2></div></div>
+        <div id="ownersAdmin" class="card"></div>
+      </section>
+
+      <section class="view" id="view-bids">
+        <div class="section-head"><div><p class="eyebrow">BID BOARD</p><h2>Compare incoming bids</h2></div></div>
+        <div id="bidsAdmin" class="card"></div>
+      </section>
+    </section>
+  </main>
+</div>
+<script src="/admin/admin.js"></script>
+</body>
+</html>

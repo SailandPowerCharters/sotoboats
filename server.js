@@ -6,6 +6,10 @@ const bcrypt = require("bcryptjs");
 const { Pool } = require("pg");
 
 const app = express();
+
+// Render terminates HTTPS at its proxy. Trust the proxy so secure
+// express-session cookies are set and returned correctly.
+app.set("trust proxy", 1);
 const PORT = process.env.PORT || 3000;
 const DATABASE_URL = process.env.DATABASE_URL || "";
 const SESSION_SECRET = process.env.SESSION_SECRET || "change-this-in-render";

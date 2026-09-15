@@ -160,14 +160,24 @@ async function initDb() {
     await pool.query(
       `INSERT INTO users (role,full_name,company_name,email,phone,password_hash)
        VALUES ('owner','Captain Alex','Alex Charters',$1,'+34 600 000 000',$2)
-       ON CONFLICT (email) DO NOTHING`,
+       ON CONFLICT (email) DO UPDATE
+       SET password_hash=EXCLUDED.password_hash,
+           full_name=EXCLUDED.full_name,
+           company_name=EXCLUDED.company_name,
+           phone=EXCLUDED.phone,
+           status='active'`,
       [ownerEmail, ownerHash]
     );
 
     await pool.query(
       `INSERT INTO users (role,full_name,company_name,email,phone,password_hash)
        VALUES ('admin','Sotoboats Admin','Sotoboats',$1,'+34 600 000 001',$2)
-       ON CONFLICT (email) DO NOTHING`,
+       ON CONFLICT (email) DO UPDATE
+       SET password_hash=EXCLUDED.password_hash,
+           full_name=EXCLUDED.full_name,
+           company_name=EXCLUDED.company_name,
+           phone=EXCLUDED.phone,
+           status='active'`,
       [adminEmail, adminHash]
     );
 

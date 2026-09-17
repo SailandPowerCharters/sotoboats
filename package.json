@@ -1,7 +1,7 @@
 {
   "name": "sotoboats",
-  "version": "2.0.0",
-  "description": "Sotoboats public website, owner portal and charter network foundation",
+  "version": "3.0.0",
+  "description": "Sotoboats charter network, admin control centre and owner portal",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"

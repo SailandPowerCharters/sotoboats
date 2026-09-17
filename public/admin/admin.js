@@ -1,168 +1,38 @@
-
-const login = document.getElementById("adminLogin");
-const app = document.getElementById("adminApp");
-const form = document.getElementById("adminLoginForm");
-const loginMessage = document.getElementById("adminLoginMessage");
-let data = null;
-let currentLang = localStorage.getItem("sotoboatsAdminLang") || "en";
-
-const translations = {
-  en: {
-    controlCentre:"Control Centre", dashboard:"Dashboard", charterRequests:"Charter Requests", owners:"Owners", bids:"Bids",
-    logout:"Log out", adminIntro:"Manage owners, charter opportunities and incoming bids.", email:"Email", password:"Password",
-    enterAdmin:"Enter Admin", charterControlCentre:"Charter Control Centre", liveNetwork:"● Live network",
-    ownersCaps:"OWNERS", boatsCaps:"BOATS", openRequestsCaps:"OPEN REQUESTS", bidsCaps:"BIDS",
-    createOpportunity:"Create Charter Opportunity", title:"Title", date:"Date", startTime:"Start time", endTime:"End time",
-    guests:"Guests", departureArea:"Departure area", preferredBoatType:"Preferred boat type", extras:"Extras",
-    budgetMin:"Budget min (€)", budgetMax:"Budget max (€)", notes:"Notes", bidDeadline:"Bid deadline",
-    createOpportunityButton:"Create opportunity", latestRequests:"Latest Requests", viewAll:"View all",
-    charterRequestsCaps:"CHARTER REQUESTS", broadcastOpportunities:"Broadcast opportunities",
-    broadcastHelp:"Create a request, then send it to all active registered owners.",
-    ownerNetworkCaps:"OWNER NETWORK", registeredOwners:"Registered Owners", bidBoardCaps:"BID BOARD",
-    compareBids:"Compare incoming bids", titlePlaceholder:"Family day charter", boatTypePlaceholder:"Motor yacht",
-    extrasPlaceholder:"Skipper + drinks", noOpportunities:"No opportunities yet.", noOwners:"No registered owners.",
-    noBids:"No bids yet.", broadcastButton:"Broadcast to owners", broadcastConfirm:"Send this charter opportunity to all active registered owners?",
-    broadcastSent:"Broadcast sent to {count} owner(s).", opportunityCreated:"Opportunity created.",
-    ownerTable:"OWNER", companyTable:"COMPANY", emailTable:"EMAIL", phoneTable:"PHONE", statusTable:"STATUS",
-    requestTable:"REQUEST", boatTable:"BOAT", bidTable:"BID"
-  },
-  es: {
-    controlCentre:"Centro de Control", dashboard:"Panel", charterRequests:"Solicitudes de Charter", owners:"Propietarios", bids:"Ofertas",
-    logout:"Cerrar sesión", adminIntro:"Gestiona propietarios, oportunidades de charter y ofertas recibidas.", email:"Correo electrónico", password:"Contraseña",
-    enterAdmin:"Entrar al Admin", charterControlCentre:"Centro de Control de Charters", liveNetwork:"● Red activa",
-    ownersCaps:"PROPIETARIOS", boatsCaps:"EMBARCACIONES", openRequestsCaps:"SOLICITUDES ABIERTAS", bidsCaps:"OFERTAS",
-    createOpportunity:"Crear oportunidad de charter", title:"Título", date:"Fecha", startTime:"Hora de inicio", endTime:"Hora de fin",
-    guests:"Pasajeros", departureArea:"Zona de salida", preferredBoatType:"Tipo de embarcación", extras:"Extras",
-    budgetMin:"Presupuesto mín. (€)", budgetMax:"Presupuesto máx. (€)", notes:"Notas", bidDeadline:"Fecha límite de oferta",
-    createOpportunityButton:"Crear oportunidad", latestRequests:"Últimas solicitudes", viewAll:"Ver todas",
-    charterRequestsCaps:"SOLICITUDES DE CHARTER", broadcastOpportunities:"Enviar oportunidades",
-    broadcastHelp:"Crea una solicitud y envíala a todos los propietarios activos registrados.",
-    ownerNetworkCaps:"RED DE PROPIETARIOS", registeredOwners:"Propietarios registrados", bidBoardCaps:"TABLÓN DE OFERTAS",
-    compareBids:"Comparar ofertas recibidas", titlePlaceholder:"Charter familiar de día", boatTypePlaceholder:"Yate a motor",
-    extrasPlaceholder:"Patrón + bebidas", noOpportunities:"Todavía no hay oportunidades.", noOwners:"No hay propietarios registrados.",
-    noBids:"Todavía no hay ofertas.", broadcastButton:"Enviar a propietarios", broadcastConfirm:"¿Enviar esta oportunidad a todos los propietarios activos registrados?",
-    broadcastSent:"Enviado a {count} propietario(s).", opportunityCreated:"Oportunidad creada.",
-    ownerTable:"PROPIETARIO", companyTable:"EMPRESA", emailTable:"EMAIL", phoneTable:"TELÉFONO", statusTable:"ESTADO",
-    requestTable:"SOLICITUD", boatTable:"EMBARCACIÓN", bidTable:"OFERTA"
-  }
+let state={data:null,lang:localStorage.getItem("sotoAdminLang")||"en",activeRequest:null};
+const T={
+en:{controlCentre:"CONTROL CENTRE",dashboard:"Dashboard",requests:"Charter Requests",calendar:"Fleet Calendar",owners:"Owners",bids:"Bids",lostBids:"Lost Bids",logout:"Log out",loginText:"Manage clients, owners, calendars, opportunities and bids.",email:"Email",password:"Password",enter:"Enter Admin",charterControl:"Charter Control Centre",live:"● Live network",enquiriesMonth:"Enquiries this month",openRequests:"Open requests",bidsMonth:"Bids this month",winsMonth:"Wins this month",bookingValue:"Booking value",noBids:"Requests with no bids",createRequest:"Create Charter Opportunity",privateClient:"Private client details",privateClientHelp:"Only the Control Centre can see this information.",clientName:"Client name",clientPhone:"Phone / WhatsApp",clientEmail:"Email",language:"Language",accommodation:"Hotel / accommodation",source:"Enquiry source",internalNotes:"Internal notes",title:"Title",date:"Date",startTime:"Start time",endTime:"End time",guests:"Guests",departure:"Departure area",boatType:"Preferred boat type",extras:"Extras",budgetMin:"Budget min (€)",budgetMax:"Budget max (€)",ownerNotes:"Notes visible to owners",deadline:"Bid deadline",create:"Create opportunity",latestRequests:"Latest Requests",viewAll:"View all",requestsCaps:"CHARTER REQUESTS",fleetCalendarCaps:"FLEET CALENDAR",calendarHelp:"See the availability shared by registered owners.",askUpdate:"Please update your calendar",activeOwners:"Active owners",activeBoats:"Active boats",ownerNetwork:"OWNER NETWORK",bidBoard:"BID BOARD",bidHelp:"Mark bids as won, lost or awaiting review.",lostBidsCaps:"LOST BIDS",lostHelp:"Track what was lost and why.",requestDetail:"CHARTER REQUEST",privateOnly:"Private — Control Centre only",broadcast:"Broadcast to owners",markLost:"Mark request lost",lostReasonCaps:"LOST REASON",reason:"Reason",notes:"Notes",saveLost:"Save as lost",markRequestLost:"Mark request as lost",status:"Status",boat:"Boat",owner:"Owner",bid:"Bid",company:"Company",phone:"Phone",opportunityCreated:"Opportunity created.",broadcastConfirm:"Send this opportunity to all active owners?",calendarConfirm:"Send a calendar update request to all active owners?",calendarSent:"Calendar update request sent to {count} owner(s)."},
+es:{controlCentre:"CENTRO DE CONTROL",dashboard:"Panel",requests:"Solicitudes de Charter",calendar:"Calendario de Flota",owners:"Propietarios",bids:"Ofertas",lostBids:"Ofertas Perdidas",logout:"Cerrar sesión",loginText:"Gestiona clientes, propietarios, calendarios, oportunidades y ofertas.",email:"Correo",password:"Contraseña",enter:"Entrar al Admin",charterControl:"Centro de Control de Charters",live:"● Red activa",enquiriesMonth:"Consultas este mes",openRequests:"Solicitudes abiertas",bidsMonth:"Ofertas este mes",winsMonth:"Ganadas este mes",bookingValue:"Valor de reservas",noBids:"Solicitudes sin ofertas",createRequest:"Crear oportunidad de charter",privateClient:"Datos privados del cliente",privateClientHelp:"Solo el Centro de Control puede ver esta información.",clientName:"Nombre del cliente",clientPhone:"Teléfono / WhatsApp",clientEmail:"Email",language:"Idioma",accommodation:"Hotel / alojamiento",source:"Origen de consulta",internalNotes:"Notas internas",title:"Título",date:"Fecha",startTime:"Hora de inicio",endTime:"Hora de fin",guests:"Pasajeros",departure:"Zona de salida",boatType:"Tipo de barco preferido",extras:"Extras",budgetMin:"Presupuesto mín. (€)",budgetMax:"Presupuesto máx. (€)",ownerNotes:"Notas visibles para propietarios",deadline:"Fecha límite de oferta",create:"Crear oportunidad",latestRequests:"Últimas solicitudes",viewAll:"Ver todo",requestsCaps:"SOLICITUDES DE CHARTER",fleetCalendarCaps:"CALENDARIO DE FLOTA",calendarHelp:"Consulta la disponibilidad compartida por los propietarios.",askUpdate:"Por favor actualiza tu calendario",activeOwners:"Propietarios activos",activeBoats:"Barcos activos",ownerNetwork:"RED DE PROPIETARIOS",bidBoard:"TABLÓN DE OFERTAS",bidHelp:"Marca ofertas como ganadas, perdidas o en revisión.",lostBidsCaps:"OFERTAS PERDIDAS",lostHelp:"Registra qué se perdió y por qué.",requestDetail:"SOLICITUD DE CHARTER",privateOnly:"Privado — solo Centro de Control",broadcast:"Enviar a propietarios",markLost:"Marcar solicitud perdida",lostReasonCaps:"MOTIVO DE PÉRDIDA",reason:"Motivo",notes:"Notas",saveLost:"Guardar como perdida",markRequestLost:"Marcar solicitud como perdida",status:"Estado",boat:"Barco",owner:"Propietario",bid:"Oferta",company:"Empresa",phone:"Teléfono",opportunityCreated:"Oportunidad creada.",broadcastConfirm:"¿Enviar esta oportunidad a todos los propietarios activos?",calendarConfirm:"¿Solicitar a todos los propietarios activos que actualicen su calendario?",calendarSent:"Solicitud de actualización enviada a {count} propietario(s)."}
 };
-
-function t(key){ return translations[currentLang][key] || translations.en[key] || key; }
-
-function applyLanguage(lang){
-  currentLang = lang;
-  localStorage.setItem("sotoboatsAdminLang", lang);
-  document.documentElement.lang = lang;
-
-  document.querySelectorAll("[data-i18n]").forEach(el => {
-    const key = el.dataset.i18n;
-    if(translations[lang][key]) el.textContent = translations[lang][key];
-  });
-  document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
-    const key = el.dataset.i18nPlaceholder;
-    if(translations[lang][key]) el.placeholder = translations[lang][key];
-  });
-  document.querySelectorAll(".lang-btn").forEach(btn => btn.classList.toggle("active", btn.dataset.lang === lang));
-  if(data) render();
+function t(k){return T[state.lang][k]||k}
+function applyLang(l){state.lang=l;localStorage.setItem("sotoAdminLang",l);document.documentElement.lang=l;document.querySelectorAll("[data-i18n]").forEach(e=>e.textContent=t(e.dataset.i18n));document.querySelectorAll("[data-lang]").forEach(b=>b.classList.toggle("active",b.dataset.lang===l));if(state.data)renderAll()}
+document.querySelectorAll("[data-lang]").forEach(b=>b.addEventListener("click",()=>applyLang(b.dataset.lang)));
+async function api(url,opt={}){const r=await fetch(url,{headers:{"Content-Type":"application/json",...(opt.headers||{})},...opt});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||"Error");return d}
+function money(v){return new Intl.NumberFormat(state.lang==="es"?"es-ES":"en-IE",{style:"currency",currency:"EUR",maximumFractionDigits:0}).format(Number(v||0))}
+function date(v){if(!v)return"—";return new Intl.DateTimeFormat(state.lang==="es"?"es-ES":"en-GB",{day:"numeric",month:"short",year:"numeric"}).format(new Date(v))}
+function dt(v){if(!v)return"—";return new Intl.DateTimeFormat(state.lang==="es"?"es-ES":"en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}).format(new Date(v))}
+function switchView(n){document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));document.querySelectorAll(".nav").forEach(b=>b.classList.toggle("active",b.dataset.view===n));document.getElementById(`view-${n}`)?.classList.add("active")}
+document.querySelectorAll(".nav").forEach(b=>b.addEventListener("click",()=>switchView(b.dataset.view)));document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>switchView(b.dataset.go)));
+document.getElementById("loginForm").addEventListener("submit",async e=>{e.preventDefault();const f=e.currentTarget;try{const r=await api("/api/login",{method:"POST",body:JSON.stringify(Object.fromEntries(new FormData(f).entries()))});if(r.user.role!=="admin")throw new Error("Admin login required");await load()}catch(err){document.getElementById("loginMessage").textContent=err.message}});
+document.getElementById("logoutBtn").addEventListener("click",async()=>{await api("/api/logout",{method:"POST"});location.reload()});
+async function load(){state.data=await api("/api/admin/dashboard");document.getElementById("loginScreen").classList.add("hidden");document.getElementById("adminApp").classList.remove("hidden");renderAll()}
+function renderAll(){
+const d=state.data,k=d.kpis||{};document.getElementById("kpiEnquiries").textContent=k.enquiries_month||0;document.getElementById("kpiOpen").textContent=k.open_requests||0;document.getElementById("kpiBids").textContent=k.bids_month||0;document.getElementById("kpiWins").textContent=k.wins_month||0;document.getElementById("kpiValue").textContent=money(k.booking_value_month);document.getElementById("kpiNoBids").textContent=k.requests_no_bids||0;document.getElementById("calOwners").textContent=k.active_owners||0;document.getElementById("calBoats").textContent=k.active_boats||0;
+document.getElementById("latestRequests").innerHTML=d.opportunities.slice(0,6).map(o=>requestCard(o,false)).join("")||"—";
+document.getElementById("requestsList").innerHTML=d.opportunities.map(o=>requestCard(o,true)).join("")||"—";
+document.getElementById("ownersTable").innerHTML=d.owners.length?`<table class="table"><thead><tr><th>${t("owner")}</th><th>${t("company")}</th><th>${t("email")}</th><th>${t("phone")}</th><th>${t("status")}</th></tr></thead><tbody>${d.owners.map(o=>`<tr><td>${o.full_name}</td><td>${o.company_name||"—"}</td><td>${o.email}</td><td>${o.phone||"—"}</td><td>${o.status}</td></tr>`).join("")}</tbody></table>`:"—";
+document.getElementById("bidsTable").innerHTML=d.bids.length?`<table class="table"><thead><tr><th>${t("requests")}</th><th>${t("owner")}</th><th>${t("boat")}</th><th>${t("bid")}</th><th>${t("status")}</th><th></th></tr></thead><tbody>${d.bids.map(b=>`<tr><td>${b.title}</td><td>${b.owner_name}</td><td>${b.boat_name||"—"}</td><td>${money(b.bid_price)}</td><td><span class="badge ${b.status==="won"?"green":b.status==="lost"?"red":"amber"}">${b.status}</span></td><td>${b.status!=="won"?`<button onclick="markWon(${b.id})">Won</button> `:""}${b.status!=="lost"?`<button onclick="openLostBid(${b.id},${JSON.stringify(b.title)})">Lost</button>`:""}</td></tr>`).join("")}</tbody></table>`:"—";
+document.getElementById("lostTable").innerHTML=d.lostBids.length?`<table class="table"><thead><tr><th>${t("requests")}</th><th>${t("owner")}</th><th>${t("boat")}</th><th>${t("bid")}</th><th>${t("reason")}</th><th>${t("notes")}</th></tr></thead><tbody>${d.lostBids.map(b=>`<tr><td>${b.title}</td><td>${b.owner_name}</td><td>${b.boat_name||"—"}</td><td>${money(b.bid_price)}</td><td>${b.lost_reason||"—"}</td><td>${b.lost_notes||"—"}</td></tr>`).join("")}</tbody></table>`:"—";
+renderCalendar()
 }
-
-document.querySelectorAll(".lang-btn").forEach(btn => {
-  btn.addEventListener("click", e => {
-    e.preventDefault();
-    applyLanguage(btn.dataset.lang);
-  });
-});
-
-async function api(url, options = {}) {
-  const res = await fetch(url, { headers: { "Content-Type": "application/json", ...(options.headers || {}) }, ...options });
-  const body = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(body.error || "Something went wrong");
-  return body;
-}
-function money(v){if(v===null||v===undefined||v==="")return"—";return new Intl.NumberFormat(currentLang==="es"?"es-ES":"en-IE",{style:"currency",currency:"EUR",maximumFractionDigits:0}).format(Number(v))}
-function dateText(v){if(!v)return"—";return new Intl.DateTimeFormat(currentLang==="es"?"es-ES":"en-GB",{day:"numeric",month:"short",year:"numeric"}).format(new Date(v))}
-
-function switchView(name){
-  document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
-  document.querySelectorAll(".nav").forEach(b=>b.classList.toggle("active",b.dataset.view===name));
-  document.getElementById(`view-${name}`)?.classList.add("active");
-}
-document.querySelectorAll(".nav").forEach(b=>b.addEventListener("click",()=>switchView(b.dataset.view)));
-document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>switchView(b.dataset.go)));
-
-form.addEventListener("submit",async e=>{
-  e.preventDefault(); loginMessage.textContent="";
-  try{
-    const result=await api("/api/login",{method:"POST",body:JSON.stringify(Object.fromEntries(new FormData(form).entries()))});
-    if(result.user.role!=="admin")throw new Error("This login is not an admin account");
-    await load();
-  }catch(err){loginMessage.textContent=err.message}
-});
-
-document.getElementById("adminLogout").addEventListener("click",async()=>{
-  await api("/api/logout",{method:"POST"}); app.classList.add("hidden"); login.classList.remove("hidden");
-});
-
-async function boot(){
-  applyLanguage(currentLang);
-  try{
-    const me=await api("/api/me");
-    if(me.user?.role==="admin")return load();
-  }catch{}
-}
-async function load(){
-  data=await api("/api/admin/dashboard");
-  login.classList.add("hidden"); app.classList.remove("hidden");
-  render();
-}
-
-function render(){
-  document.getElementById("statOwners").textContent=data.owners.length;
-  document.getElementById("statBoats").textContent=data.boats.length;
-  document.getElementById("statOpps").textContent=data.opportunities.filter(o=>o.status==="open").length;
-  document.getElementById("statBids").textContent=data.bids.length;
-
-  document.getElementById("latestOpps").innerHTML=data.opportunities.length
-    ? data.opportunities.slice(0,5).map(o=>`<div class="request-card"><div><h3>${o.title}</h3><p>${o.departure_area||"—"} · ${dateText(o.charter_date)}</p></div><span class="badge">${o.status}</span></div>`).join("")
-    : `<div class="empty">${t("noOpportunities")}</div>`;
-
-  document.getElementById("opportunitiesAdmin").innerHTML=data.opportunities.length
-    ? data.opportunities.map(o=>`<article class="request-card"><div><h3>${o.title}</h3><p>${o.notes||"—"}</p><div class="meta"><span>${dateText(o.charter_date)}</span><span>${o.guests||"—"} ${t("guests").toLowerCase()}</span><span>${o.departure_area||"—"}</span><span>${money(o.budget_min)}–${money(o.budget_max)}</span></div></div><button class="broadcast-btn" onclick="broadcast(${o.id})">${t("broadcastButton")}</button></article>`).join("")
-    : `<div class="card">${t("noOpportunities")}</div>`;
-
-  document.getElementById("ownersAdmin").innerHTML=data.owners.length
-    ? `<table class="table"><thead><tr><th>${t("ownerTable")}</th><th>${t("companyTable")}</th><th>${t("emailTable")}</th><th>${t("phoneTable")}</th><th>${t("statusTable")}</th></tr></thead><tbody>${data.owners.map(o=>`<tr><td>${o.full_name}</td><td>${o.company_name||"—"}</td><td>${o.email}</td><td>${o.phone||"—"}</td><td><span class="badge green">${o.status}</span></td></tr>`).join("")}</tbody></table>`
-    : `<div class="empty">${t("noOwners")}</div>`;
-
-  document.getElementById("bidsAdmin").innerHTML=data.bids.length
-    ? `<table class="table"><thead><tr><th>${t("requestTable")}</th><th>${t("ownerTable")}</th><th>${t("boatTable")}</th><th>${t("bidTable")}</th><th>${t("statusTable")}</th></tr></thead><tbody>${data.bids.map(b=>`<tr><td>${b.public_ref}<br>${b.title}</td><td>${b.owner_name}</td><td>${b.boat_name||"—"}</td><td>${money(b.bid_price)}</td><td><span class="badge">${b.status}</span></td></tr>`).join("")}</tbody></table>`
-    : `<div class="empty">${t("noBids")}</div>`;
-}
-
-document.getElementById("opportunityForm").addEventListener("submit",async e=>{
-  e.preventDefault();
-  const formEl=e.currentTarget;
-  const msg=document.getElementById("opportunityMessage");
-  msg.textContent="";
-  const payload=Object.fromEntries(new FormData(formEl).entries());
-  try{
-    await api("/api/admin/opportunities",{method:"POST",body:JSON.stringify(payload)});
-    formEl.reset();
-    msg.style.color="green";
-    msg.textContent=t("opportunityCreated");
-    await load();
-  }catch(err){
-    msg.style.color="#b45151";
-    msg.textContent=err.message;
-  }
-});
-
-window.broadcast=async function(id){
-  if(!confirm(t("broadcastConfirm")))return;
-  try{
-    const result=await api(`/api/admin/opportunities/${id}/broadcast`,{method:"POST",body:JSON.stringify({ownerIds:[]})});
-    alert(t("broadcastSent").replace("{count}",result.sentTo));
-  }catch(err){alert(err.message)}
-};
-
-boot();
+function requestCard(o,withActions){return `<article class="request-card"><div class="request-main" onclick="openRequest(${o.id})"><h3>${o.title}</h3><p>${o.departure_area||"—"} · ${date(o.charter_date)}${o.client_name?` · 🔒 ${o.client_name}`:""}</p><div class="meta"><span>${o.guests||"—"} guests</span><span>${money(o.budget_min)}–${money(o.budget_max)}</span><span class="badge ${o.status==="lost"?"red":o.status==="confirmed"?"green":""}">${o.status}</span></div></div>${withActions&&o.status==="open"?`<button class="gold-btn" onclick="broadcast(${o.id})">${t("broadcast")}</button>`:""}</article>`}
+function weekStart(){const d=new Date();d.setHours(0,0,0,0);const day=d.getDay()||7;d.setDate(d.getDate()-day+1);return d}
+function renderCalendar(){const start=weekStart(),slots=state.data.slots||[];document.getElementById("adminCalendar").innerHTML=[0,1,2,3,4,5,6].map(i=>{const d=new Date(start);d.setDate(start.getDate()+i);const key=d.toISOString().slice(0,10);const daySlots=slots.filter(s=>String(s.starts_at).slice(0,10)===key);return `<div class="day"><div class="day-head"><strong>${new Intl.DateTimeFormat(state.lang==="es"?"es-ES":"en-GB",{weekday:"short",day:"numeric",month:"short"}).format(d)}</strong></div>${daySlots.map(s=>`<div class="slot ${s.status}"><strong>${s.boat_name}</strong><small>${s.owner_name}</small><small>${dt(s.starts_at)} → ${new Date(s.ends_at).toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})}</small><small>${s.status}</small></div>`).join("")}</div>`}).join("")}
+const form=document.getElementById("opportunityForm");form.addEventListener("submit",async e=>{e.preventDefault();const formEl=e.currentTarget,msg=document.getElementById("opportunityMessage"),payload=Object.fromEntries(new FormData(formEl).entries());try{await api("/api/admin/opportunities",{method:"POST",body:JSON.stringify(payload)});formEl.reset();msg.style.color="green";msg.textContent=t("opportunityCreated");await load()}catch(err){msg.style.color="#b95959";msg.textContent=err.message}});
+window.broadcast=async id=>{if(!confirm(t("broadcastConfirm")))return;const r=await api(`/api/admin/opportunities/${id}/broadcast`,{method:"POST",body:JSON.stringify({ownerIds:[]})});alert(`Sent to ${r.sentTo}`)};
+document.getElementById("broadcastCalendarBtn").addEventListener("click",async()=>{if(!confirm(t("calendarConfirm")))return;const r=await api("/api/admin/calendar-update-request",{method:"POST",body:JSON.stringify({ownerIds:[]})});alert(t("calendarSent").replace("{count}",r.sentTo))});
+const rd=document.getElementById("requestDialog");window.openRequest=id=>{const o=state.data.opportunities.find(x=>Number(x.id)===Number(id));if(!o)return;state.activeRequest=o;document.getElementById("detailTitle").textContent=o.title;document.getElementById("dClientName").textContent=o.client_name||"—";document.getElementById("dPhone").textContent=o.client_phone||"—";document.getElementById("dEmail").textContent=o.client_email||"—";document.getElementById("dLanguage").textContent=o.client_language||"—";document.getElementById("dAccommodation").textContent=o.accommodation||"—";document.getElementById("dSource").textContent=o.enquiry_source||"—";document.getElementById("dInternal").textContent=o.internal_notes||"—";document.getElementById("dDate").textContent=date(o.charter_date);document.getElementById("dGuests").textContent=o.guests||"—";document.getElementById("dDeparture").textContent=o.departure_area||"—";document.getElementById("dBoatType").textContent=o.preferred_boat_type||"—";document.getElementById("dBudgetMin").textContent=money(o.budget_min);document.getElementById("dBudgetMax").textContent=money(o.budget_max);document.getElementById("dOwnerNotes").textContent=o.notes||"—";document.getElementById("detailBroadcast").style.display=o.status==="open"?"":"none";document.getElementById("markLostRequest").style.display=o.status==="open"?"":"none";rd.showModal()};
+document.getElementById("requestClose").onclick=()=>rd.close();document.getElementById("detailBroadcast").onclick=async()=>{rd.close();await broadcast(state.activeRequest.id)};document.getElementById("markLostRequest").onclick=()=>{document.getElementById("requestLostForm").opportunityId.value=state.activeRequest.id;rd.close();document.getElementById("requestLostDialog").showModal()};
+const ld=document.getElementById("lostDialog"),lf=document.getElementById("lostForm");window.openLostBid=(id,title)=>{lf.reset();lf.bidId.value=id;document.getElementById("lostTitle").textContent=title;ld.showModal()};document.getElementById("lostClose").onclick=()=>ld.close();lf.addEventListener("submit",async e=>{e.preventDefault();const p=Object.fromEntries(new FormData(lf).entries());await api(`/api/admin/bids/${p.bidId}`,{method:"PATCH",body:JSON.stringify({status:"lost",lostReason:p.lostReason,lostNotes:p.lostNotes})});ld.close();await load();switchView("lost")});
+window.markWon=async id=>{await api(`/api/admin/bids/${id}`,{method:"PATCH",body:JSON.stringify({status:"won"})});await load()};
+const rld=document.getElementById("requestLostDialog"),rlf=document.getElementById("requestLostForm");document.getElementById("requestLostClose").onclick=()=>rld.close();rlf.addEventListener("submit",async e=>{e.preventDefault();const p=Object.fromEntries(new FormData(rlf).entries());await api(`/api/admin/opportunities/${p.opportunityId}`,{method:"PATCH",body:JSON.stringify({status:"lost",lostReason:p.lostReason,lostNotes:p.lostNotes})});rld.close();await load();switchView("opportunities")});
+(async()=>{applyLang(state.lang);try{const me=await api("/api/me");if(me.user?.role==="admin")await load()}catch{}})();

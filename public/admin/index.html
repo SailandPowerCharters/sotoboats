@@ -1,123 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sotoboats Admin</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/admin/admin.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sotoboats Control Centre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/admin/admin.css">
 </head>
 <body>
-<div class="admin-shell">
-  <aside class="admin-sidebar">
+<div class="shell">
+  <aside class="sidebar">
     <a href="/" class="brand"><span>⚓</span><div><strong>SOTOBOATS</strong><small data-i18n="controlCentre">CONTROL CENTRE</small></div></a>
     <nav>
       <button class="nav active" data-view="dashboard" data-i18n="dashboard">Dashboard</button>
-      <button class="nav" data-view="opportunities" data-i18n="charterRequests">Charter Requests</button>
+      <button class="nav" data-view="opportunities" data-i18n="requests">Charter Requests</button>
+      <button class="nav" data-view="calendar" data-i18n="calendar">Fleet Calendar</button>
       <button class="nav" data-view="owners" data-i18n="owners">Owners</button>
       <button class="nav" data-view="bids" data-i18n="bids">Bids</button>
+      <button class="nav" data-view="lost" data-i18n="lostBids">Lost Bids</button>
     </nav>
-    <div class="lang-switch sidebar-language">
-      <button class="lang-btn active" data-lang="en">EN</button>
-      <button class="lang-btn" data-lang="es">ES</button>
-    </div>
-    <button id="adminLogout" class="logout" data-i18n="logout">Log out</button>
+    <div class="lang"><button data-lang="en" class="active">EN</button><button data-lang="es">ES</button></div>
+    <button id="logoutBtn" class="logout" data-i18n="logout">Log out</button>
   </aside>
 
   <main>
-    <section id="adminLogin" class="admin-login">
-      <form id="adminLoginForm" class="login-box">
-        <div class="login-language lang-switch">
-          <button type="button" class="lang-btn active" data-lang="en">EN</button>
-          <button type="button" class="lang-btn" data-lang="es">ES</button>
-        </div>
+    <section id="loginScreen" class="login-screen">
+      <form id="loginForm" class="login-card">
         <p class="eyebrow">SOTOBOATS ADMIN</p>
         <h1 data-i18n="controlCentre">Control Centre</h1>
-        <p data-i18n="adminIntro">Manage owners, charter opportunities and incoming bids.</p>
+        <p data-i18n="loginText">Manage clients, owners, calendars, opportunities and bids.</p>
         <label><span data-i18n="email">Email</span><input type="email" name="email" required></label>
         <label><span data-i18n="password">Password</span><input type="password" name="password" required></label>
-        <button type="submit" data-i18n="enterAdmin">Enter Admin</button>
-        <div id="adminLoginMessage" class="message"></div>
+        <button data-i18n="enter">Enter Admin</button>
+        <div id="loginMessage" class="message"></div>
       </form>
     </section>
 
     <section id="adminApp" class="hidden">
-      <header class="admin-topbar">
-        <div><p class="eyebrow">SOTOBOATS</p><h1 data-i18n="charterControlCentre">Charter Control Centre</h1></div>
-        <div class="topbar-actions">
-          <div class="lang-switch">
-            <button class="lang-btn active" data-lang="en">EN</button>
-            <button class="lang-btn" data-lang="es">ES</button>
-          </div>
-          <span class="admin-pill" data-i18n="liveNetwork">● Live network</span>
-        </div>
+      <header class="topbar">
+        <div><p class="eyebrow">SOTOBOATS</p><h1 data-i18n="charterControl">Charter Control Centre</h1></div>
+        <div class="top-actions"><div class="lang"><button data-lang="en" class="active">EN</button><button data-lang="es">ES</button></div><span class="live" data-i18n="live">● Live network</span></div>
       </header>
 
       <section class="view active" id="view-dashboard">
-        <div class="stats-grid">
-          <div class="stat"><span data-i18n="ownersCaps">OWNERS</span><strong id="statOwners">0</strong></div>
-          <div class="stat"><span data-i18n="boatsCaps">BOATS</span><strong id="statBoats">0</strong></div>
-          <div class="stat"><span data-i18n="openRequestsCaps">OPEN REQUESTS</span><strong id="statOpps">0</strong></div>
-          <div class="stat"><span data-i18n="bidsCaps">BIDS</span><strong id="statBids">0</strong></div>
+        <div class="kpi-grid">
+          <div class="kpi"><span data-i18n="enquiriesMonth">Enquiries this month</span><strong id="kpiEnquiries">0</strong></div>
+          <div class="kpi"><span data-i18n="openRequests">Open requests</span><strong id="kpiOpen">0</strong></div>
+          <div class="kpi"><span data-i18n="bidsMonth">Bids this month</span><strong id="kpiBids">0</strong></div>
+          <div class="kpi"><span data-i18n="winsMonth">Wins this month</span><strong id="kpiWins">0</strong></div>
+          <div class="kpi"><span data-i18n="bookingValue">Booking value</span><strong id="kpiValue">€0</strong></div>
+          <div class="kpi"><span data-i18n="noBids">Requests with no bids</span><strong id="kpiNoBids">0</strong></div>
         </div>
 
-        <div class="content-grid">
-          <section class="card">
-            <div class="card-head"><h2 data-i18n="createOpportunity">Create Charter Opportunity</h2></div>
+        <div class="dashboard-grid">
+          <section class="card create-card">
+            <div class="card-head"><h2 data-i18n="createRequest">Create Charter Opportunity</h2></div>
             <form id="opportunityForm" class="form">
-              <div class="two">
-                <label><span data-i18n="title">Title</span><input name="title" placeholder="Family day charter" data-i18n-placeholder="titlePlaceholder" required></label>
-                <label><span data-i18n="date">Date</span><input type="date" name="charterDate" required></label>
+              <div class="private-box">
+                <div class="private-title"><span>🔒</span><div><strong data-i18n="privateClient">Private client details</strong><small data-i18n="privateClientHelp">Only the Control Centre can see this information.</small></div></div>
+                <div class="two">
+                  <label><span data-i18n="clientName">Client name</span><input name="clientName"></label>
+                  <label><span data-i18n="clientPhone">Phone / WhatsApp</span><input name="clientPhone"></label>
+                </div>
+                <div class="two">
+                  <label><span data-i18n="clientEmail">Email</span><input type="email" name="clientEmail"></label>
+                  <label><span data-i18n="language">Language</span><input name="clientLanguage" placeholder="English / Español"></label>
+                </div>
+                <div class="two">
+                  <label><span data-i18n="accommodation">Hotel / accommodation</span><input name="accommodation"></label>
+                  <label><span data-i18n="source">Enquiry source</span><select name="enquirySource"><option value="">—</option><option>Walk-in</option><option>Website</option><option>WhatsApp</option><option>Hotel / Concierge</option><option>Referral</option><option>Social media</option><option>Other</option></select></label>
+                </div>
+                <label><span data-i18n="internalNotes">Internal notes</span><textarea name="internalNotes" rows="2"></textarea></label>
               </div>
-              <div class="two">
-                <label><span data-i18n="startTime">Start time</span><input type="time" name="startTime"></label>
-                <label><span data-i18n="endTime">End time</span><input type="time" name="endTime"></label>
-              </div>
-              <div class="two">
-                <label><span data-i18n="guests">Guests</span><input type="number" name="guests" min="1"></label>
-                <label><span data-i18n="departureArea">Departure area</span><input name="departureArea" placeholder="Estepona"></label>
-              </div>
-              <div class="two">
-                <label><span data-i18n="preferredBoatType">Preferred boat type</span><input name="preferredBoatType" placeholder="Motor yacht" data-i18n-placeholder="boatTypePlaceholder"></label>
-                <label><span data-i18n="extras">Extras</span><input name="extras" placeholder="Skipper + drinks" data-i18n-placeholder="extrasPlaceholder"></label>
-              </div>
-              <div class="two">
-                <label><span data-i18n="budgetMin">Budget min (€)</span><input type="number" name="budgetMin" min="0"></label>
-                <label><span data-i18n="budgetMax">Budget max (€)</span><input type="number" name="budgetMax" min="0"></label>
-              </div>
-              <label><span data-i18n="notes">Notes</span><textarea name="notes" rows="3"></textarea></label>
-              <label><span data-i18n="bidDeadline">Bid deadline</span><input type="datetime-local" name="bidDeadline"></label>
-              <button type="submit" data-i18n="createOpportunityButton">Create opportunity</button>
+
+              <div class="two"><label><span data-i18n="title">Title</span><input name="title" required></label><label><span data-i18n="date">Date</span><input type="date" name="charterDate" required></label></div>
+              <div class="two"><label><span data-i18n="startTime">Start time</span><input type="time" name="startTime"></label><label><span data-i18n="endTime">End time</span><input type="time" name="endTime"></label></div>
+              <div class="two"><label><span data-i18n="guests">Guests</span><input type="number" name="guests" min="1"></label><label><span data-i18n="departure">Departure area</span><input name="departureArea"></label></div>
+              <div class="two"><label><span data-i18n="boatType">Preferred boat type</span><input name="preferredBoatType"></label><label><span data-i18n="extras">Extras</span><input name="extras"></label></div>
+              <div class="two"><label><span data-i18n="budgetMin">Budget min (€)</span><input type="number" name="budgetMin"></label><label><span data-i18n="budgetMax">Budget max (€)</span><input type="number" name="budgetMax"></label></div>
+              <label><span data-i18n="ownerNotes">Notes visible to owners</span><textarea name="notes" rows="3"></textarea></label>
+              <label><span data-i18n="deadline">Bid deadline</span><input type="datetime-local" name="bidDeadline"></label>
+              <button data-i18n="create">Create opportunity</button>
               <div id="opportunityMessage" class="message"></div>
             </form>
           </section>
 
           <section class="card">
             <div class="card-head"><h2 data-i18n="latestRequests">Latest Requests</h2><button class="link" data-go="opportunities" data-i18n="viewAll">View all</button></div>
-            <div id="latestOpps"></div>
+            <div id="latestRequests"></div>
           </section>
         </div>
       </section>
 
       <section class="view" id="view-opportunities">
-        <div class="section-head"><div><p class="eyebrow" data-i18n="charterRequestsCaps">CHARTER REQUESTS</p><h2 data-i18n="broadcastOpportunities">Broadcast opportunities</h2><p data-i18n="broadcastHelp">Create a request, then send it to all active registered owners.</p></div></div>
-        <div id="opportunitiesAdmin" class="request-list"></div>
+        <div class="section-head"><div><p class="eyebrow" data-i18n="requestsCaps">CHARTER REQUESTS</p><h2 data-i18n="requests">Charter Requests</h2></div></div>
+        <div id="requestsList" class="request-list"></div>
+      </section>
+
+      <section class="view" id="view-calendar">
+        <div class="section-head split-head">
+          <div><p class="eyebrow" data-i18n="fleetCalendarCaps">FLEET CALENDAR</p><h2 data-i18n="calendar">Fleet Calendar</h2><p data-i18n="calendarHelp">See the availability shared by registered owners.</p></div>
+          <button id="broadcastCalendarBtn" class="gold-btn" data-i18n="askUpdate">Please update your calendar</button>
+        </div>
+        <div class="calendar-summary"><span data-i18n="activeOwners">Active owners</span><strong id="calOwners">0</strong><span data-i18n="activeBoats">Active boats</span><strong id="calBoats">0</strong></div>
+        <div id="adminCalendar" class="calendar-week"></div>
       </section>
 
       <section class="view" id="view-owners">
-        <div class="section-head"><div><p class="eyebrow" data-i18n="ownerNetworkCaps">OWNER NETWORK</p><h2 data-i18n="registeredOwners">Registered Owners</h2></div></div>
-        <div id="ownersAdmin" class="card"></div>
+        <div class="section-head"><div><p class="eyebrow" data-i18n="ownerNetwork">OWNER NETWORK</p><h2 data-i18n="owners">Owners</h2></div></div>
+        <div id="ownersTable" class="card"></div>
       </section>
 
       <section class="view" id="view-bids">
-        <div class="section-head"><div><p class="eyebrow" data-i18n="bidBoardCaps">BID BOARD</p><h2 data-i18n="compareBids">Compare incoming bids</h2></div></div>
-        <div id="bidsAdmin" class="card"></div>
+        <div class="section-head"><div><p class="eyebrow" data-i18n="bidBoard">BID BOARD</p><h2 data-i18n="bids">Bids</h2><p data-i18n="bidHelp">Mark bids as won, lost or awaiting review.</p></div></div>
+        <div id="bidsTable" class="card"></div>
+      </section>
+
+      <section class="view" id="view-lost">
+        <div class="section-head"><div><p class="eyebrow" data-i18n="lostBidsCaps">LOST BIDS</p><h2 data-i18n="lostBids">Lost Bids</h2><p data-i18n="lostHelp">Track what was lost and why.</p></div></div>
+        <div id="lostTable" class="card"></div>
       </section>
     </section>
   </main>
 </div>
+
+<dialog id="requestDialog"><div class="dialog-card request-detail">
+<button class="close" id="requestClose">×</button>
+<p class="eyebrow" data-i18n="requestDetail">CHARTER REQUEST</p>
+<h2 id="detailTitle"></h2>
+<div class="privacy-strip">🔒 <span data-i18n="privateOnly">Private — Control Centre only</span></div>
+<div class="detail-grid">
+  <div><span data-i18n="clientName">Client name</span><strong id="dClientName">—</strong></div>
+  <div><span data-i18n="clientPhone">Phone / WhatsApp</span><strong id="dPhone">—</strong></div>
+  <div><span data-i18n="clientEmail">Email</span><strong id="dEmail">—</strong></div>
+  <div><span data-i18n="language">Language</span><strong id="dLanguage">—</strong></div>
+  <div><span data-i18n="accommodation">Hotel / accommodation</span><strong id="dAccommodation">—</strong></div>
+  <div><span data-i18n="source">Enquiry source</span><strong id="dSource">—</strong></div>
+</div>
+<div class="private-notes"><span data-i18n="internalNotes">Internal notes</span><p id="dInternal">—</p></div>
+<hr>
+<div class="detail-grid">
+  <div><span data-i18n="date">Date</span><strong id="dDate">—</strong></div>
+  <div><span data-i18n="guests">Guests</span><strong id="dGuests">—</strong></div>
+  <div><span data-i18n="departure">Departure area</span><strong id="dDeparture">—</strong></div>
+  <div><span data-i18n="boatType">Preferred boat type</span><strong id="dBoatType">—</strong></div>
+  <div><span data-i18n="budgetMin">Budget min (€)</span><strong id="dBudgetMin">—</strong></div>
+  <div><span data-i18n="budgetMax">Budget max (€)</span><strong id="dBudgetMax">—</strong></div>
+</div>
+<div class="private-notes"><span data-i18n="ownerNotes">Notes visible to owners</span><p id="dOwnerNotes">—</p></div>
+<div class="dialog-actions"><button id="detailBroadcast" class="gold-btn" data-i18n="broadcast">Broadcast to owners</button><button id="markLostRequest" class="secondary" data-i18n="markLost">Mark request lost</button></div>
+</div></dialog>
+
+<dialog id="lostDialog"><form id="lostForm" class="dialog-card">
+<button type="button" class="close" id="lostClose">×</button>
+<p class="eyebrow" data-i18n="lostReasonCaps">LOST REASON</p><h2 id="lostTitle"></h2>
+<input type="hidden" name="bidId">
+<label><span data-i18n="reason">Reason</span><select name="lostReason" required><option value="">—</option><option>Price too high</option><option>Customer chose another boat</option><option>No suitable availability</option><option>Response too slow</option><option>Customer cancelled</option><option>Customer did not respond</option><option>Date changed</option><option>Requirements could not be met</option><option>Other</option></select></label>
+<label><span data-i18n="notes">Notes</span><textarea name="lostNotes" rows="3"></textarea></label>
+<button class="gold-btn" data-i18n="saveLost">Save as lost</button>
+</form></dialog>
+
+<dialog id="requestLostDialog"><form id="requestLostForm" class="dialog-card">
+<button type="button" class="close" id="requestLostClose">×</button>
+<p class="eyebrow" data-i18n="lostReasonCaps">LOST REASON</p><h2 data-i18n="markRequestLost">Mark request as lost</h2>
+<input type="hidden" name="opportunityId">
+<label><span data-i18n="reason">Reason</span><select name="lostReason" required><option value="">—</option><option>Price too high</option><option>Customer chose another supplier</option><option>No suitable availability</option><option>Customer cancelled</option><option>Customer did not respond</option><option>Date changed</option><option>Requirements could not be met</option><option>Other</option></select></label>
+<label><span data-i18n="notes">Notes</span><textarea name="lostNotes" rows="3"></textarea></label>
+<button class="gold-btn" data-i18n="saveLost">Save as lost</button>
+</form></dialog>
+
 <script src="/admin/admin.js"></script>
 </body>
 </html>

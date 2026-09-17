@@ -1,261 +1,38 @@
-const loginScreen = document.getElementById("loginScreen");
-const portalScreen = document.getElementById("portalScreen");
-const loginForm = document.getElementById("loginForm");
-const loginMessage = document.getElementById("loginMessage");
-const logoutBtn = document.getElementById("logoutBtn");
-const bidDialog = document.getElementById("bidDialog");
-const bidForm = document.getElementById("bidForm");
-let dashboardData = null;
-
-async function api(url, options = {}) {
-  const res = await fetch(url, {
-    headers: { "Content-Type": "application/json", ...(options.headers || {}) },
-    ...options
-  });
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(data.error || data.message || "Something went wrong");
-  return data;
-}
-
-function money(v) {
-  if (v === null || v === undefined || v === "") return "—";
-  return new Intl.NumberFormat("en-IE", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(Number(v));
-}
-
-function dateText(v) {
-  if (!v) return "Date TBA";
-  return new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric" }).format(new Date(v));
-}
-
-function switchView(name) {
-  document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
-  document.querySelectorAll(".nav-item").forEach(b => b.classList.toggle("active", b.dataset.view === name));
-  document.getElementById(`view-${name}`)?.classList.add("active");
-}
-
-document.querySelectorAll(".nav-item").forEach(btn => btn.addEventListener("click", () => switchView(btn.dataset.view)));
-document.querySelectorAll("[data-go]").forEach(btn => btn.addEventListener("click", () => switchView(btn.dataset.go)));
-
-loginForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  loginMessage.textContent = "";
-  const data = Object.fromEntries(new FormData(loginForm).entries());
-  try {
-    const result = await api("/api/login", { method: "POST", body: JSON.stringify(data) });
-    if (result.user.role !== "owner") throw new Error("This login is not an owner account");
-    await loadDashboard();
-  } catch (err) {
-    loginMessage.textContent = err.message;
-  }
-});
-
-logoutBtn.addEventListener("click", async () => {
-  await api("/api/logout", { method: "POST" });
-  portalScreen.classList.add("hidden");
-  loginScreen.classList.remove("hidden");
-});
-
-async function boot() {
-  try {
-    const me = await api("/api/me");
-    if (me.user?.role === "owner") return loadDashboard();
-  } catch {}
-  loginScreen.classList.remove("hidden");
-}
-
-async function loadDashboard() {
-  dashboardData = await api("/api/owner/dashboard");
-  loginScreen.classList.add("hidden");
-  portalScreen.classList.remove("hidden");
-
-  const user = dashboardData.user;
-  document.getElementById("welcomeTitle").textContent = `Welcome back, ${user.fullName}.`;
-  document.getElementById("welcomeSub").textContent = dashboardData.opportunities.length
-    ? `You have ${dashboardData.opportunities.length} charter opportunities waiting.`
-    : "You're all caught up.";
-  document.getElementById("userName").textContent = user.fullName;
-  document.getElementById("userInitial").textContent = (user.fullName || "S").charAt(0).toUpperCase();
-  document.getElementById("opportunityCount").textContent = dashboardData.opportunities.length;
-
-  renderDashboard();
-  renderBoats();
-  renderAvailability();
-  renderOpportunities();
-  renderBids();
-  populateBidBoats();
-}
-
-function renderDashboard() {
-  const latest = dashboardData.opportunities[0];
-  const latestEl = document.getElementById("latestOpportunity");
-  if (!latest) {
-    latestEl.className = "empty-state";
-    latestEl.textContent = "No opportunities yet.";
-  } else {
-    latestEl.className = "";
-    latestEl.innerHTML = `
-      <div class="op-mini">
-        <img src="${dashboardData.boats[0]?.image_url || 'https://images.pexels.com/photos/8436330/pexels-photo-8436330.jpeg?auto=compress&cs=tinysrgb&w=800'}" alt="">
-        <div>
-          <h4>${latest.title}</h4>
-          <div class="meta-row">
-            <span>${dateText(latest.charter_date)}</span>
-            <span>${latest.guests || "—"} guests</span>
-            <span>${latest.departure_area || "Area TBA"}</span>
-            <span>${money(latest.budget_min)}–${money(latest.budget_max)}</span>
-          </div>
-          <button class="bid-now" onclick="openBid(${latest.id}, ${JSON.stringify(latest.title)})">Bid now →</button>
-        </div>
-      </div>`;
-  }
-
-  const boat = dashboardData.boats[0];
-  document.getElementById("boatSummary").innerHTML = boat
-    ? `<div class="boat-mini"><img src="${boat.image_url || 'https://images.pexels.com/photos/8436330/pexels-photo-8436330.jpeg?auto=compress&cs=tinysrgb&w=500'}"><div><strong>${boat.name}</strong><small>${boat.marina || ""} · ${boat.capacity || "—"} guests</small></div></div>`
-    : `<div class="empty-state">No boats added yet.</div>`;
-
-  document.getElementById("availabilitySummary").innerHTML = buildAvailabilityRows(dashboardData.availability.slice(0, 4));
-  document.getElementById("bidSummary").innerHTML = dashboardData.bids.length
-    ? dashboardData.bids.slice(0, 4).map(b => `<div class="status-row"><div><strong>${b.title}</strong><br><small>${b.boat_name || ""}</small></div><span class="badge ${b.status === "won" ? "green" : b.status === "submitted" ? "blue" : "orange"}">${b.status}</span></div>`).join("")
-    : `<div class="empty-state">No bids submitted yet.</div>`;
-}
-
-function buildAvailabilityRows(rows) {
-  if (!rows.length) return `<div class="empty-state">No availability saved yet.</div>`;
-  return rows.map(a => `<div class="status-row"><div><strong>${a.boat_name}</strong><br><small>${dateText(a.week_start)}</small></div><span class="badge ${a.status === "confirmed" ? "green" : a.status === "unavailable" ? "orange" : "blue"}">${a.status.replaceAll("_"," ")}</span></div>`).join("");
-}
-
-function renderBoats() {
-  document.getElementById("boatsGrid").innerHTML = dashboardData.boats.length
-    ? dashboardData.boats.map(b => `
-      <article class="boat-card">
-        <img src="${b.image_url || 'https://images.pexels.com/photos/8436330/pexels-photo-8436330.jpeg?auto=compress&cs=tinysrgb&w=800'}">
-        <div class="body">
-          <span class="badge green">Ready to sail</span>
-          <h3>${b.name}</h3>
-          <p>${b.boat_type || "Boat"} · ${b.marina || "Marina TBA"} · ${b.capacity || "—"} guests</p>
-          <p>Half day ${money(b.half_day_price)} · Full day ${money(b.full_day_price)}</p>
-        </div>
-      </article>`).join("")
-    : `<div class="empty-state">Add your first boat using the form.</div>`;
-}
-
-document.getElementById("boatForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const data = Object.fromEntries(new FormData(e.currentTarget).entries());
-  try {
-    await api("/api/owner/boats", { method: "POST", body: JSON.stringify(data) });
-    e.currentTarget.reset();
-    await loadDashboard();
-    switchView("boats");
-  } catch (err) {
-    alert(err.message);
-  }
-});
-
-function mondayOfWeek(offset = 0) {
-  const d = new Date();
-  const day = d.getDay() || 7;
-  d.setDate(d.getDate() - day + 1 + offset * 7);
-  d.setHours(12, 0, 0, 0);
-  return d.toISOString().slice(0,10);
-}
-
-function renderAvailability() {
-  const holder = document.getElementById("availabilityManager");
-  if (!dashboardData.boats.length) {
-    holder.innerHTML = `<div class="card">Add a boat first.</div>`;
-    return;
-  }
-
-  holder.innerHTML = dashboardData.boats.map(boat => {
-    const weeks = [0,1,2,3].map(i => {
-      const date = mondayOfWeek(i);
-      const current = dashboardData.availability.find(a => Number(a.boat_id) === Number(boat.id) && String(a.week_start).slice(0,10) === date);
-      return `<div class="week-box">
-        <strong>${i === 0 ? "This week" : `Week ${i+1}`}</strong>
-        <small>${dateText(date)}</small>
-        <select data-boat="${boat.id}" data-week="${date}">
-          <option value="confirmed" ${current?.status === "confirmed" ? "selected" : ""}>Confirmed</option>
-          <option value="to_be_advised" ${!current || current?.status === "to_be_advised" ? "selected" : ""}>To be advised</option>
-          <option value="unavailable" ${current?.status === "unavailable" ? "selected" : ""}>Unavailable</option>
-        </select>
-      </div>`;
-    }).join("");
-
-    return `<section class="availability-boat"><h3>${boat.name}</h3><div class="availability-weeks">${weeks}</div></section>`;
-  }).join("");
-
-  holder.querySelectorAll("select").forEach(sel => sel.addEventListener("change", async () => {
-    try {
-      await api("/api/owner/availability", {
-        method: "POST",
-        body: JSON.stringify({ boatId: sel.dataset.boat, weekStart: sel.dataset.week, status: sel.value })
-      });
-    } catch (err) {
-      alert(err.message);
-    }
-  }));
-}
-
-function renderOpportunities() {
-  document.getElementById("opportunitiesList").innerHTML = dashboardData.opportunities.length
-    ? dashboardData.opportunities.map(o => `
-      <article class="opportunity-card">
-        <div class="body">
-          <span class="tag gold">FRESH CHARTER REQUEST</span>
-          <h3>${o.title}</h3>
-          <p>${o.notes || "No additional notes."}</p>
-          <div class="meta-row">
-            <span>${dateText(o.charter_date)}</span>
-            <span>${o.guests || "—"} guests</span>
-            <span>${o.departure_area || "Area TBA"}</span>
-            <span>${money(o.budget_min)}–${money(o.budget_max)}</span>
-          </div>
-          <button class="bid-now" onclick="openBid(${o.id}, ${JSON.stringify(o.title)})">Bid now →</button>
-        </div>
-      </article>`).join("")
-    : `<div class="card">No current opportunities.</div>`;
-}
-
-function renderBids() {
-  const holder = document.getElementById("bidsTable");
-  if (!dashboardData.bids.length) {
-    holder.innerHTML = `<div class="empty-state">No bids submitted yet.</div>`;
-    return;
-  }
-  holder.innerHTML = `<table class="bids-table"><thead><tr><th>Opportunity</th><th>Boat</th><th>Bid</th><th>Status</th><th>Date</th></tr></thead><tbody>${dashboardData.bids.map(b => `<tr><td>${b.title}</td><td>${b.boat_name || "—"}</td><td>${money(b.bid_price)}</td><td><span class="badge ${b.status === "won" ? "green" : "blue"}">${b.status}</span></td><td>${dateText(b.created_at)}</td></tr>`).join("")}</tbody></table>`;
-}
-
-function populateBidBoats() {
-  document.getElementById("bidBoatSelect").innerHTML = `<option value="">Choose boat</option>` + dashboardData.boats.map(b => `<option value="${b.id}">${b.name} · ${b.marina || ""}</option>`).join("");
-}
-
-window.openBid = function(id, title) {
-  bidForm.reset();
-  bidForm.elements.opportunityId.value = id;
-  document.getElementById("bidDialogTitle").textContent = title;
-  document.getElementById("bidMessage").textContent = "";
-  bidDialog.showModal();
+let state={data:null,slots:[],lang:localStorage.getItem("sotoOwnerLang")||"en"};
+const T={
+en:{dashboard:"Dashboard",boats:"My Boats",calendar:"Calendar",opportunities:"Charter Opportunities",bids:"My Bids",logout:"Log out",loginHeadline:"Your boat. Your calendar. More opportunities.",loginText:"Keep availability current, respond to charter requests and track performance.",email:"Email",password:"Password",enter:"Enter Owner Portal",ready:"● Ready to sail",calendarUpdateRequested:"Calendar update requested",updateCalendar:"Update calendar",performance:"YOUR PERFORMANCE",heroText:"Accurate availability helps Sotoboats send you better-fit opportunities.",received:"Opportunities received",submitted:"Bids submitted",won:"Bids won",winRate:"Win rate",confirmedValue:"Confirmed value",availableSlots:"Available slots next 30d",nextOpportunity:"Next opportunity",viewAll:"View all",upcomingAvailability:"Upcoming availability",manage:"Manage",fleet:"MY FLEET",addBoat:"Add a boat",boatName:"Boat name",boatType:"Boat type",marina:"Marina",capacity:"Capacity",cabins:"Cabins",halfDay:"Half day (€)",fullDay:"Full day (€)",addBoatBtn:"Add boat",availability:"AVAILABILITY",calendarHelp:"Add time slots for each boat. Unavailable reasons remain private to you.",boat:"Boat",start:"Start",end:"End",status:"Status",privateReason:"Private reason (optional)",addSlot:"Add to calendar",freshCharters:"FRESH CHARTERS",activity:"YOUR ACTIVITY",submitBid:"SUBMIT A BID",bidPrice:"Bid price (€)",departureMarina:"Departure marina",includes:"What is included?",notes:"Notes",confirmAvailability:"I confirm boat and crew are available",sendBid:"Send bid"},
+es:{dashboard:"Panel",boats:"Mis Barcos",calendar:"Calendario",opportunities:"Oportunidades de Charter",bids:"Mis Ofertas",logout:"Cerrar sesión",loginHeadline:"Tu barco. Tu calendario. Más oportunidades.",loginText:"Mantén la disponibilidad actualizada, responde a solicitudes y controla tu rendimiento.",email:"Correo",password:"Contraseña",enter:"Entrar al Portal",ready:"● Listo para navegar",calendarUpdateRequested:"Actualización de calendario solicitada",updateCalendar:"Actualizar calendario",performance:"TU RENDIMIENTO",heroText:"Una disponibilidad precisa ayuda a Sotoboats a enviarte mejores oportunidades.",received:"Oportunidades recibidas",submitted:"Ofertas enviadas",won:"Ofertas ganadas",winRate:"Tasa de éxito",confirmedValue:"Valor confirmado",availableSlots:"Franjas disponibles próximos 30 días",nextOpportunity:"Próxima oportunidad",viewAll:"Ver todo",upcomingAvailability:"Próxima disponibilidad",manage:"Gestionar",fleet:"MI FLOTA",addBoat:"Añadir barco",boatName:"Nombre del barco",boatType:"Tipo de barco",marina:"Puerto",capacity:"Capacidad",cabins:"Camarotes",halfDay:"Medio día (€)",fullDay:"Día completo (€)",addBoatBtn:"Añadir barco",availability:"DISPONIBILIDAD",calendarHelp:"Añade franjas horarias para cada barco. Los motivos de no disponibilidad permanecen privados.",boat:"Barco",start:"Inicio",end:"Fin",status:"Estado",privateReason:"Motivo privado (opcional)",addSlot:"Añadir al calendario",freshCharters:"NUEVOS CHARTERS",activity:"TU ACTIVIDAD",submitBid:"ENVIAR OFERTA",bidPrice:"Precio oferta (€)",departureMarina:"Puerto de salida",includes:"¿Qué incluye?",notes:"Notas",confirmAvailability:"Confirmo que barco y tripulación están disponibles",sendBid:"Enviar oferta"}
 };
+function t(k){return T[state.lang][k]||k}
+function applyLang(l){state.lang=l;localStorage.setItem("sotoOwnerLang",l);document.documentElement.lang=l;document.querySelectorAll("[data-i18n]").forEach(e=>e.textContent=t(e.dataset.i18n));document.querySelectorAll("[data-lang]").forEach(b=>b.classList.toggle("active",b.dataset.lang===l));if(state.data) renderAll()}
+document.querySelectorAll("[data-lang]").forEach(b=>b.addEventListener("click",()=>applyLang(b.dataset.lang)));
+async function api(url,opt={}){const r=await fetch(url,{headers:{"Content-Type":"application/json",...(opt.headers||{})},...opt});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||"Error");return d}
+function money(v){return new Intl.NumberFormat(state.lang==="es"?"es-ES":"en-IE",{style:"currency",currency:"EUR",maximumFractionDigits:0}).format(Number(v||0))}
+function dt(v){if(!v)return"—";return new Intl.DateTimeFormat(state.lang==="es"?"es-ES":"en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}).format(new Date(v))}
+function dOnly(v){if(!v)return"—";return new Intl.DateTimeFormat(state.lang==="es"?"es-ES":"en-GB",{weekday:"short",day:"numeric",month:"short"}).format(new Date(v))}
+function switchView(n){document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));document.querySelectorAll(".nav").forEach(b=>b.classList.toggle("active",b.dataset.view===n));document.getElementById(`view-${n}`)?.classList.add("active");if(n==="calendar")loadCalendar()}
+document.querySelectorAll(".nav").forEach(b=>b.addEventListener("click",()=>switchView(b.dataset.view)));document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>switchView(b.dataset.go)));
+document.getElementById("goCalendarBtn").addEventListener("click",()=>switchView("calendar"));
+document.getElementById("loginForm").addEventListener("submit",async e=>{e.preventDefault();const msg=document.getElementById("loginMessage");msg.textContent="";try{const r=await api("/api/login",{method:"POST",body:JSON.stringify(Object.fromEntries(new FormData(e.currentTarget).entries()))});if(r.user.role!=="owner")throw new Error("Owner login required");await load()}catch(err){msg.textContent=err.message}});
+document.getElementById("logoutBtn").addEventListener("click",async()=>{await api("/api/logout",{method:"POST"});location.reload()});
 
-bidForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const fd = new FormData(bidForm);
-  const payload = Object.fromEntries(fd.entries());
-  payload.availabilityConfirmed = fd.get("availabilityConfirmed") === "on";
-  try {
-    await api("/api/owner/bids", { method: "POST", body: JSON.stringify(payload) });
-    document.getElementById("bidMessage").style.color = "green";
-    document.getElementById("bidMessage").textContent = "Bid submitted.";
-    setTimeout(async () => {
-      bidDialog.close();
-      await loadDashboard();
-      switchView("bids");
-    }, 700);
-  } catch (err) {
-    document.getElementById("bidMessage").textContent = err.message;
-  }
-});
-
-boot();
+async function load(){state.data=await api("/api/owner/dashboard");document.getElementById("loginScreen").classList.add("hidden");document.getElementById("portalApp").classList.remove("hidden");renderAll();await loadCalendar()}
+function renderAll(){
+const d=state.data,k=d.kpis||{};document.getElementById("welcome").textContent=`${state.lang==="es"?"Bienvenido de nuevo":"Welcome back"}, ${d.user.fullName}.`;
+document.getElementById("kpiReceived").textContent=k.opportunities_received||0;document.getElementById("kpiSubmitted").textContent=k.bids_submitted||0;document.getElementById("kpiWon").textContent=k.bids_won||0;document.getElementById("kpiWinRate").textContent=(Number(k.bids_submitted)?Math.round(Number(k.bids_won)*100/Number(k.bids_submitted)):0)+"%";document.getElementById("kpiValue").textContent=money(k.confirmed_value);document.getElementById("kpiSlots").textContent=k.available_slots_30d||0;
+const note=d.notifications.find(n=>!n.is_read&&n.notification_type==="calendar_update");const banner=document.getElementById("notificationBanner");if(note){banner.classList.remove("hidden");document.getElementById("notificationText").textContent=note.message}else banner.classList.add("hidden");
+document.getElementById("latestOpportunity").innerHTML=d.opportunities[0]?opCard(d.opportunities[0],true):`<p>—</p>`;
+document.getElementById("boatsGrid").innerHTML=d.boats.map(b=>`<article class="boat-card"><img src="${b.image_url||'https://images.pexels.com/photos/8436330/pexels-photo-8436330.jpeg?auto=compress&cs=tinysrgb&w=800'}"><div class="body"><span class="badge available">Ready</span><h3>${b.name}</h3><p>${b.boat_type||"—"} · ${b.marina||"—"} · ${b.capacity||"—"}</p><p>${money(b.half_day_price)} / ${money(b.full_day_price)}</p></div></article>`).join("")||"<p>—</p>";
+document.getElementById("opportunityGrid").innerHTML=d.opportunities.map(o=>opCard(o,false)).join("")||"<div class='card'>—</div>";
+document.getElementById("bidsTable").innerHTML=d.bids.length?`<table class="table"><thead><tr><th>${t("opportunities")}</th><th>${t("boat")}</th><th>${t("bidPrice")}</th><th>${t("status")}</th></tr></thead><tbody>${d.bids.map(b=>`<tr><td>${b.title}</td><td>${b.boat_name||"—"}</td><td>${money(b.bid_price)}</td><td><span class="badge ${b.status==="won"?"available":b.status==="lost"?"unavailable":"booked"}">${b.status}</span></td></tr>`).join("")}</tbody></table>`:"—";
+const selects=[document.getElementById("slotBoat"),document.getElementById("bidBoat")];selects.forEach(s=>{s.innerHTML=d.boats.map(b=>`<option value="${b.id}">${b.name}</option>`).join("")});
+}
+function opCard(o,mini){return `<article class="${mini?'':'op-card'}"><div class="${mini?'':'body'}"><span class="eyebrow">${o.public_ref||""}</span><h3>${o.title}</h3><div class="meta"><span>${dOnly(o.charter_date)}</span><span>${o.guests||"—"} guests</span><span>${o.departure_area||"—"}</span><span>${money(o.budget_min)}–${money(o.budget_max)}</span></div><button class="bid-btn" onclick="openBid(${o.id},${JSON.stringify(o.title)})">${t("sendBid")}</button></div></article>`}
+document.getElementById("boatForm").addEventListener("submit",async e=>{e.preventDefault();const f=e.currentTarget;await api("/api/owner/boats",{method:"POST",body:JSON.stringify(Object.fromEntries(new FormData(f).entries()))});f.reset();await load();switchView("boats")});
+document.getElementById("slotForm").addEventListener("submit",async e=>{e.preventDefault();const f=e.currentTarget;const p=Object.fromEntries(new FormData(f).entries());p.startsAt=new Date(p.startsAt).toISOString();p.endsAt=new Date(p.endsAt).toISOString();await api("/api/owner/calendar-slots",{method:"POST",body:JSON.stringify(p)});f.reset();renderAll();await loadCalendar()});
+function weekBounds(){const d=new Date();d.setHours(0,0,0,0);const day=d.getDay()||7;d.setDate(d.getDate()-day+1);const e=new Date(d);e.setDate(d.getDate()+7);return[d,e]}
+async function loadCalendar(){if(!state.data)return;const [s,e]=weekBounds();const r=await api(`/api/owner/calendar?from=${encodeURIComponent(s.toISOString())}&to=${encodeURIComponent(e.toISOString())}`);state.slots=r.slots;renderCalendar();document.getElementById("availabilityPreview").innerHTML=r.slots.slice(0,5).map(x=>`<p><span class="badge ${x.status}">${x.status}</span> <strong>${x.boat_name}</strong> ${dt(x.starts_at)}</p>`).join("")||"—"}
+function renderCalendar(){const [start]=weekBounds();document.getElementById("calendarWeek").innerHTML=[0,1,2,3,4,5,6].map(i=>{const d=new Date(start);d.setDate(start.getDate()+i);const key=d.toISOString().slice(0,10);const slots=state.slots.filter(s=>String(s.starts_at).slice(0,10)===key);return `<div class="day"><div class="day-head"><strong>${dOnly(d)}</strong><small>${slots.length} slots</small></div>${slots.map(s=>`<div class="slot ${s.status}"><strong>${s.boat_name}</strong><small>${dt(s.starts_at)}–${new Date(s.ends_at).toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})}</small><small>${s.status}</small>${s.private_reason?`<small>🔒 ${s.private_reason}</small>`:""}<button onclick="deleteSlot(${s.id})">Delete</button></div>`).join("")}</div>`}).join("")}
+window.deleteSlot=async id=>{if(confirm("Delete this calendar slot?")){await api(`/api/owner/calendar-slots/${id}`,{method:"DELETE"});await loadCalendar()}};
+const dlg=document.getElementById("bidDialog"),bf=document.getElementById("bidForm");window.openBid=(id,title)=>{bf.reset();bf.opportunityId.value=id;document.getElementById("bidTitle").textContent=title;dlg.showModal()};document.getElementById("closeBid").onclick=()=>dlg.close();bf.addEventListener("submit",async e=>{e.preventDefault();const fd=new FormData(bf),p=Object.fromEntries(fd.entries());p.availabilityConfirmed=fd.get("availabilityConfirmed")==="on";try{await api("/api/owner/bids",{method:"POST",body:JSON.stringify(p)});dlg.close();await load();switchView("bids")}catch(err){document.getElementById("bidMessage").textContent=err.message}});
+(async()=>{applyLang(state.lang);try{const me=await api("/api/me");if(me.user?.role==="owner")await load()}catch{}})();

@@ -63,6 +63,40 @@ const options = [...document.querySelectorAll(".helm-option")];
 const menuToggle = document.querySelector(".menu-toggle");
 const mainNav = document.querySelector(".main-nav");
 
+let currentHelmRotation = 0;
+
+function spinHelmTo(targetRotation) {
+  if (!wheel) return;
+
+  const start = currentHelmRotation;
+  let target = targetRotation;
+
+  // Keep each movement visually obvious while preserving the intended quarter-turn layout.
+  while (target - start > 180) target -= 360;
+  while (target - start < -180) target += 360;
+
+  // Force an actual keyframe animation rather than depending only on CSS transition.
+  wheel.getAnimations().forEach((animation) => animation.cancel());
+
+  const animation = wheel.animate(
+    [
+      { transform: `rotate(${start}deg)` },
+      { transform: `rotate(${target}deg)` }
+    ],
+    {
+      duration: 900,
+      easing: "cubic-bezier(.2,.8,.15,1)",
+      fill: "forwards"
+    }
+  );
+
+  animation.onfinish = () => {
+    currentHelmRotation = target;
+    wheel.style.transform = `rotate(${target}deg)`;
+    animation.cancel();
+  };
+}
+
 function setHeroBackground(value) {
   heroBackdrop.style.background = value;
 }
@@ -101,7 +135,7 @@ function activateHelm(key) {
   });
 
   preview.classList.add("is-changing");
-  wheel.style.transform = `rotate(${data.rotation}deg)`;
+  spinHelmTo(data.rotation);
   heroBackdrop.style.transform = "scale(1.05)";
 
   if (data.video) {
@@ -132,34 +166,45 @@ options.forEach((button) => {
   button.addEventListener("click", () => activateHelm(button.dataset.key));
 });
 
-menuToggle.addEventListener("click", () => {
-  const isOpen = mainNav.classList.toggle("open");
-  menuToggle.setAttribute("aria-expanded", String(isOpen));
-});
+if (menuToggle && mainNav) {
+  menuToggle.addEventListener("click", () => {
+    const isOpen = mainNav.classList.toggle("open");
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+  });
+}
 
 document.querySelectorAll(".main-nav a").forEach((link) => {
   link.addEventListener("click", () => {
-    mainNav.classList.remove("open");
-    menuToggle.setAttribute("aria-expanded", "false");
+    if (mainNav) mainNav.classList.remove("open");
+    if (menuToggle) menuToggle.setAttribute("aria-expanded", "false");
   });
 });
 
-document.getElementById("year").textContent = new Date().getFullYear();
+const yearEl = document.getElementById("year");
+if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 window.addEventListener("load", () => {
   showCharterVideo();
 
-  setTimeout(() => {
-    wheel.animate(
-      [
-        { transform: "rotate(-6deg)" },
-        { transform: "rotate(10deg)" },
-        { transform: "rotate(0deg)" }
-      ],
-      {
-        duration: 1200,
-        easing: "cubic-bezier(.2,.8,.2,1)"
-      }
-    );
-  }, 650);
+  if (wheel) {
+    currentHelmRotation = 0;
+    wheel.style.transform = "rotate(0deg)";
+
+    setTimeout(() => {
+      const intro = wheel.animate(
+        [
+          { transform: "rotate(-5deg)" },
+          { transform: "rotate(8deg)" },
+          { transform: "rotate(0deg)" }
+        ],
+        {
+          duration: 1000,
+          easing: "cubic-bezier(.2,.8,.2,1)"
+        }
+      );
+      intro.onfinish = () => {
+        wheel.style.transform = "rotate(0deg)";
+      };
+    }, 500);
+  }
 });

@@ -1,7 +1,6 @@
 const helmData = {
   charter: {
     rotation: 0,
-    video: true,
     kicker: "CHARTER",
     title: "Make the Mediterranean yours.",
     text: "Tell us what kind of day you have in mind and we’ll help you find the right boat, experience and crew.",
@@ -13,7 +12,6 @@ const helmData = {
   },
   sale: {
     rotation: -90,
-    video: false,
     kicker: "BOATS FOR SALE",
     title: "Find your next boat.",
     text: "Explore selected boats for sale with local support from enquiry to handover.",
@@ -25,7 +23,6 @@ const helmData = {
   },
   services: {
     rotation: -180,
-    video: false,
     kicker: "MARINE SERVICES",
     title: "More time boating. Less time organising.",
     text: "Practical local support for owners, from maintenance and preparation to trusted marine services.",
@@ -37,7 +34,6 @@ const helmData = {
   },
   sell: {
     rotation: -270,
-    video: false,
     kicker: "SELL YOUR BOAT",
     title: "Ready for your next chapter?",
     text: "Let Sotoboats market your boat, handle enquiries and connect you with serious buyers.",
@@ -52,7 +48,6 @@ const helmData = {
 const wheel = document.getElementById("helmWheel");
 const preview = document.getElementById("helmPreview");
 const heroBackdrop = document.getElementById("heroBackdrop");
-const heroVideo = document.getElementById("heroVideo");
 const previewKicker = document.getElementById("previewKicker");
 const previewTitle = document.getElementById("previewTitle");
 const previewText = document.getElementById("previewText");
@@ -102,29 +97,6 @@ function setHeroBackground(value) {
 }
 
 
-function showCharterVideo() {
-  if (!heroVideo) return;
-  heroVideo.classList.remove("video-changing");
-  heroVideo.classList.add("active");
-
-  const playAttempt = heroVideo.play();
-  if (playAttempt && typeof playAttempt.catch === "function") {
-    playAttempt.catch(() => {
-      // Poster/background image remains visible if autoplay is unavailable.
-    });
-  }
-}
-
-function hideCharterVideo() {
-  if (!heroVideo) return;
-  heroVideo.classList.add("video-changing");
-
-  setTimeout(() => {
-    heroVideo.classList.remove("active");
-    heroVideo.pause();
-    heroVideo.classList.remove("video-changing");
-  }, 420);
-}
 
 function activateHelm(key) {
   const data = helmData[key];
@@ -137,12 +109,6 @@ function activateHelm(key) {
   preview.classList.add("is-changing");
   spinHelmTo(data.rotation);
   heroBackdrop.style.transform = "scale(1.05)";
-
-  if (data.video) {
-    showCharterVideo();
-  } else {
-    hideCharterVideo();
-  }
 
   setTimeout(() => {
     previewKicker.textContent = data.kicker;
@@ -184,8 +150,6 @@ const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 window.addEventListener("load", () => {
-  showCharterVideo();
-
   if (wheel) {
     currentHelmRotation = 0;
     wheel.style.transform = "rotate(0deg)";

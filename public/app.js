@@ -4,19 +4,19 @@ const helmData = {
     video: true,
     kicker: "CHARTER",
     title: "Make the Mediterranean yours.",
-    text: "Browse featured boats or tell us what you need and we will find the right charter for you.",
+    text: "Tell us what kind of day you have in mind and we’ll help you find the right boat, experience and crew.",
     cta: "Explore charters →",
     href: "#charter",
     heroCta: "Explore charters",
-    intro: "Charter, buy, sell and enjoy the Mediterranean with one trusted local team.",
+    intro: "Charter, celebrate, explore or find your next boat with one trusted local team.",
     image: "radial-gradient(circle at 72% 40%, rgba(48, 103, 148, 0.26) 0%, rgba(12, 31, 49, 0) 42%), linear-gradient(120deg, rgba(6, 23, 37, 0.05), rgba(7, 25, 40, 0.04)), url(\"https://images.pexels.com/photos/8436330/pexels-photo-8436330.jpeg?auto=compress&cs=tinysrgb&w=1800\") center center / cover no-repeat"
   },
   sale: {
     rotation: -90,
     video: false,
     kicker: "BOATS FOR SALE",
-    title: "Your next boat could be closer than you think.",
-    text: "Explore selected vessels offered through Sotoboats and trusted owners across the western Costa del Sol.",
+    title: "Find your next boat.",
+    text: "Explore selected boats for sale with local support from enquiry to handover.",
     cta: "View boats for sale →",
     href: "#sale",
     heroCta: "View boats for sale",
@@ -27,8 +27,8 @@ const helmData = {
     rotation: -180,
     video: false,
     kicker: "MARINE SERVICES",
-    title: "One local team. One point of contact.",
-    text: "From maintenance and preparation to owner support and logistics, Sotoboats helps keep everything moving.",
+    title: "More time boating. Less time organising.",
+    text: "Practical local support for owners, from maintenance and preparation to trusted marine services.",
     cta: "Explore marine services →",
     href: "#services",
     heroCta: "Marine services",
@@ -39,8 +39,8 @@ const helmData = {
     rotation: -270,
     video: false,
     kicker: "SELL YOUR BOAT",
-    title: "Sell with local expertise behind you.",
-    text: "Professional presentation, qualified enquiries and straightforward brokerage from valuation to handover.",
+    title: "Ready for your next chapter?",
+    text: "Let Sotoboats market your boat, handle enquiries and connect you with serious buyers.",
     cta: "Request a valuation →",
     href: "#sell",
     heroCta: "Request a valuation",
@@ -62,6 +62,40 @@ const heroIntro = document.getElementById("heroIntro");
 const options = [...document.querySelectorAll(".helm-option")];
 const menuToggle = document.querySelector(".menu-toggle");
 const mainNav = document.querySelector(".main-nav");
+
+let currentHelmRotation = 0;
+
+function spinHelmTo(targetRotation) {
+  if (!wheel) return;
+
+  const start = currentHelmRotation;
+  let target = targetRotation;
+
+  // Keep each movement visually obvious while preserving the intended quarter-turn layout.
+  while (target - start > 180) target -= 360;
+  while (target - start < -180) target += 360;
+
+  // Force an actual keyframe animation rather than depending only on CSS transition.
+  wheel.getAnimations().forEach((animation) => animation.cancel());
+
+  const animation = wheel.animate(
+    [
+      { transform: `rotate(${start}deg)` },
+      { transform: `rotate(${target}deg)` }
+    ],
+    {
+      duration: 900,
+      easing: "cubic-bezier(.2,.8,.15,1)",
+      fill: "forwards"
+    }
+  );
+
+  animation.onfinish = () => {
+    currentHelmRotation = target;
+    wheel.style.transform = `rotate(${target}deg)`;
+    animation.cancel();
+  };
+}
 
 function setHeroBackground(value) {
   heroBackdrop.style.background = value;
@@ -101,7 +135,7 @@ function activateHelm(key) {
   });
 
   preview.classList.add("is-changing");
-  wheel.style.transform = `rotate(${data.rotation}deg)`;
+  spinHelmTo(data.rotation);
   heroBackdrop.style.transform = "scale(1.05)";
 
   if (data.video) {
@@ -132,34 +166,45 @@ options.forEach((button) => {
   button.addEventListener("click", () => activateHelm(button.dataset.key));
 });
 
-menuToggle.addEventListener("click", () => {
-  const isOpen = mainNav.classList.toggle("open");
-  menuToggle.setAttribute("aria-expanded", String(isOpen));
-});
+if (menuToggle && mainNav) {
+  menuToggle.addEventListener("click", () => {
+    const isOpen = mainNav.classList.toggle("open");
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+  });
+}
 
 document.querySelectorAll(".main-nav a").forEach((link) => {
   link.addEventListener("click", () => {
-    mainNav.classList.remove("open");
-    menuToggle.setAttribute("aria-expanded", "false");
+    if (mainNav) mainNav.classList.remove("open");
+    if (menuToggle) menuToggle.setAttribute("aria-expanded", "false");
   });
 });
 
-document.getElementById("year").textContent = new Date().getFullYear();
+const yearEl = document.getElementById("year");
+if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 window.addEventListener("load", () => {
   showCharterVideo();
 
-  setTimeout(() => {
-    wheel.animate(
-      [
-        { transform: "rotate(-6deg)" },
-        { transform: "rotate(10deg)" },
-        { transform: "rotate(0deg)" }
-      ],
-      {
-        duration: 1200,
-        easing: "cubic-bezier(.2,.8,.2,1)"
-      }
-    );
-  }, 650);
+  if (wheel) {
+    currentHelmRotation = 0;
+    wheel.style.transform = "rotate(0deg)";
+
+    setTimeout(() => {
+      const intro = wheel.animate(
+        [
+          { transform: "rotate(-5deg)" },
+          { transform: "rotate(8deg)" },
+          { transform: "rotate(0deg)" }
+        ],
+        {
+          duration: 1000,
+          easing: "cubic-bezier(.2,.8,.2,1)"
+        }
+      );
+      intro.onfinish = () => {
+        wheel.style.transform = "rotate(0deg)";
+      };
+    }, 500);
+  }
 });

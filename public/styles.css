@@ -1540,3 +1540,406 @@ footer p {
     inset 0 34px 40px -20px rgba(8,40,74,.90),
     inset 0 -34px 40px -20px rgba(8,40,74,.90);
 }
+
+
+/* =========================================================
+   FINAL MOBILE LAYER
+   Deliberately overrides the earlier experimental breakpoints
+   ========================================================= */
+
+.mobile-owner-link { display: none; }
+
+@media (max-width: 760px) {
+  html, body {
+    overflow-x: hidden;
+  }
+
+  /* Header */
+  .site-header {
+    position: absolute;
+    height: 76px;
+    padding: 0 18px;
+    gap: 12px;
+    background: rgba(5, 28, 52, .96);
+    border-bottom: 1px solid rgba(208,168,92,.22);
+  }
+
+  .brand {
+    gap: 9px;
+    min-width: 0;
+  }
+
+  .brand-mark {
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+    flex: 0 0 40px;
+  }
+
+  .brand-text {
+    font-size: 17px;
+    letter-spacing: .12em;
+    white-space: nowrap;
+  }
+
+  .menu-toggle {
+    display: block;
+    margin-left: auto;
+    position: relative;
+    z-index: 41;
+  }
+
+  .menu-toggle span {
+    width: 28px;
+    height: 2px;
+    margin: 6px 0;
+  }
+
+  .header-cta,
+  .owner-login-cta {
+    display: none !important;
+  }
+
+  .main-nav {
+    position: absolute;
+    top: 76px;
+    left: 0;
+    right: 0;
+    z-index: 40;
+    display: none;
+    margin: 0;
+    padding: 16px 18px 22px;
+    background: rgba(5, 28, 52, .985);
+    border-bottom: 1px solid rgba(208,168,92,.24);
+    box-shadow: 0 18px 40px rgba(0,0,0,.28);
+  }
+
+  .main-nav.open {
+    display: grid;
+    gap: 0;
+  }
+
+  .main-nav a {
+    display: block;
+    padding: 13px 4px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    font-size: 15px;
+    color: #fff;
+  }
+
+  .main-nav .mobile-owner-link {
+    display: block;
+    margin-top: 10px;
+    padding: 12px 14px;
+    border: 1px solid rgba(208,168,92,.75);
+    border-radius: 999px;
+    text-align: center;
+    color: var(--gold-light);
+    font-weight: 800;
+  }
+
+  /* Hero becomes a clean vertical mobile story */
+  .hero {
+    min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 120px 22px 28px !important;
+    background: #08284a;
+  }
+
+  .hero-backdrop {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 62% 39%, rgba(50,118,170,.28) 0%, rgba(8,40,74,0) 32%),
+      linear-gradient(180deg, #08284a 0%, #0a365e 52%, #08284a 100%) !important;
+    filter: none !important;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(4,24,45,.04), rgba(4,24,45,.16)) !important;
+  }
+
+  .hero-copy {
+    order: 1;
+    width: 100%;
+    max-width: none;
+    padding: 0 !important;
+    margin: 0;
+    text-shadow: none;
+  }
+
+  .hero .eyebrow {
+    margin-bottom: 16px;
+    font-size: 10px;
+    letter-spacing: .20em;
+  }
+
+  .hero-copy h1 {
+    max-width: 100%;
+    margin: 0 0 20px;
+    font-size: clamp(48px, 14.2vw, 60px) !important;
+    line-height: .96;
+    letter-spacing: -.035em;
+  }
+
+  .hero-intro {
+    max-width: 100%;
+    margin: 0 0 24px;
+    font-size: 17px;
+    line-height: 1.55;
+  }
+
+  .hero-actions {
+    display: grid;
+    gap: 11px;
+    width: 100%;
+  }
+
+  .hero-actions .btn,
+  #primaryHeroCta {
+    width: 100%;
+    max-width: none !important;
+    min-height: 54px;
+    padding: 12px 18px;
+    line-height: 1.25;
+    text-align: center;
+  }
+
+  /* Family photo directly after the intro/buttons */
+  .hero-bride-wrap {
+    order: 2;
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: calc(100% + 28px) !important;
+    height: 330px !important;
+    margin: 26px -14px 18px !important;
+    opacity: 1 !important;
+    overflow: hidden !important;
+    z-index: 4;
+  }
+
+  .hero-bride {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    object-fit: cover !important;
+    object-position: center 45% !important;
+  }
+
+  .hero-bride-wrap::after {
+    background:
+      linear-gradient(to right,
+        #08284a 0%,
+        rgba(8,40,74,.70) 5%,
+        rgba(8,40,74,.20) 12%,
+        transparent 20%,
+        transparent 80%,
+        rgba(8,40,74,.20) 88%,
+        rgba(8,40,74,.70) 95%,
+        #08284a 100%
+      ),
+      linear-gradient(to bottom,
+        #08284a 0%,
+        rgba(8,40,74,.55) 5%,
+        rgba(8,40,74,.10) 13%,
+        transparent 21%,
+        transparent 79%,
+        rgba(8,40,74,.12) 87%,
+        rgba(8,40,74,.60) 95%,
+        #08284a 100%
+      ) !important;
+  }
+
+  .hero-bride-wrap::before {
+    box-shadow:
+      inset 24px 0 28px -18px rgba(8,40,74,.85),
+      inset -24px 0 28px -18px rgba(8,40,74,.85),
+      inset 0 22px 28px -18px rgba(8,40,74,.75),
+      inset 0 -22px 28px -18px rgba(8,40,74,.75) !important;
+  }
+
+  /* Helm below the photograph */
+  .helm-zone {
+    order: 3;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    justify-self: auto !important;
+    transform: none !important;
+    margin: 14px 0 0 !important;
+  }
+
+  .helm-label {
+    position: static;
+    width: 100%;
+    margin: 0 0 2px;
+    text-align: center;
+    font-size: 10px;
+  }
+
+  .helm-shell {
+    width: 310px !important;
+    height: 310px !important;
+    flex: 0 0 310px;
+  }
+
+  .helm-wheel {
+    width: 274px !important;
+    height: 274px !important;
+  }
+
+  .helm-option {
+    width: 78px !important;
+    height: 78px !important;
+    padding: 8px;
+    font-size: 10px !important;
+  }
+
+  .option-top {
+    top: 2px !important;
+    left: 116px !important;
+  }
+
+  .option-right {
+    top: 116px !important;
+    right: 2px !important;
+  }
+
+  .option-bottom {
+    bottom: 2px !important;
+    left: 116px !important;
+  }
+
+  .option-left {
+    top: 116px !important;
+    left: 2px !important;
+  }
+
+  .helm-preview {
+    width: 100% !important;
+    min-height: 0;
+    padding: 24px 22px !important;
+    border-left-width: 1px;
+    border-color: rgba(208,168,92,.65);
+  }
+
+  .helm-preview h2 {
+    font-size: 31px !important;
+  }
+
+  /* Experience cards swipe horizontally */
+  .mockup-grid {
+    display: flex !important;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 14px 14px 20px !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mockup-grid .experience-tile {
+    flex: 0 0 82vw;
+    min-width: 82vw !important;
+    min-height: 285px !important;
+    scroll-snap-align: start;
+  }
+
+  .mockup-grid .experience-tile img {
+    height: 69% !important;
+  }
+
+  .mockup-grid .experience-tile strong {
+    font-size: 22px !important;
+  }
+
+  /* Booking strip */
+  .self-book-section {
+    grid-template-columns: 1fr !important;
+    gap: 18px;
+    padding: 34px 22px !important;
+  }
+
+  .self-book-copy h2 {
+    font-size: 37px !important;
+  }
+
+  .self-book-actions {
+    display: grid;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .self-book-actions .btn {
+    width: 100%;
+  }
+
+  /* General sections */
+  .section {
+    padding: 64px 22px !important;
+  }
+
+  .section-heading h2,
+  .broker-copy h2,
+  .experience-copy h2,
+  .contact-section h2 {
+    font-size: 42px !important;
+  }
+
+  .charter-cards,
+  .experience-grid,
+  .brokerage-grid,
+  .local-section,
+  .destination-new,
+  .find-boat-section {
+    grid-template-columns: 1fr !important;
+  }
+
+  .find-boat-image {
+    min-height: 330px !important;
+  }
+
+  .final-cta {
+    min-height: 560px;
+  }
+
+  .final-cta h2 {
+    font-size: 50px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .site-header {
+    padding-inline: 14px;
+  }
+
+  .brand-text {
+    font-size: 15px;
+  }
+
+  .hero {
+    padding-inline: 18px !important;
+  }
+
+  .hero-copy h1 {
+    font-size: 47px !important;
+  }
+
+  .hero-bride-wrap {
+    height: 300px !important;
+  }
+
+  .helm-shell {
+    transform: scale(.92);
+    margin: -12px 0;
+  }
+}

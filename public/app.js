@@ -4,9 +4,9 @@ const helmData = {
     kicker: "CHARTER",
     title: "Make the Mediterranean yours.",
     text: "Tell us what kind of day you have in mind and we’ll help you find the right boat, experience and crew.",
-    cta: "Explore charters →",
-    href: "#charter",
-    heroCta: "Explore charters",
+    cta: "View Charter calendar & book online →",
+    href: "https://sp-charter-dashboard.onrender.com/book",
+    heroCta: "View our Charter calendar and book online",
     intro: "Charter, celebrate, explore or find your next boat with one trusted local team.",
     image: "radial-gradient(circle at 72% 40%, rgba(48, 103, 148, 0.26) 0%, rgba(12, 31, 49, 0) 42%), linear-gradient(120deg, rgba(6, 23, 37, 0.05), rgba(7, 25, 40, 0.04)), url(\"https://images.pexels.com/photos/8436330/pexels-photo-8436330.jpeg?auto=compress&cs=tinysrgb&w=1800\") center center / cover no-repeat"
   },
@@ -116,6 +116,11 @@ function activateHelm(key) {
     previewText.textContent = data.text;
     previewLink.textContent = data.cta;
     previewLink.href = data.href;
+  const isBookingLink = data.href === "https://sp-charter-dashboard.onrender.com/book";
+  previewLink.target = isBookingLink ? "_blank" : "_self";
+  if (isBookingLink) previewLink.rel = "noopener"; else previewLink.removeAttribute("rel");
+  primaryHeroCta.target = isBookingLink ? "_blank" : "_self";
+  if (isBookingLink) primaryHeroCta.rel = "noopener"; else primaryHeroCta.removeAttribute("rel");
     primaryHeroCta.textContent = data.heroCta;
     primaryHeroCta.href = data.href;
     heroIntro.textContent = data.intro;

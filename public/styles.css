@@ -1179,3 +1179,44 @@ footer p {
     min-width:84vw;
   }
 }
+
+
+/* ---------- Larger bride hero ---------- */
+.hero-bride-wrap {
+  left: 28%;
+  bottom: -4px;
+  width: 44%;
+  height: 103%;
+}
+
+.hero-bride {
+  width: auto;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+@media (max-width: 1200px){
+  .hero-bride-wrap{
+    left:29%;
+    width:41%;
+    height:100%;
+  }
+}
+
+@media (max-width: 980px){
+  .hero-bride-wrap{
+    left:43%;
+    width:54%;
+    height:72%;
+  }
+}
+
+@media (max-width: 680px){
+  .hero-bride-wrap{
+    left:40%;
+    width:62%;
+    height:64%;
+  }
+}

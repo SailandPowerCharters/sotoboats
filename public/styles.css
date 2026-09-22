@@ -1016,3 +1016,166 @@ footer p {
     scroll-snap-align: start;
   }
 }
+
+
+/* ---------- Refined hero to match approved mockup ---------- */
+.hero {
+  min-height: 720px;
+  grid-template-columns: minmax(420px, 0.95fr) minmax(500px, 0.9fr);
+  gap: 18px;
+  padding: 118px clamp(28px, 4vw, 72px) 22px;
+  background: #08284a;
+}
+
+.hero-backdrop {
+  background:
+    linear-gradient(90deg, rgba(5,28,52,.97) 0%, rgba(5,28,52,.86) 26%, rgba(5,28,52,.36) 55%, rgba(5,28,52,.50) 100%),
+    url("/media/sll.jpg") center 48% / cover no-repeat !important;
+  filter: saturate(.95) brightness(.93);
+}
+
+.hero-bride-wrap {
+  left: 27%;
+  bottom: 0;
+  width: 39%;
+  height: 96%;
+  z-index: 3;
+  overflow: visible;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+}
+
+.hero-bride {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(0 16px 24px rgba(0,0,0,.24));
+}
+
+.hero-overlay {
+  z-index: 2;
+  background:
+    linear-gradient(90deg, rgba(4,24,45,.34) 0%, rgba(4,24,45,.13) 34%, rgba(4,24,45,.03) 58%, rgba(4,24,45,.16) 100%),
+    linear-gradient(180deg, rgba(4,24,45,.02), rgba(4,24,45,.23));
+}
+
+.hero-copy,
+.helm-zone { z-index: 4; }
+
+.hero-copy {
+  max-width: 540px;
+  padding: 12px 0 34px 0;
+  align-self:center;
+}
+
+.hero-copy h1 {
+  font-size: clamp(58px, 5.9vw, 96px);
+  line-height: .94;
+  margin-bottom: 22px;
+  max-width: 560px;
+}
+
+.hero-copy h1::after{
+  content:"";
+}
+
+.helm-zone{
+  justify-self:end;
+  align-self:center;
+  margin-right:0;
+  transform:none;
+}
+
+.helm-shell{
+  gap:20px;
+}
+
+.helm-preview{
+  width:260px;
+  border:1px solid rgba(208,168,92,.72);
+  background:rgba(6,31,57,.94);
+  padding:30px 28px;
+}
+
+.helm-preview h3{
+  font-size:32px;
+  line-height:1.02;
+}
+
+.mockup-grid{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+  padding:14px clamp(22px,3vw,36px) 22px;
+  background:#08284a;
+}
+
+.mockup-grid .experience-tile{
+  min-height:280px;
+  border:1px solid rgba(208,168,92,.95);
+  border-radius:8px;
+  overflow:hidden;
+  background:#0a2f56;
+}
+
+.mockup-grid .experience-tile img{
+  position:absolute;
+  inset:0 0 auto;
+  height:70%;
+  width:100%;
+  object-fit:cover;
+}
+
+.mockup-grid .experience-tile::after{
+  background:linear-gradient(180deg,rgba(5,24,45,0) 38%,rgba(5,24,45,.96) 77%);
+}
+
+.mockup-grid .experience-tile div{
+  bottom:14px;
+  left:18px;
+  right:18px;
+}
+
+.mockup-grid .experience-tile strong{
+  font-size:24px;
+  line-height:1.05;
+}
+
+@media (max-width: 1200px){
+  .hero-bride-wrap{left:30%;width:34%;}
+  .helm-preview{width:235px}
+}
+@media (max-width: 980px){
+  .hero{
+    min-height:900px;
+    grid-template-columns:1fr;
+    align-content:start;
+  }
+  .hero-bride-wrap{
+    left:46%;
+    width:48%;
+    height:65%;
+    opacity:.78;
+  }
+  .helm-zone{
+    justify-self:start;
+    margin-top:36px;
+  }
+}
+@media (max-width: 680px){
+  .hero-bride-wrap{
+    left:43%;
+    width:55%;
+    height:58%;
+    opacity:.62;
+  }
+  .mockup-grid{
+    display:flex;
+    overflow-x:auto;
+  }
+  .mockup-grid .experience-tile{
+    min-width:84vw;
+  }
+}

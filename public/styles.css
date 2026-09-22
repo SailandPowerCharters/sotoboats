@@ -1479,3 +1479,64 @@ footer p {
     max-width: 260px;
   }
 }
+
+
+/* ---------- Restore soft feather around hero image ---------- */
+.hero-bride-wrap {
+  position: absolute;
+  overflow: hidden;
+  background: transparent;
+}
+
+/* Keep the family image itself clean */
+.hero-bride {
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+
+/* Reliable feathering in Chrome: fade the photo into the navy hero */
+.hero-bride-wrap::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(to right,
+      #08284a 0%,
+      rgba(8,40,74,.94) 3%,
+      rgba(8,40,74,.66) 8%,
+      rgba(8,40,74,.26) 14%,
+      transparent 22%,
+      transparent 78%,
+      rgba(8,40,74,.26) 86%,
+      rgba(8,40,74,.66) 92%,
+      rgba(8,40,74,.94) 97%,
+      #08284a 100%
+    ),
+    linear-gradient(to bottom,
+      #08284a 0%,
+      rgba(8,40,74,.88) 4%,
+      rgba(8,40,74,.48) 10%,
+      rgba(8,40,74,.14) 16%,
+      transparent 24%,
+      transparent 78%,
+      rgba(8,40,74,.16) 86%,
+      rgba(8,40,74,.52) 93%,
+      #08284a 100%
+    );
+}
+
+/* Extra softness at the perimeter */
+.hero-bride-wrap::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  box-shadow:
+    inset 42px 0 44px -20px rgba(8,40,74,.95),
+    inset -42px 0 44px -20px rgba(8,40,74,.95),
+    inset 0 34px 40px -20px rgba(8,40,74,.90),
+    inset 0 -34px 40px -20px rgba(8,40,74,.90);
+}

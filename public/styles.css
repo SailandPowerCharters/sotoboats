@@ -2124,3 +2124,314 @@ footer p {
     -webkit-text-stroke: .15px #08284a;
   }
 }
+
+
+/* =========================================================
+   CHARTERS-ONLY / MOROCCO UPDATE
+   ========================================================= */
+
+.morocco-card {
+  background: #08284a;
+}
+
+.morocco-card-visual {
+  min-height: 360px;
+  height: 100%;
+  padding: 34px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: #fff;
+  background:
+    radial-gradient(circle at 70% 20%, rgba(211,170,90,.22), transparent 30%),
+    linear-gradient(145deg, #0d3b65 0%, #08284a 52%, #061f3a 100%);
+  border-bottom: 1px solid rgba(211,170,90,.45);
+}
+
+.morocco-card-visual::before {
+  content: "≈  ≈  ≈  ≈  ≈";
+  display: block;
+  margin-bottom: auto;
+  color: rgba(239,209,139,.78);
+  font-size: 32px;
+  letter-spacing: .22em;
+}
+
+.morocco-route-mini {
+  color: var(--gold-light, #efd18b);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .18em;
+}
+
+.morocco-card-visual strong {
+  margin: 10px 0 8px;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(34px, 4vw, 58px);
+  line-height: .95;
+  color: #efd18b;
+}
+
+.morocco-card-visual small {
+  font-size: 13px;
+  letter-spacing: .08em;
+}
+
+.morocco-feature {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  min-height: 620px;
+  color: #fff;
+  background: #08284a;
+  border-top: 1px solid rgba(211,170,90,.35);
+  border-bottom: 1px solid rgba(211,170,90,.35);
+}
+
+.morocco-feature-copy {
+  padding: 80px max(40px, 7vw);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.morocco-feature-copy h2 {
+  margin: 8px 0 20px;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(52px, 6vw, 92px);
+  font-weight: 500;
+  line-height: .95;
+  color: #efd18b;
+}
+
+.morocco-feature-copy p {
+  max-width: 760px;
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.morocco-big {
+  font-size: clamp(20px, 2vw, 28px) !important;
+  line-height: 1.45 !important;
+}
+
+.morocco-facts {
+  display: flex;
+  gap: 18px;
+  margin: 28px 0 34px;
+  flex-wrap: wrap;
+}
+
+.morocco-facts span {
+  min-width: 145px;
+  padding: 16px 18px;
+  border: 1px solid rgba(211,170,90,.55);
+  border-radius: 8px;
+  font-size: 12px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.morocco-facts strong {
+  display: block;
+  margin-bottom: 5px;
+  font-family: "Playfair Display", serif;
+  font-size: 32px;
+  color: #efd18b;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.morocco-route {
+  min-height: 620px;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 52% 48%, rgba(46,116,163,.5), transparent 28%),
+    linear-gradient(145deg,#123f68,#08284a 65%,#061f3a);
+  position: relative;
+  overflow: hidden;
+}
+
+.morocco-route::before,
+.morocco-route::after {
+  content: "";
+  position: absolute;
+  width: 340px;
+  height: 340px;
+  border: 1px solid rgba(239,209,139,.12);
+  border-radius: 50%;
+}
+
+.morocco-route::before { top: -100px; right: -60px; }
+.morocco-route::after { bottom: -120px; left: -80px; }
+
+.route-port {
+  position: relative;
+  z-index: 2;
+}
+
+.route-port small {
+  display: block;
+  margin-bottom: 5px;
+  color: #d3aa5a;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .22em;
+}
+
+.route-port strong {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(34px, 4vw, 62px);
+  font-weight: 500;
+}
+
+.route-end {
+  align-self: flex-end;
+  text-align: right;
+}
+
+.route-line {
+  display: flex;
+  justify-content: space-around;
+  margin: 45px 0;
+  color: #efd18b;
+  font-size: 34px;
+}
+
+.morocco-route > p {
+  margin-top: 42px;
+  text-align: center;
+  color: rgba(255,255,255,.72);
+  letter-spacing: .08em;
+}
+
+.our-boats-section {
+  background: #f7f3ea;
+}
+
+.boat-focus-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 38px;
+}
+
+.boat-focus-grid article {
+  overflow: hidden;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 16px 50px rgba(8,40,74,.08);
+}
+
+.boat-focus-grid img,
+.jaz-visual {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+}
+
+.boat-focus-grid article > div:last-child {
+  padding: 28px 30px 32px;
+}
+
+.boat-focus-grid article > div:last-child span {
+  color: #a47b37;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .16em;
+}
+
+.boat-focus-grid article > div:last-child h3 {
+  margin: 8px 0 10px;
+  font-family: "Playfair Display", serif;
+  font-size: 32px;
+  color: #08284a;
+}
+
+.boat-focus-grid article > div:last-child p {
+  margin: 0;
+  color: #425367;
+  line-height: 1.65;
+}
+
+.jaz-visual {
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: #fff;
+  background:
+    radial-gradient(circle at 66% 24%, rgba(211,170,90,.26), transparent 24%),
+    linear-gradient(145deg,#0e456f,#08284a 58%,#061f3a);
+}
+
+.jaz-visual > span {
+  margin-bottom: auto;
+  color: #efd18b;
+  font-size: 13px;
+  letter-spacing: .25em;
+}
+
+.jaz-visual > strong {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(36px, 4.4vw, 66px);
+  line-height: .94;
+  font-weight: 500;
+  color: #efd18b;
+}
+
+.jaz-visual > small {
+  margin-top: 18px;
+  font-size: 11px;
+  letter-spacing: .14em;
+}
+
+@media (max-width: 900px) {
+  .morocco-feature,
+  .boat-focus-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .morocco-feature-copy {
+    padding: 64px 26px;
+  }
+
+  .morocco-route {
+    min-height: 470px;
+    padding: 45px 28px;
+  }
+
+  .route-end {
+    align-self: flex-start;
+    text-align: left;
+  }
+
+  .boat-focus-grid img,
+  .jaz-visual {
+    height: 340px;
+  }
+}
+
+@media (max-width: 760px) {
+  .morocco-card-visual {
+    min-height: 310px;
+  }
+
+  .morocco-facts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .morocco-facts span {
+    min-width: 0;
+    padding: 12px 8px;
+    font-size: 9px;
+  }
+
+  .morocco-facts strong {
+    font-size: 24px;
+  }
+}

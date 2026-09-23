@@ -824,6 +824,71 @@
 }
 </style>
 
+
+<style id="find-boat-compact-fix">
+  /* Make the middle "Tell us the plan" section feel tighter */
+  .find-boat-section {
+    min-height: 0 !important;
+    height: auto !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    align-items: stretch !important;
+  }
+
+  .find-boat-section .find-boat-image,
+  .find-boat-section > img,
+  .find-boat-visual {
+    min-height: 420px !important;
+    height: 420px !important;
+    object-fit: cover !important;
+  }
+
+  .find-boat-section .find-boat-copy,
+  .find-boat-copy {
+    min-height: 420px !important;
+    padding: 46px clamp(34px, 5vw, 76px) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+  }
+
+  .find-boat-copy h2 {
+    margin: 8px 0 18px !important;
+    font-size: clamp(42px, 4vw, 64px) !important;
+    line-height: .98 !important;
+  }
+
+  .find-boat-copy p {
+    margin-bottom: 14px !important;
+    font-size: 15px !important;
+    line-height: 1.6 !important;
+  }
+
+  .find-boat-copy .hero-actions,
+  .find-boat-copy .find-boat-actions {
+    margin-top: 12px !important;
+  }
+
+  @media (max-width: 900px) {
+    .find-boat-section {
+      grid-template-columns: 1fr !important;
+    }
+
+    .find-boat-section .find-boat-image,
+    .find-boat-section > img,
+    .find-boat-visual {
+      height: 300px !important;
+      min-height: 300px !important;
+    }
+
+    .find-boat-section .find-boat-copy,
+    .find-boat-copy {
+      min-height: 0 !important;
+      padding: 42px 24px !important;
+    }
+  }
+</style>
+
 </head>
 <body>
   <header class="site-header">

@@ -376,4 +376,7 @@ body{
     width:177.7778vh;
     height:100vh;
   }
+}/* Keep the Celebration hero faces in shot */
+#sceneImage[src$="celebration.jpg"] {
+  object-position: center 18% !important;
 }

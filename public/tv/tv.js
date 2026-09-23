@@ -1,33 +1,33 @@
 const scenes = [
   {
-    image: "./media/bow-friends.jpg",
-    eyebrow: "MORE THAN A TRIP",
-    title: "YOUR DAY<br>AT SEA,<br><span>BEAUTIFULLY DONE.</span>",
-    lead: "Charters, celebrations and Mediterranean experiences from Estepona."
-  },
-  {
     image: "./media/hero-four-girls.jpg",
-    eyebrow: "GOOD PEOPLE · BLUE WATER",
-    title: "MAKE<br>MEMORIES<br><span>AT SEA.</span>",
-    lead: "Friends, family, birthdays and celebrations — built around your perfect day."
+    eyebrow: "ESTEPONA · COSTA DEL SOL",
+    title: "YOUR DAY AT SEA<br><span>STARTS HERE.</span>",
+    lead: "Charter, celebrate, explore and make the Mediterranean yours."
   },
   {
     image: "./media/celebration.jpg",
     eyebrow: "CELEBRATE DIFFERENTLY",
-    title: "THE BEST<br>PARTIES HAVE<br><span>A HORIZON.</span>",
+    title: "THE BEST PARTIES<br><span>HAVE A HORIZON.</span>",
     lead: "Hen trips, birthdays and special occasions with the Costa del Sol as your backdrop."
   },
   {
-    image: "./media/food.jpg",
-    eyebrow: "STAY A LITTLE LONGER",
-    title: "GOOD FOOD.<br>GOOD COMPANY.<br><span>NO RUSH.</span>",
-    lead: "Food, drinks and the little extras that turn a charter into a day to remember."
+    image: "./media/food-hero.jpg",
+    eyebrow: "FOOD & DRINKS",
+    title: "GOOD COMPANY.<br><span>GREAT MOMENTS.</span>",
+    lead: "Champagne, snacks and the little extras that make a day at sea feel special."
   },
   {
     image: "./media/boat-sll.jpg",
     eyebrow: "OUR BOATS",
-    title: "FIND THE<br>BOAT THAT FITS<br><span>YOUR DAY.</span>",
-    lead: "From relaxed private charters to larger celebrations, ask us what's available today."
+    title: "FIND THE BOAT<br><span>THAT FITS YOUR DAY.</span>",
+    lead: "From relaxed private charters to larger group experiences, ask what's available today."
+  },
+  {
+    image: "./media/paddleboard.jpg",
+    eyebrow: "MORE THAN A CHARTER",
+    title: "ADD A LITTLE MORE<br><span>ADVENTURE.</span>",
+    lead: "Paddleboards, jet skis and on-the-water experiences for unforgettable days."
   }
 ];
 
@@ -38,17 +38,32 @@ const lead = document.getElementById("sceneLead");
 
 let current = 0;
 
-function showScene(index){
+function applySceneCrop(imagePath) {
+  if (imagePath.includes("celebration.jpg")) {
+    img.style.objectPosition = "center 12%";
+  } else if (imagePath.includes("food-hero.jpg")) {
+    img.style.objectPosition = "center 58%";
+  } else if (imagePath.includes("paddleboard.jpg")) {
+    img.style.objectPosition = "center 55%";
+  } else {
+    img.style.objectPosition = "center center";
+  }
+}
+
+function showScene(index) {
   const scene = scenes[index];
   img.classList.add("fade");
 
   setTimeout(() => {
     img.src = scene.image;
+    applySceneCrop(scene.image);
+
     eyebrow.textContent = scene.eyebrow;
     title.innerHTML = scene.title;
     lead.textContent = scene.lead;
 
     img.classList.remove("zoom");
+
     requestAnimationFrame(() => {
       img.classList.remove("fade");
       requestAnimationFrame(() => img.classList.add("zoom"));
@@ -57,6 +72,7 @@ function showScene(index){
 }
 
 window.addEventListener("load", () => {
+  applySceneCrop(scenes[0].image);
   setTimeout(() => img.classList.add("zoom"), 250);
 });
 

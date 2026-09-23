@@ -530,6 +530,139 @@
 }
 </style>
 
+
+<style id="reviews-section-styles">
+  .reviews-section {
+    padding: 84px clamp(24px, 5vw, 84px);
+    background: #f6f1e8;
+    color: #08284a;
+  }
+
+  .reviews-heading {
+    max-width: 900px;
+    margin: 0 auto 34px;
+    text-align: center;
+  }
+
+  .reviews-heading h2 {
+    margin: 8px 0 10px;
+    font-family: "Playfair Display", serif;
+    font-size: clamp(46px, 5vw, 76px);
+    line-height: 1;
+    font-weight: 500;
+    color: #08284a;
+  }
+
+  .reviews-heading > p:last-child {
+    margin: 0;
+    color: #5a6674;
+    font-size: 17px;
+  }
+
+  .reviews-grid {
+    max-width: 1480px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .review-card {
+    min-height: 280px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid rgba(181, 142, 74, .45);
+    border-radius: 10px;
+    box-shadow: 0 16px 40px rgba(8, 40, 74, .08);
+  }
+
+  .review-stars {
+    margin-bottom: 18px;
+    color: #b58e4a;
+    font-size: 18px;
+    letter-spacing: .14em;
+  }
+
+  .review-card h3 {
+    margin: 0 0 14px;
+    font-family: "Playfair Display", serif;
+    font-size: 30px;
+    line-height: 1.08;
+    color: #08284a;
+  }
+
+  .review-card p {
+    margin: 0 0 20px;
+    color: #405064;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  .review-card span {
+    margin-top: auto;
+    color: #9b7739;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+
+  .reviews-footer {
+    max-width: 1480px;
+    margin: 26px auto 0;
+    padding-top: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    border-top: 1px solid rgba(181, 142, 74, .4);
+  }
+
+  .reviews-footer > div {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .reviews-footer strong {
+    color: #b58e4a;
+    font-family: "Playfair Display", serif;
+    font-size: 28px;
+  }
+
+  .reviews-footer span {
+    color: #5a6674;
+    font-size: 13px;
+  }
+
+  .reviews-footer a {
+    color: #08284a;
+    text-decoration: none;
+    font-weight: 800;
+  }
+
+  .reviews-footer a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 900px) {
+    .reviews-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .review-card {
+      min-height: auto;
+    }
+
+    .reviews-footer {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>
+
 </head>
 <body>
   <header class="site-header">
@@ -849,6 +982,47 @@
             <a href="/morocco/">Discover the Morocco sailing trip →</a>
           </div>
         </article>
+      </div>
+    </section>
+
+
+    <section class="reviews-section" id="reviews">
+      <div class="reviews-heading">
+        <p class="eyebrow dark">LOVED ON THE WATER</p>
+        <h2>Rated 4.9 on TripAdvisor</h2>
+        <p>Real days. Real guests. Very good memories.</p>
+      </div>
+
+      <div class="reviews-grid">
+        <article class="review-card">
+          <div class="review-stars" aria-label="5 star review">★★★★★</div>
+          <h3>“Super cool!”</h3>
+          <p>Very nice guides. Drinks, fruits and snacks, with a fantastic playlist. We saw dolphins right next to our boats, we swam — great atmosphere!</p>
+          <span>Friends · June 2026</span>
+        </article>
+
+        <article class="review-card">
+          <div class="review-stars" aria-label="5 star review">★★★★★</div>
+          <h3>“Fully recommended.”</h3>
+          <p>We went as a group of seven to watch the sunset. Snacks and drinks were provided, the views were beautiful and we saw dolphins. Very satisfied with the tour.</p>
+          <span>Friends · April 2026</span>
+        </article>
+
+        <article class="review-card">
+          <div class="review-stars" aria-label="5 star review">★★★★★</div>
+          <h3>“What a great trip from start to finish.”</h3>
+          <p>Easy to find in beautiful Estepona port, a lovely boat and hospitable hosts. Seeing dolphins was an amazing bonus.</p>
+          <span>Friends · April 2026</span>
+        </article>
+      </div>
+
+      <div class="reviews-footer">
+        <div>
+          <strong>★ 4.9</strong>
+          <span>TripAdvisor rating</span>
+        </div>
+        <a href="https://www.tripadvisor.com/Attraction_Review-g187437-d25366049-Reviews-Sail_and_Power_Charters-Estepona_Costa_del_Sol_Province_of_Malaga_Andalucia.html"
+           target="_blank" rel="noopener">Read more guest reviews →</a>
       </div>
     </section>
 

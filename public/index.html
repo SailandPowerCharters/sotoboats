@@ -1217,6 +1217,104 @@
 }
 </style>
 
+
+<style id="helm-and-findboat-polish-v2">
+/* =========================================================
+   SMALL POLISH: HELM CENTERING + FOOD IMAGE CROP
+   ========================================================= */
+
+@media (min-width: 1181px) {
+  /* Give the helm a little more presence and centre it properly */
+  section.hero > .helm-zone {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    align-items: center !important;
+  }
+
+  section.hero > .helm-zone .helm-label {
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  section.hero > .helm-zone .helm-shell {
+    width: 228px !important;
+    height: 228px !important;
+    min-width: 228px !important;
+    min-height: 228px !important;
+    flex: 0 0 228px !important;
+    margin: 0 auto !important;
+    left: auto !important;
+    right: auto !important;
+    transform: none !important;
+  }
+
+  section.hero > .helm-zone .helm-wheel {
+    width: 204px !important;
+    height: 204px !important;
+    left: 12px !important;
+    top: 12px !important;
+  }
+
+  section.hero > .helm-zone .helm-option {
+    width: 66px !important;
+    height: 66px !important;
+    font-size: 8.5px !important;
+  }
+
+  section.hero > .helm-zone .option-top {
+    top: 0 !important;
+    left: 81px !important;
+  }
+
+  section.hero > .helm-zone .option-right {
+    top: 81px !important;
+    right: 0 !important;
+  }
+
+  section.hero > .helm-zone .option-bottom {
+    bottom: 0 !important;
+    left: 81px !important;
+  }
+
+  section.hero > .helm-zone .option-left {
+    top: 81px !important;
+    left: 0 !important;
+  }
+
+  section.hero > .helm-zone .helm-preview {
+    width: calc(100% - 8px) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
+/* Correct crop for the food image in "Tell us the plan" */
+.find-boat-section .find-boat-image {
+  height: 420px !important;
+  min-height: 420px !important;
+  overflow: hidden !important;
+}
+
+.find-boat-section .find-boat-image img {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  object-fit: cover !important;
+  object-position: center 72% !important;
+}
+
+@media (max-width: 900px) {
+  .find-boat-section .find-boat-image {
+    height: 300px !important;
+    min-height: 300px !important;
+  }
+
+  .find-boat-section .find-boat-image img {
+    object-position: center 70% !important;
+  }
+}
+</style>
+
 </head>
 <body>
   <header class="site-header">

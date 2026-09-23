@@ -1,53 +1,48 @@
 const helmData = {
-  charter: {
+  private: {
     rotation: 0,
-    kicker: "CHARTER",
+    kicker: "PRIVATE CHARTER",
     title: "Make the Mediterranean yours.",
     text: "Tell us what kind of day you have in mind and we’ll help you find the right boat, experience and crew.",
-    cta: "View Charter calendar & book online →",
+    cta: "View charter calendar & book online →",
     href: "https://sp-charter-dashboard.onrender.com/book",
     heroCta: "View our Charter calendar and book online",
-    intro: "Charter, celebrate, explore or find your next boat with one trusted local team.",
-    image: "radial-gradient(circle at 72% 40%, rgba(48, 103, 148, 0.26) 0%, rgba(12, 31, 49, 0) 42%), linear-gradient(120deg, rgba(6, 23, 37, 0.05), rgba(7, 25, 40, 0.04)), url(\"https://images.pexels.com/photos/8436330/pexels-photo-8436330.jpeg?auto=compress&cs=tinysrgb&w=1800\") center center / cover no-repeat"
+    intro: "Private charters, celebrations and unforgettable days on the Mediterranean — all from one trusted local team in Estepona."
   },
-  sale: {
+  celebrations: {
     rotation: -90,
-    kicker: "BOATS FOR SALE",
-    title: "Find your next boat.",
-    text: "Explore selected boats for sale with local support from enquiry to handover.",
-    cta: "View boats for sale →",
-    href: "#sale",
-    heroCta: "View boats for sale",
-    intro: "Discover boats for sale with local guidance, clear communication and a personal brokerage service.",
-    image: "radial-gradient(circle at 72% 40%, rgba(48, 103, 148, 0.26) 0%, rgba(12, 31, 49, 0) 42%), linear-gradient(120deg, rgba(6, 23, 37, 0.05), rgba(7, 25, 40, 0.04)), url(\"https://images.pexels.com/photos/1295036/pexels-photo-1295036.jpeg?auto=compress&cs=tinysrgb&w=1800\") center center / cover no-repeat"
+    kicker: "CELEBRATIONS",
+    title: "The best parties have a horizon.",
+    text: "Birthdays, hens, anniversaries and group days made better on the Mediterranean.",
+    cta: "Plan a celebration →",
+    href: "#experiences",
+    heroCta: "Plan a celebration",
+    intro: "Bring your favourite people. We’ll help you turn a boat charter into a day worth remembering."
   },
-  services: {
+  morocco: {
     rotation: -180,
-    kicker: "MARINE SERVICES",
-    title: "More time boating. Less time organising.",
-    text: "Practical local support for owners, from maintenance and preparation to trusted marine services.",
-    cta: "Explore marine services →",
-    href: "#services",
-    heroCta: "Marine services",
-    intro: "Practical marine support and trusted local coordination for owners on the Costa del Sol.",
-    image: "radial-gradient(circle at 72% 40%, rgba(48, 103, 148, 0.26) 0%, rgba(12, 31, 49, 0) 42%), linear-gradient(120deg, rgba(6, 23, 37, 0.05), rgba(7, 25, 40, 0.04)), url(\"https://images.pexels.com/photos/163236/luxury-yacht-boat-speed-water-163236.jpeg?auto=compress&cs=tinysrgb&w=1800\") center center / cover no-repeat"
+    kicker: "SAIL TO MOROCCO",
+    title: "Two sailing days. Two nights in Smir.",
+    text: "Cross the Strait aboard Jaz II, our Jeanneau Sun Odyssey 45 DS. Created for sailors with some previous experience.",
+    cta: "Discover the Morocco trip →",
+    href: "/morocco/",
+    heroCta: "Explore the Morocco sailing trip",
+    intro: "A proper sailing adventure from Estepona to Marina Smir for guests who want to go further."
   },
-  sell: {
+  water: {
     rotation: -270,
-    kicker: "SELL YOUR BOAT",
-    title: "Ready for your next chapter?",
-    text: "Let Sotoboats market your boat, handle enquiries and connect you with serious buyers.",
-    cta: "Request a valuation →",
-    href: "#sell",
-    heroCta: "Request a valuation",
-    intro: "Present your boat properly, reach serious buyers and let Sotoboats manage the process from start to finish.",
-    image: "radial-gradient(circle at 72% 40%, rgba(48, 103, 148, 0.26) 0%, rgba(12, 31, 49, 0) 42%), linear-gradient(120deg, rgba(6, 23, 37, 0.05), rgba(7, 25, 40, 0.04)), url(\"https://images.pexels.com/photos/860868/pexels-photo-860868.jpeg?auto=compress&cs=tinysrgb&w=1800\") center center / cover no-repeat"
+    kicker: "WATER EXPERIENCES",
+    title: "Drop anchor. Add some adventure.",
+    text: "Paddleboards, jet skis, swimming and the extras that turn a charter into your kind of day.",
+    cta: "Explore experiences →",
+    href: "#experiences",
+    heroCta: "Explore charter experiences",
+    intro: "Build your day around the people you’re with — relaxed, energetic, celebratory or a bit of everything."
   }
 };
 
 const wheel = document.getElementById("helmWheel");
 const preview = document.getElementById("helmPreview");
-const heroBackdrop = document.getElementById("heroBackdrop");
 const previewKicker = document.getElementById("previewKicker");
 const previewTitle = document.getElementById("previewTitle");
 const previewText = document.getElementById("previewText");
@@ -62,15 +57,12 @@ let currentHelmRotation = 0;
 
 function spinHelmTo(targetRotation) {
   if (!wheel) return;
-
   const start = currentHelmRotation;
   let target = targetRotation;
 
-  // Keep each movement visually obvious while preserving the intended quarter-turn layout.
   while (target - start > 180) target -= 360;
   while (target - start < -180) target += 360;
 
-  // Force an actual keyframe animation rather than depending only on CSS transition.
   wheel.getAnimations().forEach((animation) => animation.cancel());
 
   const animation = wheel.animate(
@@ -92,23 +84,14 @@ function spinHelmTo(targetRotation) {
   };
 }
 
-function setHeroBackground(value) {
-  heroBackdrop.style.background = value;
-}
-
-
-
 function activateHelm(key) {
   const data = helmData[key];
   if (!data) return;
 
-  options.forEach((btn) => {
-    btn.classList.toggle("active", btn.dataset.key === key);
-  });
+  options.forEach((btn) => btn.classList.toggle("active", btn.dataset.key === key));
 
   preview.classList.add("is-changing");
   spinHelmTo(data.rotation);
-  heroBackdrop.style.transform = "scale(1.05)";
 
   setTimeout(() => {
     previewKicker.textContent = data.kicker;
@@ -116,21 +99,19 @@ function activateHelm(key) {
     previewText.textContent = data.text;
     previewLink.textContent = data.cta;
     previewLink.href = data.href;
-  const isBookingLink = data.href === "https://sp-charter-dashboard.onrender.com/book";
-  previewLink.target = isBookingLink ? "_blank" : "_self";
-  if (isBookingLink) previewLink.rel = "noopener"; else previewLink.removeAttribute("rel");
-  primaryHeroCta.target = isBookingLink ? "_blank" : "_self";
-  if (isBookingLink) primaryHeroCta.rel = "noopener"; else primaryHeroCta.removeAttribute("rel");
+
+    const isExternal = data.href.startsWith("http");
+    previewLink.target = isExternal ? "_blank" : "_self";
+    if (isExternal) previewLink.rel = "noopener"; else previewLink.removeAttribute("rel");
+
     primaryHeroCta.textContent = data.heroCta;
     primaryHeroCta.href = data.href;
+    primaryHeroCta.target = isExternal ? "_blank" : "_self";
+    if (isExternal) primaryHeroCta.rel = "noopener"; else primaryHeroCta.removeAttribute("rel");
+
     heroIntro.textContent = data.intro;
-    setHeroBackground(data.image);
     preview.classList.remove("is-changing");
   }, 200);
-
-  setTimeout(() => {
-    heroBackdrop.style.transform = "scale(1.02)";
-  }, 760);
 }
 
 options.forEach((button) => {
@@ -158,7 +139,6 @@ window.addEventListener("load", () => {
   if (wheel) {
     currentHelmRotation = 0;
     wheel.style.transform = "rotate(0deg)";
-
     setTimeout(() => {
       const intro = wheel.animate(
         [
@@ -166,14 +146,9 @@ window.addEventListener("load", () => {
           { transform: "rotate(8deg)" },
           { transform: "rotate(0deg)" }
         ],
-        {
-          duration: 1000,
-          easing: "cubic-bezier(.2,.8,.2,1)"
-        }
+        { duration: 1000, easing: "cubic-bezier(.2,.8,.2,1)" }
       );
-      intro.onfinish = () => {
-        wheel.style.transform = "rotate(0deg)";
-      };
+      intro.onfinish = () => { wheel.style.transform = "rotate(0deg)"; };
     }, 500);
   }
 });

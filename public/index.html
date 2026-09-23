@@ -889,6 +889,334 @@
   }
 </style>
 
+
+<style id="hero-final-clean-layout">
+/* =========================================================
+   HERO FINAL CLEAN RESET
+   Explicitly overrides all earlier hero experiments.
+   ========================================================= */
+@media (min-width: 1181px) {
+
+  section.hero {
+    position: relative !important;
+    display: grid !important;
+    grid-template-columns: 27% 46% 15% 12% !important;
+    grid-template-rows: 720px !important;
+    width: 100% !important;
+    height: 720px !important;
+    min-height: 720px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    align-items: stretch !important;
+    overflow: hidden !important;
+    background: #08284a !important;
+  }
+
+  /* Decorative layers stay behind the content */
+  section.hero > .hero-backdrop,
+  section.hero > .hero-overlay {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    pointer-events: none !important;
+  }
+
+  section.hero > .hero-backdrop {
+    z-index: 0 !important;
+  }
+
+  section.hero > .hero-overlay {
+    z-index: 2 !important;
+  }
+
+  /* LEFT COPY */
+  section.hero > .hero-copy {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    position: relative !important;
+    inset: auto !important;
+    z-index: 6 !important;
+    width: 100% !important;
+    max-width: none !important;
+    height: 720px !important;
+    margin: 0 !important;
+    padding: 140px 28px 42px 30px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    transform: none !important;
+  }
+
+  section.hero > .hero-copy h1 {
+    margin: 0 0 22px !important;
+    font-size: clamp(58px, 4.4vw, 88px) !important;
+    line-height: .96 !important;
+    letter-spacing: -.035em !important;
+  }
+
+  section.hero > .hero-copy .hero-intro {
+    max-width: 430px !important;
+    font-size: 17px !important;
+    line-height: 1.6 !important;
+  }
+
+  section.hero > .hero-copy .hero-actions {
+    margin-top: 26px !important;
+    gap: 10px !important;
+  }
+
+  section.hero > .hero-copy .btn {
+    min-height: 50px !important;
+    padding: 0 18px !important;
+    font-size: 12px !important;
+  }
+
+  /* CENTRE IMAGE */
+  section.hero > .hero-bride-wrap {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    position: relative !important;
+    inset: auto !important;
+    z-index: 1 !important;
+    width: 100% !important;
+    height: 720px !important;
+    min-height: 720px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    transform: none !important;
+  }
+
+  section.hero > .hero-bride-wrap img,
+  section.hero > .hero-bride-wrap .hero-bride {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    object-fit: cover !important;
+    object-position: center 46% !important;
+    margin: 0 !important;
+    transform: none !important;
+  }
+
+  /* HELM COLUMN */
+  section.hero > .helm-zone {
+    grid-column: 3 !important;
+    grid-row: 1 !important;
+    position: relative !important;
+    inset: auto !important;
+    z-index: 7 !important;
+    width: 100% !important;
+    height: 720px !important;
+    min-height: 720px !important;
+    margin: 0 !important;
+    padding: 112px 12px 20px !important;
+    box-sizing: border-box !important;
+    transform: none !important;
+    justify-self: stretch !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 0 !important;
+    background: linear-gradient(180deg, #0b3a65 0%, #08284a 100%) !important;
+    border-left: 1px solid rgba(208,168,92,.24) !important;
+    border-right: 1px solid rgba(208,168,92,.24) !important;
+  }
+
+  section.hero > .helm-zone .helm-label {
+    position: static !important;
+    margin: 0 0 12px !important;
+    width: 100% !important;
+    text-align: center !important;
+    font-size: 9px !important;
+    letter-spacing: .2em !important;
+  }
+
+  section.hero > .helm-zone .helm-shell {
+    position: relative !important;
+    width: 205px !important;
+    height: 205px !important;
+    min-width: 205px !important;
+    min-height: 205px !important;
+    margin: 0 auto !important;
+    flex: 0 0 205px !important;
+  }
+
+  section.hero > .helm-zone .helm-wheel {
+    width: 182px !important;
+    height: 182px !important;
+  }
+
+  section.hero > .helm-zone .helm-option {
+    width: 62px !important;
+    height: 62px !important;
+    padding: 7px !important;
+    font-size: 8px !important;
+    line-height: 1.08 !important;
+  }
+
+  section.hero > .helm-zone .option-top {
+    top: 0 !important;
+    left: 71px !important;
+  }
+
+  section.hero > .helm-zone .option-right {
+    top: 71px !important;
+    right: 0 !important;
+  }
+
+  section.hero > .helm-zone .option-bottom {
+    bottom: 0 !important;
+    left: 71px !important;
+  }
+
+  section.hero > .helm-zone .option-left {
+    top: 71px !important;
+    left: 0 !important;
+  }
+
+  section.hero > .helm-zone .helm-preview {
+    position: relative !important;
+    inset: auto !important;
+    width: calc(100% - 12px) !important;
+    min-height: 0 !important;
+    margin: 18px auto 0 !important;
+    padding: 18px 14px 16px !important;
+    box-sizing: border-box !important;
+    background: #08233f !important;
+    border: 1px solid rgba(208,168,92,.68) !important;
+    border-left: 1px solid rgba(208,168,92,.68) !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  section.hero > .helm-zone .helm-preview .preview-kicker {
+    margin-bottom: 8px !important;
+    font-size: 8px !important;
+  }
+
+  section.hero > .helm-zone .helm-preview h2 {
+    margin-bottom: 10px !important;
+    font-size: 26px !important;
+    line-height: .98 !important;
+  }
+
+  section.hero > .helm-zone .helm-preview p {
+    margin-bottom: 12px !important;
+    font-size: 11px !important;
+    line-height: 1.45 !important;
+  }
+
+  section.hero > .helm-zone .helm-preview .text-link {
+    font-size: 10px !important;
+  }
+
+  /* RIGHT VERTICAL EXPERIENCE RAIL */
+  section.hero > .experience-rail {
+    grid-column: 4 !important;
+    grid-row: 1 !important;
+    position: relative !important;
+    inset: auto !important;
+    z-index: 7 !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    height: 720px !important;
+    min-height: 720px !important;
+    margin: 0 !important;
+    padding: 108px 12px 18px !important;
+    box-sizing: border-box !important;
+    background: #0a3157 !important;
+    border-left: none !important;
+    transform: none !important;
+  }
+
+  section.hero > .experience-rail .experience-rail-heading {
+    flex: 0 0 auto !important;
+    padding: 0 2px 10px !important;
+    text-align: center !important;
+    font-size: 8px !important;
+    letter-spacing: .12em !important;
+  }
+
+  section.hero > .experience-rail .experience-rail-window {
+    position: relative !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  section.hero > .experience-rail .experience-rail-track {
+    gap: 10px !important;
+  }
+
+  section.hero > .experience-rail .rail-card {
+    flex: 0 0 126px !important;
+    height: 126px !important;
+    border-radius: 7px !important;
+  }
+
+  section.hero > .experience-rail .rail-card strong {
+    font-size: 14px !important;
+  }
+
+  section.hero > .experience-rail .rail-card span {
+    font-size: 7px !important;
+  }
+
+  /* The desktop rail replaces the horizontal strip */
+  section.experience-marquee.mobile-experience-marquee {
+    display: none !important;
+  }
+}
+
+/* Large-but-not-huge desktop: simplify proportions */
+@media (min-width:1181px) and (max-width:1500px) {
+  section.hero {
+    grid-template-columns: 28% 44% 16% 12% !important;
+  }
+
+  section.hero > .hero-copy {
+    padding-left: 24px !important;
+    padding-right: 22px !important;
+  }
+
+  section.hero > .hero-copy h1 {
+    font-size: clamp(52px, 4vw, 72px) !important;
+  }
+
+  section.hero > .helm-zone .helm-shell {
+    transform: scale(.92) !important;
+    transform-origin: top center !important;
+    margin-bottom: -14px !important;
+  }
+}
+
+/* Keep the existing stacked/mobile layout below desktop width */
+@media (max-width:1180px) {
+  section.hero {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  section.hero > .experience-rail {
+    display: none !important;
+  }
+
+  section.experience-marquee.mobile-experience-marquee {
+    display: block !important;
+  }
+}
+</style>
+
 </head>
 <body>
   <header class="site-header">

@@ -189,19 +189,66 @@ body.morocco-page {
 .jaz-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
 .jaz-badges span { padding: 10px 14px; border: 1px solid rgba(211,170,90,.5); border-radius: 999px; font-size: 12px; }
 
-.jaz-photo-placeholder {
-  padding: 60px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  background:
-    radial-gradient(circle at 70% 20%, rgba(211,170,90,.22), transparent 24%),
-    linear-gradient(145deg,#114d78,#08284a 58%,#061f3a);
+.jaz-photo {
+  position: relative;
+  min-height: 650px;
+  overflow: hidden;
+  background: #08284a;
 }
 
-.jaz-photo-placeholder > span { margin-bottom: auto; color: #efd18b; letter-spacing: .25em; }
-.jaz-photo-placeholder > strong { font-family:"Playfair Display",serif; font-size: clamp(54px,7vw,105px); line-height:.9; color:#efd18b; }
-.jaz-photo-placeholder > small { margin-top: 20px; color: rgba(255,255,255,.62); }
+.jaz-photo img {
+  width: 100%;
+  height: 100%;
+  min-height: 650px;
+  display: block;
+  object-fit: cover;
+  object-position: center 48%;
+}
+
+.jaz-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(4,23,42,.04) 38%, rgba(4,23,42,.88) 100%),
+    linear-gradient(90deg, rgba(4,23,42,.14), transparent 34%);
+}
+
+.jaz-photo-overlay {
+  position: absolute;
+  left: 42px;
+  right: 42px;
+  bottom: 38px;
+  z-index: 2;
+  color: #fff;
+}
+
+.jaz-photo-overlay > span {
+  display: block;
+  margin-bottom: 8px;
+  color: #efd18b;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .24em;
+}
+
+.jaz-photo-overlay > strong {
+  display: block;
+  max-width: 760px;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(34px,4.2vw,62px);
+  line-height: .95;
+  font-weight: 500;
+  color: #fff;
+}
+
+.jaz-photo-overlay > small {
+  display: block;
+  margin-top: 14px;
+  color: rgba(255,255,255,.78);
+  font-size: 12px;
+  letter-spacing: .12em;
+}
 
 .who-for { padding: 100px 7vw; background:#fff; }
 .who-grid { margin-top: 44px; display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
@@ -252,6 +299,9 @@ body.morocco-page {
   .morocco-hero-route{padding:70px 24px;min-height:480px}
   .morocco-intro,.who-for,.morocco-details,.morocco-enquire{padding:70px 24px}
   .trip-timeline{padding:0 24px 70px}
-  .jaz-copy,.jaz-photo-placeholder{padding:70px 24px}
+  .jaz-copy{padding:70px 24px}
+  .jaz-photo{min-height:460px}
+  .jaz-photo img{min-height:460px}
+  .jaz-photo-overlay{left:24px;right:24px;bottom:24px}
   .who-grid{grid-template-columns:1fr}
 }

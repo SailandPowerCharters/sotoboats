@@ -2074,3 +2074,53 @@ footer p {
     animation: none !important;
   }
 }
+
+
+/* ---------- Hero alignment + booking CTA refinement ---------- */
+.helm-shell {
+  transform: translateX(52px);
+}
+
+#primaryHeroCta {
+  min-width: 320px;
+  max-width: 340px;
+  padding: 13px 24px;
+  line-height: 1.08;
+  font-weight: 800;
+  letter-spacing: .01em;
+  white-space: normal;
+  text-align: center;
+  color: #08284a;
+  -webkit-text-stroke: .2px #08284a;
+  text-shadow: 0 0 .35px #08284a;
+}
+
+.hero-actions {
+  align-items: center;
+}
+
+@media (max-width: 1180px) {
+  .helm-shell {
+    transform: translateX(30px);
+  }
+
+  #primaryHeroCta {
+    min-width: 300px;
+    max-width: 320px;
+  }
+}
+
+@media (max-width: 760px) {
+  .helm-shell {
+    transform: none !important;
+  }
+
+  #primaryHeroCta {
+    min-width: 0;
+    max-width: none !important;
+    width: 100%;
+    padding: 13px 18px;
+    line-height: 1.12;
+    -webkit-text-stroke: .15px #08284a;
+  }
+}

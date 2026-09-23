@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0b1d2f" />
-  <meta name="description" content="Sotoboats — charters, boats for sale, marine services and holiday experiences from Estepona and the western Costa del Sol." />
+  <meta name="description" content="Sotoboats — private boat charters, celebrations, sailing adventures and Mediterranean experiences from Estepona and the Costa del Sol." />
   <title>Sotoboats | Your life on the water starts here</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,11 +24,10 @@
     </button>
 
     <nav class="main-nav" id="mainNav" aria-label="Main navigation">
-      <a href="#charter">Charter</a>
-      <a href="#sale">Boats for Sale</a>
-      <a href="#sell">Sell Your Boat</a>
-      <a href="#services">Marine Services</a>
+      <a href="#charter">Charters</a>
       <a href="#experiences">Experiences</a>
+      <a href="#morocco">Sail to Morocco</a>
+      <a href="#boats">Our Boats</a>
       <a href="#contact">Contact</a>
       <a href="/portal/" class="mobile-owner-link">Boat owner login</a>
     </nav>
@@ -49,7 +48,7 @@
         <p class="eyebrow">ESTEPONA · COSTA DEL SOL</p>
         <h1>Your life on the water starts here.</h1>
         <p class="hero-intro" id="heroIntro">
-          Charter, celebrate, explore or find your next boat with one trusted local team.
+          Private charters, celebrations and unforgettable days on the Mediterranean — all from one trusted local team in Estepona.
         </p>
         <div class="hero-actions">
           <a class="btn btn-gold" id="primaryHeroCta" href="https://sp-charter-dashboard.onrender.com/book" target="_blank" rel="noopener">View our Charter calendar<br>and book online</a>
@@ -145,25 +144,25 @@
             </svg>
           </div>
 
-          <button class="helm-option option-top active" data-key="charter" aria-label="Choose Charter">
-            <span>Charter</span>
+          <button class="helm-option option-top active" data-key="private" aria-label="Choose Private Charter">
+            <span>Private<br />Charter</span>
           </button>
-          <button class="helm-option option-right" data-key="sale" aria-label="Choose Boats for Sale">
-            <span>Boats<br />for Sale</span>
+          <button class="helm-option option-right" data-key="celebrations" aria-label="Choose Celebrations">
+            <span>Celebrate</span>
           </button>
-          <button class="helm-option option-bottom" data-key="services" aria-label="Choose Marine Services">
-            <span>Marine<br />Services</span>
+          <button class="helm-option option-bottom" data-key="morocco" aria-label="Choose Sail to Morocco">
+            <span>Morocco<br />Sailing</span>
           </button>
-          <button class="helm-option option-left" data-key="sell" aria-label="Choose Sell Your Boat">
-            <span>Sell Your<br />Boat</span>
+          <button class="helm-option option-left" data-key="water" aria-label="Choose Water Experiences">
+            <span>Water<br />Experiences</span>
           </button>
         </div>
 
         <aside class="helm-preview" id="helmPreview">
-          <p class="preview-kicker" id="previewKicker">CHARTER</p>
+          <p class="preview-kicker" id="previewKicker">PRIVATE CHARTER</p>
           <h2 id="previewTitle">Make the Mediterranean yours.</h2>
           <p id="previewText">
-            Browse featured boats or tell us what you need and we will find the right charter for you.
+            Tell us the kind of day you have in mind and we’ll help you find the right boat, experience and crew.
           </p>
           <a class="text-link" id="previewLink" href="#charter">Explore charters →</a>
         </aside>
@@ -268,6 +267,20 @@
             <a href="#experiences">See the experiences →</a>
           </div>
         </article>
+
+        <article class="charter-feature morocco-card">
+          <div class="morocco-card-visual">
+            <span class="morocco-route-mini">ESTEPONA → MARINA SMIR</span>
+            <strong>SAIL TO<br>MOROCCO</strong>
+            <small>2 sailing days · 2 nights in Marina Smir</small>
+          </div>
+          <div class="charter-feature-copy">
+            <span>SIGNATURE SAILING EXPERIENCE</span>
+            <h3>Cross the Strait aboard Jaz II</h3>
+            <p>For sailors with some experience who want a proper passage, two nights in Marina Smir and something beyond the usual day charter.</p>
+            <a href="/morocco/">Discover the Morocco sailing trip →</a>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -327,41 +340,49 @@
       </div>
     </section>
 
-    <section class="section section-navy" id="sale">
-      <div class="brokerage-grid">
-        <div>
-          <p class="eyebrow">BOATS FOR SALE</p>
-          <h2>Your next boat might be closer than you think.</h2>
-          <p class="section-lead">Browse selected boats for sale in Estepona and across the Costa del Sol, with local help from first enquiry to handover.</p>
-          <a class="btn btn-gold" href="#contact">Explore boats for sale</a>
+    <section class="morocco-feature" id="morocco">
+      <div class="morocco-feature-copy">
+        <p class="eyebrow">SIGNATURE SAILING EXPERIENCE</p>
+        <h2>Sail to Morocco.</h2>
+        <p class="morocco-big">Two sailing days. Two nights in Marina Smir. Aboard <strong>Jaz II</strong>, our Jeanneau Sun Odyssey 45 DS.</p>
+        <p>Created for sailors with some previous experience who want more than a few hours on the water. Cross the Strait, spend two nights in Marina Smir and enjoy a proper Mediterranean sailing adventure.</p>
+        <div class="morocco-facts">
+          <span><strong>2</strong>Sailing days</span>
+          <span><strong>2</strong>Nights in Smir</span>
+          <span><strong>45 ft</strong>Jaz II</span>
         </div>
-        <img src="/media/sll.jpg" alt="Motor yacht on the Mediterranean" />
+        <a class="btn btn-gold" href="/morocco/">Explore the Morocco trip</a>
+      </div>
+      <div class="morocco-route">
+        <div class="route-port route-start"><small>START</small><strong>ESTEPONA</strong></div>
+        <div class="route-line"><span>≈</span><span>≈</span><span>≈</span></div>
+        <div class="route-port route-end"><small>MOROCCO</small><strong>MARINA SMIR</strong></div>
+        <p>Across the Strait of Gibraltar</p>
       </div>
     </section>
 
-    <section class="section sell-section" id="sell">
-      <div class="section-heading">
-        <p class="eyebrow dark">SELL YOUR BOAT</p>
-        <h2>Give your boat the right audience.</h2>
-        <p class="section-lead dark-copy">Let Sotoboats present your boat professionally, manage enquiries and connect you with serious prospective buyers.</p>
-        <a class="btn btn-navy" href="#contact">Talk to us about selling</a>
-      </div>
-    </section>
-
-    <section class="section services-section" id="services">
+    <section class="section our-boats-section" id="boats">
       <div class="section-heading split-heading">
         <div>
-          <p class="eyebrow dark">FOR BOAT OWNERS</p>
-          <h2>Look after the boat. Enjoy more of it.</h2>
-          <p class="section-lead dark-copy">Practical local support and trusted marine professionals around Estepona and the surrounding marinas.</p>
+          <p class="eyebrow dark">OUR BOATS</p>
+          <h2>Find the boat that fits your day.</h2>
+          <p class="section-lead dark-copy">From relaxed private charters to group celebrations and proper sailing adventures, tell us what you want from the day and we’ll help match you to the right boat.</p>
         </div>
-        <a class="text-link dark-link" href="#contact">Explore marine services →</a>
+        <a class="text-link dark-link" href="https://sp-charter-dashboard.onrender.com/book" target="_blank" rel="noopener">View charter calendar →</a>
       </div>
-      <div class="service-grid">
-        <div class="service-card"><span>01</span><h3>Maintenance &amp; repairs</h3><p>Trusted local support for routine and reactive work.</p></div>
-        <div class="service-card"><span>02</span><h3>Boat preparation</h3><p>Cleaning, detailing and pre-charter or pre-sale preparation.</p></div>
-        <div class="service-card"><span>03</span><h3>Owner support</h3><p>Local eyes and practical help when you’re away.</p></div>
-        <div class="service-card"><span>04</span><h3>Logistics</h3><p>Help coordinating equipment, supplies and trusted services.</p></div>
+      <div class="boat-focus-grid">
+        <article>
+          <img src="/media/sll.jpg" alt="Motor yacht available for charter" />
+          <div><span>MOTOR YACHT CHARTERS</span><h3>Relax, celebrate, explore.</h3><p>Private days on the Costa del Sol with your own group.</p></div>
+        </article>
+        <article class="jaz-card">
+          <div class="jaz-visual">
+            <span>JAZ II</span>
+            <strong>JEANNEAU<br>SUN ODYSSEY 45 DS</strong>
+            <small>SAILING · MOROCCO · PASSAGE EXPERIENCE</small>
+          </div>
+          <div><span>SAILING ADVENTURES</span><h3>Go further under sail.</h3><p>For guests who want an active sailing experience beyond the usual charter.</p></div>
+        </article>
       </div>
     </section>
 
@@ -369,11 +390,11 @@
       <div>
         <p class="eyebrow">OUR COAST</p>
         <h2>Start in Estepona.<br />See where the day takes you.</h2>
-        <p>Cruise the Costa del Sol, find a quiet swimming spot, head towards Sotogrande, enjoy lunch by the water or simply let the coastline unfold.</p>
+        <p>Cruise the Costa del Sol, find a quiet swimming spot, head towards Sotogrande — or, for experienced sailors, cross the Strait for our Marina Smir sailing adventure.</p>
         <a class="text-link" href="#contact">Discover Estepona by boat →</a>
       </div>
       <div class="destination-names">
-        <span>ESTEPONA</span><span>SOTOGRANDE</span><span>DUQUESA</span><span>MARBELLA</span><span>PUERTO BANÚS</span><span>GIBRALTAR</span>
+        <span>ESTEPONA</span><span>SOTOGRANDE</span><span>DUQUESA</span><span>MARBELLA</span><span>GIBRALTAR</span><span>MARINA SMIR</span>
       </div>
     </section>
 
@@ -385,7 +406,7 @@
         <p>Tell us the date, who’s coming and what you have in mind. We’ll help with the rest.</p>
         <div class="cta-row">
           <a class="btn btn-gold" href="mailto:info@sotoboats.com">Find my boat</a>
-          <a class="btn btn-ghost" href="https://wa.me/" target="_blank" rel="noopener">Chat on WhatsApp</a>
+          <a class="btn btn-ghost" href="https://wa.me/34644053656" target="_blank" rel="noopener">Chat on WhatsApp</a>
         </div>
         <small>SOTOBOATS · YACHTS · PEOPLE · PLACES</small>
       </div>
@@ -396,7 +417,7 @@
       <span class="brand-mark small">S</span>
       <div><strong>SOTOBOATS</strong><small>Estepona · Costa del Sol</small></div>
     </div>
-    <p>Charters · Boats for Sale · Brokerage · Marine Services · Holiday Experiences</p>
+    <p>Private Charters · Celebrations · Sailing Adventures · Mediterranean Experiences</p>
     <p class="copyright">© <span id="year"></span> Sotoboats. All rights reserved.</p>
   </footer>
 

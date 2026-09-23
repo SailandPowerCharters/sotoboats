@@ -663,6 +663,167 @@
   }
 </style>
 
+
+<style id="hero-grid-structure-fix">
+@media (min-width:1181px){
+  section.hero{
+    position:relative !important;
+    display:grid !important;
+    grid-template-columns:minmax(330px,.95fr) minmax(600px,1.55fr) 250px 260px !important;
+    min-height:635px !important;
+    height:635px !important;
+    padding:0 !important;
+    gap:0 !important;
+    overflow:hidden !important;
+    align-items:stretch !important;
+  }
+
+  /* Decorative layers must not become grid columns/rows */
+  .hero-backdrop,
+  .hero-overlay{
+    position:absolute !important;
+    inset:0 !important;
+    width:100% !important;
+    height:100% !important;
+    pointer-events:none !important;
+  }
+
+  .hero-backdrop{ z-index:0 !important; }
+  .hero-overlay{ z-index:2 !important; }
+
+  /* Explicit grid placement */
+  .hero-copy{
+    grid-column:1 !important;
+    grid-row:1 !important;
+    position:relative !important;
+    z-index:4 !important;
+    align-self:center !important;
+    padding:62px 34px 48px 44px !important;
+    width:auto !important;
+    max-width:none !important;
+    margin:0 !important;
+  }
+
+  .hero-bride-wrap{
+    grid-column:2 !important;
+    grid-row:1 !important;
+    position:relative !important;
+    inset:auto !important;
+    z-index:1 !important;
+    width:100% !important;
+    height:635px !important;
+    min-height:635px !important;
+    margin:0 !important;
+    overflow:hidden !important;
+  }
+
+  .hero-bride-wrap img,
+  .hero-bride{
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;
+    object-position:center 46% !important;
+  }
+
+  .helm-zone{
+    grid-column:3 !important;
+    grid-row:1 !important;
+    position:relative !important;
+    inset:auto !important;
+    z-index:5 !important;
+    width:250px !important;
+    height:635px !important;
+    min-height:635px !important;
+    margin:0 !important;
+    padding:24px 14px 22px !important;
+    transform:none !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    box-sizing:border-box !important;
+    background:linear-gradient(180deg,#0b3a65 0%,#08284a 100%) !important;
+    border-left:1px solid rgba(208,168,92,.28) !important;
+    border-right:1px solid rgba(208,168,92,.28) !important;
+  }
+
+  .helm-shell{
+    width:216px !important;
+    height:216px !important;
+    margin:14px auto 0 !important;
+    flex:0 0 auto !important;
+  }
+
+  .helm-wheel{
+    width:192px !important;
+    height:192px !important;
+  }
+
+  .helm-option{
+    width:64px !important;
+    height:64px !important;
+    font-size:9px !important;
+  }
+
+  .helm-preview{
+    position:relative !important;
+    inset:auto !important;
+    width:218px !important;
+    margin:22px auto 0 !important;
+    padding:18px 16px !important;
+    box-sizing:border-box !important;
+  }
+
+  .helm-preview h2{
+    font-size:28px !important;
+    line-height:.98 !important;
+  }
+
+  .helm-preview p{
+    font-size:12px !important;
+    line-height:1.5 !important;
+  }
+
+  .experience-rail{
+    grid-column:4 !important;
+    grid-row:1 !important;
+    position:relative !important;
+    inset:auto !important;
+    z-index:5 !important;
+    width:260px !important;
+    height:635px !important;
+    min-height:635px !important;
+    margin:0 !important;
+    padding:24px 18px 24px !important;
+    box-sizing:border-box !important;
+    background:#0a3157 !important;
+    display:flex !important;
+    flex-direction:column !important;
+  }
+
+  .experience-rail-window{
+    flex:1 1 auto !important;
+    min-height:0 !important;
+    overflow:hidden !important;
+  }
+
+  .mobile-experience-marquee{
+    display:none !important;
+  }
+}
+
+@media (min-width:1181px) and (max-width:1450px){
+  section.hero{
+    grid-template-columns:minmax(300px,.9fr) minmax(520px,1.45fr) 225px 235px !important;
+  }
+  .helm-zone{width:225px !important}
+  .experience-rail{width:235px !important}
+  .helm-shell{width:202px !important;height:202px !important}
+  .helm-wheel{width:178px !important;height:178px !important}
+  .helm-preview{width:198px !important}
+}
+</style>
+
 </head>
 <body>
   <header class="site-header">

@@ -294,6 +294,14 @@ body{
   object-fit:cover;
 }
 
+.marquee-track article.friends-card img{
+  object-position:center center;
+}
+
+.marquee-track article.celebration-card img{
+  object-position:center 12%;
+}
+
 .marquee-track article::after{
   content:"";
   position:absolute;

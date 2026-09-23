@@ -391,6 +391,145 @@
   }
 </style>
 
+
+<style id="helm-control-column-layout">
+@media (min-width:1181px){
+  section.hero{
+    display:grid !important;
+    grid-template-columns:minmax(320px, .95fr) minmax(560px, 1.55fr) 250px 260px !important;
+    align-items:stretch !important;
+    gap:0 !important;
+    padding:0 !important;
+    min-height:635px !important;
+    overflow:hidden !important;
+  }
+
+  .hero-copy{
+    position:relative !important;
+    z-index:4 !important;
+    padding:72px 34px 52px 44px !important;
+    align-self:center !important;
+  }
+
+  .hero-bride-wrap{
+    position:relative !important;
+    inset:auto !important;
+    width:100% !important;
+    height:100% !important;
+    min-height:635px !important;
+    margin:0 !important;
+    order:initial !important;
+  }
+
+  .hero-bride-wrap img{
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;
+    object-position:center 45% !important;
+  }
+
+  .helm-zone{
+    position:relative !important;
+    inset:auto !important;
+    width:250px !important;
+    height:auto !important;
+    min-height:635px !important;
+    padding:26px 14px 24px !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    background:linear-gradient(180deg,#0b3a65 0%,#08284a 100%) !important;
+    border-left:1px solid rgba(208,168,92,.28) !important;
+    border-right:1px solid rgba(208,168,92,.28) !important;
+    transform:none !important;
+  }
+
+  .helm-zone .route-label,
+  .helm-zone .helm-label{
+    margin-top:0 !important;
+  }
+
+  .helm-shell{
+    width:220px !important;
+    height:220px !important;
+    margin-top:16px !important;
+    flex:0 0 auto !important;
+  }
+
+  .helm-wheel{
+    width:196px !important;
+    height:196px !important;
+  }
+
+  .helm-option{
+    width:66px !important;
+    height:66px !important;
+    font-size:9px !important;
+  }
+
+  .helm-preview{
+    position:relative !important;
+    inset:auto !important;
+    width:220px !important;
+    margin-top:26px !important;
+    padding:20px 18px 18px !important;
+    background:#08233f !important;
+    border:1px solid rgba(208,168,92,.72) !important;
+    box-sizing:border-box !important;
+  }
+
+  .helm-preview h2{
+    font-size:30px !important;
+    line-height:.96 !important;
+  }
+
+  .helm-preview p{
+    font-size:13px !important;
+    line-height:1.55 !important;
+  }
+
+  .experience-rail{
+    position:relative !important;
+    inset:auto !important;
+    width:260px !important;
+    min-height:635px !important;
+    padding:26px 18px 28px !important;
+    border-left:none !important;
+    background:#0a3157 !important;
+    display:flex !important;
+    flex-direction:column !important;
+    box-sizing:border-box !important;
+  }
+
+  .experience-rail-window{
+    flex:1 1 auto !important;
+    min-height:0 !important;
+  }
+
+  .mobile-experience-marquee{
+    display:none !important;
+  }
+}
+
+@media (min-width:1181px) and (max-width:1450px){
+  section.hero{
+    grid-template-columns:minmax(300px,.9fr) minmax(500px,1.45fr) 225px 235px !important;
+  }
+  .helm-zone{width:225px !important}
+  .helm-shell{width:205px !important;height:205px !important}
+  .helm-wheel{width:180px !important;height:180px !important}
+  .helm-preview{width:198px !important}
+  .experience-rail{width:235px !important}
+}
+
+@media (max-width:1180px){
+  .helm-zone{
+    transform:none !important;
+  }
+}
+</style>
+
 </head>
 <body>
   <header class="site-header">

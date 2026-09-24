@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#08284a">
+  <meta name="description" content="Tell Sotoboats what kind of charter day you want and see suitable boat options with indicative pricing.">
+  <title>Find Me a Boat | Sotoboats</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--navy:#08284a;--navy-dark:#061f3a;--gold:#d3aa5a;--gold-light:#efd18b;--cream:#f5f0e7}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--cream);color:var(--navy);font-family:"DM Sans",sans-serif}
+    header{height:78px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:var(--navy-dark);border-bottom:1px solid rgba(211,170,90,.45)}
+    .brand{color:var(--gold-light);font-family:"Playfair Display",serif;font-size:27px;letter-spacing:.08em;text-decoration:none}
+    .back{color:#fff;text-decoration:none;font-size:13px;font-weight:700}
+    .hero{padding:60px clamp(22px,7vw,100px);display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center;background:linear-gradient(135deg,#08284a,#061f3a);color:#fff}
+    .eyebrow{margin:0 0 10px;color:var(--gold-light);font-size:11px;font-weight:800;letter-spacing:.2em}
+    .hero h1{margin:0;font-family:"Playfair Display",serif;font-size:clamp(50px,6vw,88px);line-height:.95;font-weight:500}
+    .hero h1 span{color:var(--gold-light)}
+    .hero p:last-child{max-width:680px;font-size:18px;line-height:1.6;color:rgba(255,255,255,.84)}
+    .hero-note{justify-self:end;width:min(330px,100%);padding:28px;border:1px solid rgba(211,170,90,.5);border-radius:12px}
+    .hero-note strong{display:block;margin-top:8px;font-family:"Playfair Display",serif;font-size:32px;line-height:1.05}
+    main{padding:55px clamp(18px,6vw,90px) 85px}
+    .wrap{max-width:1400px;margin:auto}
+    .step{display:flex;gap:18px;align-items:center;margin-bottom:25px}
+    .step-badge{width:54px;height:54px;border-radius:50%;border:1px solid #c8a259;display:grid;place-items:center;color:#a87f3d;font-family:"Playfair Display",serif;font-size:22px}
+    .step h2,.results-head h2{margin:0;font-family:"Playfair Display",serif;font-size:clamp(40px,4vw,60px);font-weight:500}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    .field,.extras{background:#fff;border:1px solid rgba(8,40,74,.12);border-radius:10px;padding:18px 20px}
+    .field span,.extras legend{display:block;margin-bottom:8px;color:#6d7883;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+    input,select{font-family:"DM Sans",sans-serif}
+    .field input,.field select{width:100%;border:0;border-bottom:1px solid #d7dbe0;padding:7px 0 10px;background:transparent;color:var(--navy);font-weight:600;font-size:17px;outline:none}
+    .extras{grid-column:1/-1}
+    .chips{display:flex;gap:8px;flex-wrap:wrap}
+    .chips input{position:absolute;opacity:0}
+    .chips span{display:inline-flex;padding:10px 14px;border:1px solid #cfd6dd;border-radius:999px;cursor:pointer;font-size:13px;font-weight:700}
+    .chips input:checked+span{background:var(--navy);border-color:var(--navy);color:#fff}
+    .submit{margin-top:20px;min-height:54px;padding:0 28px;border:0;border-radius:999px;background:var(--gold);color:var(--navy);font-weight:900;font-size:15px;cursor:pointer}
+    .small{font-size:12px;color:#78828c}
+    #resultsSection{padding-top:65px}
+    .results-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:22px}
+    .again{border:0;background:transparent;color:var(--navy);font-weight:800;text-decoration:underline;cursor:pointer}
+    .boats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+    .card{display:flex;flex-direction:column;overflow:hidden;background:#fff;border:1px solid rgba(8,40,74,.13);border-radius:12px;box-shadow:0 15px 40px rgba(8,40,74,.07)}
+    .card img{width:100%;height:270px;object-fit:cover}
+    .body{padding:22px;display:flex;flex-direction:column;flex:1}
+    .tag{display:inline-block;align-self:flex-start;margin-bottom:10px;padding:7px 10px;border-radius:999px;background:#f3ead8;color:#8d692e;font-size:10px;font-weight:900}
+    .type{color:#a87f3d;font-size:10px;font-weight:900;letter-spacing:.14em}
+    .card h3{margin:7px 0 10px;font-family:"Playfair Display",serif;font-size:32px;font-weight:500}
+    .card p{margin:0 0 13px;color:#536273;line-height:1.55}
+    .price{margin-top:auto;padding-top:13px;border-top:1px solid #e4e7ea;display:flex;justify-content:space-between;gap:12px;align-items:end}
+    .price strong{font-family:"Playfair Display",serif;font-size:29px}
+    .price small{display:block;color:#7c8792;font-size:10px}
+    .select{margin-top:15px;width:100%;min-height:46px;border-radius:999px;border:1px solid var(--navy);background:#fff;color:var(--navy);font-weight:800;cursor:pointer}
+    .select.selected{background:var(--navy);color:#fff}
+    .network{grid-column:1/-1;padding:30px;background:var(--navy);color:#fff;border-radius:12px}
+    .network h3{margin:5px 0 10px;font-family:"Playfair Display",serif;font-size:38px}
+    .contact{margin-top:32px;padding:34px;display:grid;grid-template-columns:1fr 1fr;gap:40px;background:var(--navy);color:#fff;border-radius:12px}
+    .contact h2{margin:7px 0 10px;font-family:"Playfair Display",serif;font-size:42px;font-weight:500}
+    .contact p{color:rgba(255,255,255,.8)}
+    .contact-fields{display:grid;gap:10px}
+    .contact-fields input{min-height:48px;padding:0 14px;border:1px solid rgba(255,255,255,.25);border-radius:7px;background:rgba(255,255,255,.06);color:#fff}
+    .contact-fields input::placeholder{color:rgba(255,255,255,.65)}
+    .contact-fields button{min-height:50px;border:0;border-radius:999px;background:var(--gold);color:var(--navy);font-weight:900;cursor:pointer}
+    @media(max-width:900px){.hero{grid-template-columns:1fr}.hero-note{justify-self:start}.boats{grid-template-columns:1fr 1fr}.contact{grid-template-columns:1fr}}
+    @media(max-width:650px){header{height:70px}.grid{grid-template-columns:1fr}.extras{grid-column:auto}.boats{grid-template-columns:1fr}.results-head{align-items:flex-start;flex-direction:column}.hero{padding:50px 20px}main{padding:40px 15px 60px}}
+  </style>
+</head>
+<body>
+<header>
+  <a class="brand" href="/">SOTOBOATS</a>
+  <a class="back" href="/">← Back to charters</a>
+</header>
+
+<section class="hero">
+  <div>
+    <p class="eyebrow">FIND ME A BOAT</p>
+    <h1>Tell us the plan.<br><span>We’ll narrow it down.</span></h1>
+    <p>Answer a few quick questions and we’ll show you suitable charter options with indicative prices.</p>
+  </div>
+  <div class="hero-note">
+    <p class="eyebrow">ESTEPONA · COSTA DEL SOL</p>
+    <strong>One enquiry.<br>More options.</strong>
+  </div>
+</section>
+
+<main>
+  <div class="wrap">
+    <form id="boatFinderForm">
+      <div class="step">
+        <span class="step-badge">01</span>
+        <div><p class="eyebrow" style="color:#a87f3d">YOUR DAY</p><h2>What are you planning?</h2></div>
+      </div>
+
+      <div class="grid">
+        <label class="field"><span>Date</span><input type="date" name="date" id="tripDate" required></label>
+        <label class="field"><span>How many people?</span>
+          <select name="guests" required>
+            <option value="">Choose</option><option value="2">1–2</option><option value="4">3–4</option><option value="6">5–6</option><option value="8">7–8</option><option value="10">9–10</option><option value="12">11–12</option><option value="13">More than 12</option>
+          </select>
+        </label>
+        <label class="field"><span>What kind of day?</span>
+          <select name="occasion" required>
+            <option value="">Choose</option><option value="private">Private charter</option><option value="celebration">Birthday / celebration</option><option value="henstag">Hen / stag</option><option value="family">Family & friends</option><option value="sunset">Sunset</option><option value="sailing">Proper sailing</option><option value="waterfun">Water fun</option>
+          </select>
+        </label>
+        <label class="field"><span>How long?</span>
+          <select name="duration" required>
+            <option value="">Choose</option><option value="2">2 hours</option><option value="4">4 hours</option><option value="6">6 hours</option><option value="8">8 hours</option>
+          </select>
+        </label>
+        <label class="field"><span>Approximate budget</span>
+          <select name="budget">
+            <option value="99999">Show me all suitable options</option><option value="600">Up to €600</option><option value="900">Up to €900</option><option value="1200">Up to €1,200</option><option value="1700">Up to €1,700</option><option value="2500">Up to €2,500</option><option value="3500">Up to €3,500</option>
+          </select>
+        </label>
+        <fieldset class="extras">
+          <legend>Anything you particularly want?</legend>
+          <div class="chips">
+            <label><input type="checkbox" name="extras" value="Food & drinks"><span>Food & drinks</span></label>
+            <label><input type="checkbox" name="extras" value="Paddleboards"><span>Paddleboards</span></label>
+            <label><input type="checkbox" name="extras" value="Snorkelling"><span>Snorkelling</span></label>
+            <label><input type="checkbox" name="extras" value="Celebration"><span>Celebration</span></label>
+            <label><input type="checkbox" name="extras" value="Sunset"><span>Sunset</span></label>
+            <label><input type="checkbox" name="extras" value="Dolphin spotting"><span>Dolphin spotting</span></label>
+          </div>
+        </fieldset>
+      </div>
+
+      <button class="submit" type="submit">Show me suitable boats →</button>
+      <p class="small">Prices shown are indicative and subject to date, availability and final confirmation.</p>
+    </form>
+
+    <section id="resultsSection" hidden>
+      <div class="results-head">
+        <div><p class="eyebrow" style="color:#a87f3d">YOUR MATCHES</p><h2 id="resultsTitle">A few good options.</h2></div>
+        <button type="button" class="again" id="startAgain">Change my answers</button>
+      </div>
+      <div class="boats" id="boatResults"></div>
+
+      <div class="contact">
+        <div>
+          <p class="eyebrow">LIKE ONE OF THESE?</p>
+          <h2>Send Sotoboats your shortlist.</h2>
+          <p>We’ll check the date, confirm the exact price and help you choose.</p>
+        </div>
+        <div class="contact-fields">
+          <input id="customerName" type="text" placeholder="Your name">
+          <input id="customerPhone" type="tel" placeholder="WhatsApp / phone">
+          <input id="customerEmail" type="email" placeholder="Email">
+          <button type="button" id="sendWhatsApp">Send enquiry on WhatsApp</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script>
+const boats=[
+{id:"jaz",name:"Jaz II",type:"Jeanneau Sun Odyssey 45 DS",image:"https://static.wixstatic.com/media/24ac4e_42b5209b6ac84a2896f864776a94a8d2~mv2.jpeg",occasions:["private","family","sunset","sailing","waterfun"],prices:{2:412,4:690,6:920,8:1102},included:"Skipper, hostess, snacks, drinks, music, snorkelling and paddleboards.",note:"A strong choice when the sailing itself is part of the experience."},
+{id:"master",name:"Master V",type:"Lagoon 380 Catamaran",image:"/media/family-paddleboard.jpg",occasions:["private","celebration","henstag","family","sunset","waterfun"],prices:{2:484,4:914,6:1271,8:1610},included:"Skipper, hostess, snacks, drinks, music, snorkelling and paddleboards.",note:"Lots of sociable deck space for groups, families and celebrations."},
+{id:"sll",name:"Sarah's Lucky Lady",type:"Sunseeker Camargue 50",image:"/media/sll.jpg",occasions:["private","celebration","henstag","family","sunset","waterfun"],prices:{2:850,4:1550,6:2300,8:2650},included:"Fuel, skipper, hostess, snacks, drinks, music, snorkelling and paddleboards.",note:"A premium motor-yacht option for celebrations and a faster day on the coast."}
+];
+const form=document.getElementById("boatFinderForm"),section=document.getElementById("resultsSection"),results=document.getElementById("boatResults"),title=document.getElementById("resultsTitle");
+let answers=null,selected=new Set();
+const money=n=>new Intl.NumberFormat("en-IE",{style:"currency",currency:"EUR",maximumFractionDigits:0}).format(n);
+function score(b,o){let s=b.occasions.includes(o)?10:0;if(o==="sailing"&&b.id==="jaz")s+=10;if((o==="celebration"||o==="henstag")&&b.id==="master")s+=4;if(o==="private"&&b.id==="sll")s+=3;return s}
+function card(b,d){const tag=b.id==="jaz"?"BEST FOR SAILING":b.id==="master"?"GREAT FOR GROUPS":"MOTOR YACHT OPTION";return `<article class="card"><img src="${b.image}" alt="${b.name}"><div class="body"><span class="tag">${tag}</span><span class="type">${b.type}</span><h3>${b.name}</h3><p>${b.note}</p><p><strong>Included:</strong> ${b.included}</p><div class="price"><div><small>INDICATIVE ${d}-HOUR PRICE</small><strong>${money(b.prices[d])}</strong></div><small>Subject to availability<br>and confirmation</small></div><button class="select" type="button" data-boat="${b.id}">Add to my shortlist</button></div></article>`}
+form.addEventListener("submit",e=>{e.preventDefault();const d=new FormData(form),g=Number(d.get("guests")),dur=Number(d.get("duration")),budget=Number(d.get("budget")||99999),occasion=d.get("occasion");answers={date:d.get("date"),guests:g,duration:dur,budget,occasion,extras:d.getAll("extras")};selected.clear();
+if(g>12){results.innerHTML=`<article class="network"><p class="eyebrow">LARGER GROUP</p><h3>We’ll search the wider Sotoboats network.</h3><p>Your group is larger than these example boats. Send us the enquiry and we’ll look for suitable larger boats and catamarans.</p></article>`;title.textContent="Let us source something larger."}
+else{const matches=boats.map(b=>({...b,s:score(b,occasion)})).filter(b=>b.s>0).sort((a,b)=>b.s-a.s||a.prices[dur]-b.prices[dur]);const within=matches.filter(b=>b.prices[dur]<=budget),show=within.length?within:matches;if(show.length){results.innerHTML=show.map(b=>card(b,dur)).join("");title.textContent=within.length?"These fit your plan.":"Closest matches to your plan."}else{results.innerHTML=`<article class="network"><p class="eyebrow">WE'LL SOURCE IT</p><h3>Nothing in the example fleet quite fits.</h3><p>Send us your details and we’ll look for the right match.</p></article>`;title.textContent="Let us find a better fit."}}
+section.hidden=false;section.scrollIntoView({behavior:"smooth",block:"start"})});
+results.addEventListener("click",e=>{const b=e.target.closest(".select");if(!b)return;const id=b.dataset.boat;if(selected.has(id)){selected.delete(id);b.classList.remove("selected");b.textContent="Add to my shortlist"}else{selected.add(id);b.classList.add("selected");b.textContent="✓ Added to shortlist"}});
+document.getElementById("startAgain").addEventListener("click",()=>form.scrollIntoView({behavior:"smooth",block:"start"}));
+document.getElementById("sendWhatsApp").addEventListener("click",()=>{if(!answers)return;const names=[...selected].map(id=>boats.find(b=>b.id===id)?.name).filter(Boolean);const msg=["Hi Sotoboats, I'd like help finding a charter.","",`Date: ${answers.date||"Flexible"}`,`Group: ${answers.guests>12?"More than 12":`Up to ${answers.guests}`}`,`Duration: ${answers.duration} hours`,`Type: ${answers.occasion}`,`Budget: ${answers.budget>=99999?"Open":`Up to €${answers.budget}`}`,`Extras: ${answers.extras.length?answers.extras.join(", "):"None selected"}`,`Shortlist: ${names.length?names.join(", "):"Please recommend"}`,"",`Name: ${document.getElementById("customerName").value||"Not supplied"}`,`Phone: ${document.getElementById("customerPhone").value||"Not supplied"}`,`Email: ${document.getElementById("customerEmail").value||"Not supplied"}`].join("\n");window.open(`https://wa.me/34644053656?text=${encodeURIComponent(msg)}`,"_blank","noopener")});
+document.getElementById("tripDate").min=new Date().toISOString().split("T")[0];
+</script>
+</body>
+</html>

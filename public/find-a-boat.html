@@ -132,7 +132,21 @@
             <option value="99999">Show me all suitable options</option><option value="600">Up to €600</option><option value="900">Up to €900</option><option value="1200">Up to €1,200</option><option value="1700">Up to €1,700</option><option value="2500">Up to €2,500</option><option value="3500">Up to €3,500</option>
           </select>
         </label>
-        <fieldset class="extras" id="extrasField">
+        
+        <label class="field" id="nameField">
+          <span>Your name</span>
+          <input type="text" name="customer_name" id="customerName" autocomplete="name" required>
+        </label>
+        <label class="field" id="emailField">
+          <span>Email address</span>
+          <input type="email" name="customer_email" id="customerEmail" autocomplete="email" required>
+        </label>
+        <label class="field" id="phoneField">
+          <span>Phone / WhatsApp number</span>
+          <input type="tel" name="customer_phone" id="customerPhone" autocomplete="tel" required>
+        </label>
+
+<fieldset class="extras" id="extrasField">
           <legend>Anything you particularly want?</legend>
           <div class="chips">
             <label><input type="checkbox" name="extras" value="Food & drinks"><span>Food & drinks</span></label>
@@ -171,12 +185,11 @@
           <h2>Send Sotoboats your shortlist.</h2>
           <p>We’ll check the date, confirm the exact price and help you choose.</p>
         </div>
+        
         <div class="contact-fields">
-          <input id="customerName" type="text" placeholder="Your name">
-          <input id="customerPhone" type="tel" placeholder="WhatsApp / phone">
-          <input id="customerEmail" type="email" placeholder="Email">
           <button type="button" id="sendWhatsApp">Send enquiry on WhatsApp</button>
         </div>
+
       </div>
     </section>
   </div>
@@ -207,7 +220,10 @@ function renderMoroccoEnquiry(){
     budget:99999,
     occasion:"morocco",
     extras:[],
-    sailingSkill:sailingSkill
+    sailingSkill:sailingSkill,
+    customerName:new FormData(form).get("customer_name")||"",
+    customerEmail:new FormData(form).get("customer_email")||"",
+    customerPhone:new FormData(form).get("customer_phone")||""
   };
 
   results.innerHTML=`
@@ -222,7 +238,7 @@ function renderMoroccoEnquiry(){
   section.scrollIntoView({behavior:"smooth",block:"start"});
 }
 
-form.addEventListener("submit",e=>{e.preventDefault();const d=new FormData(form),g=Number(d.get("guests")),dur=Number(d.get("duration")),budget=Number(d.get("budget")||99999),occasion=d.get("occasion");if(occasion==="morocco"){renderMoroccoEnquiry();return;}answers={date:d.get("date"),guests:g,duration:dur,budget,occasion,extras:d.getAll("extras"),sailingSkill:d.get("sailing_skill")||""};selected.clear();
+form.addEventListener("submit",e=>{e.preventDefault();const d=new FormData(form),g=Number(d.get("guests")),dur=Number(d.get("duration")),budget=Number(d.get("budget")||99999),occasion=d.get("occasion");if(occasion==="morocco"){renderMoroccoEnquiry();return;}answers={date:d.get("date"),guests:g,duration:dur,budget,occasion,extras:d.getAll("extras"),sailingSkill:d.get("sailing_skill")||"",customerName:d.get("customer_name")||"",customerEmail:d.get("customer_email")||"",customerPhone:d.get("customer_phone")||""};selected.clear();
 if(g>12){results.innerHTML=`<article class="network"><p class="eyebrow">LARGER GROUP</p><h3>We’ll search the wider Sotoboats network.</h3><p>Your group is larger than these example boats. Send us the enquiry and we’ll look for suitable larger boats and catamarans.</p></article>`;title.textContent="Let us source something larger."}
 else{const matches=boats.map(b=>({...b,s:score(b,occasion)})).filter(b=>b.s>0).sort((a,b)=>b.s-a.s||a.prices[dur]-b.prices[dur]);const within=matches.filter(b=>b.prices[dur]<=budget),show=within.length?within:matches;if(show.length){results.innerHTML=show.map(b=>card(b,dur)).join("");title.textContent=within.length?"These fit your plan.":"Closest matches to your plan."}else{results.innerHTML=`<article class="network"><p class="eyebrow">WE'LL SOURCE IT</p><h3>Nothing in the example fleet quite fits.</h3><p>Send us your details and we’ll look for the right match.</p></article>`;title.textContent="Let us find a better fit."}}
 if(occasion==="morocco" && g<=12){
@@ -235,9 +251,9 @@ document.getElementById("sendWhatsApp").addEventListener("click",()=>{
   if(!answers)return;
 
   const names=[...selected].map(id=>boats.find(b=>b.id===id)?.name).filter(Boolean);
-  const name=document.getElementById("customerName").value||"Not supplied";
-  const phone=document.getElementById("customerPhone").value||"Not supplied";
-  const email=document.getElementById("customerEmail").value||"Not supplied";
+  const name=answers.customerName||document.getElementById("customerName")?.value||"Not supplied";
+  const phone=answers.customerPhone||document.getElementById("customerPhone")?.value||"Not supplied";
+  const email=answers.customerEmail||document.getElementById("customerEmail")?.value||"Not supplied";
 
   let lines;
 

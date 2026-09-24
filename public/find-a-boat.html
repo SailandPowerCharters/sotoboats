@@ -104,9 +104,24 @@
         </label>
         <label class="field"><span>What kind of day?</span>
           <select name="occasion" required>
-            <option value="">Choose</option><option value="private">Private charter</option><option value="celebration">Birthday / celebration</option><option value="henstag">Hen / stag</option><option value="family">Family & friends</option><option value="sunset">Sunset</option><option value="sailing">Proper sailing</option><option value="waterfun">Water fun</option>
+            <option value="">Choose</option><option value="private">Private charter</option><option value="celebration">Birthday / celebration</option><option value="henstag">Hen / stag</option><option value="family">Family & friends</option><option value="sunset">Sunset</option><option value="sailing">Proper sailing</option><option value="morocco">Morocco sailing</option><option value="waterfun">Water fun</option>
           </select>
         </label>
+        <label class="field" id="sailingSkillField" hidden>
+          <span>What is your sailing experience?</span>
+          <select name="sailing_skill" id="sailingSkill">
+            <option value="">Choose</option>
+            <option value="Never sailed before">Never sailed before</option>
+            <option value="Beginner — a few trips">Beginner — a few trips</option>
+            <option value="Some experience">Some experience</option>
+            <option value="Confident recreational sailor">Confident recreational sailor</option>
+            <option value="Experienced sailor">Experienced sailor</option>
+          </select>
+          <small id="sailingSkillNote" style="display:block;margin-top:9px;color:#78828c;line-height:1.45">
+            Tell us your experience so we can match the right sailing option.
+          </small>
+        </label>
+
         <label class="field"><span>How long?</span>
           <select name="duration" required>
             <option value="">Choose</option><option value="2">2 hours</option><option value="4">4 hours</option><option value="6">6 hours</option><option value="8">8 hours</option>
@@ -160,22 +175,52 @@
 
 <script>
 const boats=[
-{id:"jaz",name:"Jaz II",type:"Jeanneau Sun Odyssey 45 DS",image:"https://static.wixstatic.com/media/24ac4e_42b5209b6ac84a2896f864776a94a8d2~mv2.jpeg",occasions:["private","family","sunset","sailing","waterfun"],prices:{2:412,4:690,6:920,8:1102},included:"Skipper, hostess, snacks, drinks, music, snorkelling and paddleboards.",note:"A strong choice when the sailing itself is part of the experience."},
+{id:"jaz",name:"Jaz II",type:"Jeanneau Sun Odyssey 45 DS",image:"https://static.wixstatic.com/media/24ac4e_42b5209b6ac84a2896f864776a94a8d2~mv2.jpeg",occasions:["private","family","sunset","sailing","morocco","waterfun"],prices:{2:412,4:690,6:920,8:1102},included:"Skipper, hostess, snacks, drinks, music, snorkelling and paddleboards.",note:"A strong choice when the sailing itself is part of the experience."},
 {id:"master",name:"Master V",type:"Lagoon 380 Catamaran",image:"/media/family-paddleboard.jpg",occasions:["private","celebration","henstag","family","sunset","waterfun"],prices:{2:484,4:914,6:1271,8:1610},included:"Skipper, hostess, snacks, drinks, music, snorkelling and paddleboards.",note:"Lots of sociable deck space for groups, families and celebrations."},
 {id:"sll",name:"Sarah's Lucky Lady",type:"Sunseeker Camargue 50",image:"/media/sll.jpg",occasions:["private","celebration","henstag","family","sunset","waterfun"],prices:{2:850,4:1550,6:2300,8:2650},included:"Fuel, skipper, hostess, snacks, drinks, music, snorkelling and paddleboards.",note:"A premium motor-yacht option for celebrations and a faster day on the coast."}
 ];
 const form=document.getElementById("boatFinderForm"),section=document.getElementById("resultsSection"),results=document.getElementById("boatResults"),title=document.getElementById("resultsTitle");
 let answers=null,selected=new Set();
 const money=n=>new Intl.NumberFormat("en-IE",{style:"currency",currency:"EUR",maximumFractionDigits:0}).format(n);
-function score(b,o){let s=b.occasions.includes(o)?10:0;if(o==="sailing"&&b.id==="jaz")s+=10;if((o==="celebration"||o==="henstag")&&b.id==="master")s+=4;if(o==="private"&&b.id==="sll")s+=3;return s}
-function card(b,d){const tag=b.id==="jaz"?"BEST FOR SAILING":b.id==="master"?"GREAT FOR GROUPS":"MOTOR YACHT OPTION";return `<article class="card"><img src="${b.image}" alt="${b.name}"><div class="body"><span class="tag">${tag}</span><span class="type">${b.type}</span><h3>${b.name}</h3><p>${b.note}</p><p><strong>Included:</strong> ${b.included}</p><div class="price"><div><small>INDICATIVE ${d}-HOUR PRICE</small><strong>${money(b.prices[d])}</strong></div><small>Subject to availability<br>and confirmation</small></div><button class="select" type="button" data-boat="${b.id}">Add to my shortlist</button></div></article>`}
-form.addEventListener("submit",e=>{e.preventDefault();const d=new FormData(form),g=Number(d.get("guests")),dur=Number(d.get("duration")),budget=Number(d.get("budget")||99999),occasion=d.get("occasion");answers={date:d.get("date"),guests:g,duration:dur,budget,occasion,extras:d.getAll("extras")};selected.clear();
+function score(b,o){let s=b.occasions.includes(o)?10:0;if((o==="sailing"||o==="morocco")&&b.id==="jaz")s+=12;if((o==="celebration"||o==="henstag")&&b.id==="master")s+=4;if(o==="private"&&b.id==="sll")s+=3;return s}
+function card(b,d){const tag=(answers&&answers.occasion==="morocco"&&b.id==="jaz")?"MOROCCO SAILING":b.id==="jaz"?"BEST FOR SAILING":b.id==="master"?"GREAT FOR GROUPS":"MOTOR YACHT OPTION";return `<article class="card"><img src="${b.image}" alt="${b.name}"><div class="body"><span class="tag">${tag}</span><span class="type">${b.type}</span><h3>${b.name}</h3><p>${b.note}</p><p><strong>Included:</strong> ${b.included}</p><div class="price"><div><small>INDICATIVE ${d}-HOUR PRICE</small><strong>${money(b.prices[d])}</strong></div><small>Subject to availability<br>and confirmation</small></div><button class="select" type="button" data-boat="${b.id}">Add to my shortlist</button></div></article>`}
+form.addEventListener("submit",e=>{e.preventDefault();const d=new FormData(form),g=Number(d.get("guests")),dur=Number(d.get("duration")),budget=Number(d.get("budget")||99999),occasion=d.get("occasion");answers={date:d.get("date"),guests:g,duration:dur,budget,occasion,extras:d.getAll("extras"),sailingSkill:d.get("sailing_skill")||""};selected.clear();
 if(g>12){results.innerHTML=`<article class="network"><p class="eyebrow">LARGER GROUP</p><h3>We’ll search the wider Sotoboats network.</h3><p>Your group is larger than these example boats. Send us the enquiry and we’ll look for suitable larger boats and catamarans.</p></article>`;title.textContent="Let us source something larger."}
 else{const matches=boats.map(b=>({...b,s:score(b,occasion)})).filter(b=>b.s>0).sort((a,b)=>b.s-a.s||a.prices[dur]-b.prices[dur]);const within=matches.filter(b=>b.prices[dur]<=budget),show=within.length?within:matches;if(show.length){results.innerHTML=show.map(b=>card(b,dur)).join("");title.textContent=within.length?"These fit your plan.":"Closest matches to your plan."}else{results.innerHTML=`<article class="network"><p class="eyebrow">WE'LL SOURCE IT</p><h3>Nothing in the example fleet quite fits.</h3><p>Send us your details and we’ll look for the right match.</p></article>`;title.textContent="Let us find a better fit."}}
+if(occasion==="morocco" && g<=12){
+      results.innerHTML += `<article class="network"><p class="eyebrow">SAIL TO MARINA SMIR</p><h3>Morocco is a proper sailing experience.</h3><p>Typically 2 days sailing with 2 nights in Marina Smir before sailing back to Estepona. We’ll confirm suitability, weather and final itinerary with you before anything is booked.</p></article>`;
+    }
 section.hidden=false;section.scrollIntoView({behavior:"smooth",block:"start"})});
 results.addEventListener("click",e=>{const b=e.target.closest(".select");if(!b)return;const id=b.dataset.boat;if(selected.has(id)){selected.delete(id);b.classList.remove("selected");b.textContent="Add to my shortlist"}else{selected.add(id);b.classList.add("selected");b.textContent="✓ Added to shortlist"}});
 document.getElementById("startAgain").addEventListener("click",()=>form.scrollIntoView({behavior:"smooth",block:"start"}));
-document.getElementById("sendWhatsApp").addEventListener("click",()=>{if(!answers)return;const names=[...selected].map(id=>boats.find(b=>b.id===id)?.name).filter(Boolean);const msg=["Hi Sotoboats, I'd like help finding a charter.","",`Date: ${answers.date||"Flexible"}`,`Group: ${answers.guests>12?"More than 12":`Up to ${answers.guests}`}`,`Duration: ${answers.duration} hours`,`Type: ${answers.occasion}`,`Budget: ${answers.budget>=99999?"Open":`Up to €${answers.budget}`}`,`Extras: ${answers.extras.length?answers.extras.join(", "):"None selected"}`,`Shortlist: ${names.length?names.join(", "):"Please recommend"}`,"",`Name: ${document.getElementById("customerName").value||"Not supplied"}`,`Phone: ${document.getElementById("customerPhone").value||"Not supplied"}`,`Email: ${document.getElementById("customerEmail").value||"Not supplied"}`].join("\n");window.open(`https://wa.me/34644053656?text=${encodeURIComponent(msg)}`,"_blank","noopener")});
+document.getElementById("sendWhatsApp").addEventListener("click",()=>{if(!answers)return;const names=[...selected].map(id=>boats.find(b=>b.id===id)?.name).filter(Boolean);const msg=["Hi Sotoboats, I'd like help finding a charter.","",`Date: ${answers.date||"Flexible"}`,`Group: ${answers.guests>12?"More than 12":`Up to ${answers.guests}`}`,`Duration: ${answers.duration} hours`,`Type: ${answers.occasion}`,...(answers.sailingSkill?[`Sailing experience: ${answers.sailingSkill}`]:[]),`Budget: ${answers.budget>=99999?"Open":`Up to €${answers.budget}`}`,`Extras: ${answers.extras.length?answers.extras.join(", "):"None selected"}`,`Shortlist: ${names.length?names.join(", "):"Please recommend"}`,"",`Name: ${document.getElementById("customerName").value||"Not supplied"}`,`Phone: ${document.getElementById("customerPhone").value||"Not supplied"}`,`Email: ${document.getElementById("customerEmail").value||"Not supplied"}`].join("\n");window.open(`https://wa.me/34644053656?text=${encodeURIComponent(msg)}`,"_blank","noopener")});
+
+const occasionSelect=document.querySelector('select[name="occasion"]');
+const sailingSkillField=document.getElementById("sailingSkillField");
+const sailingSkill=document.getElementById("sailingSkill");
+const sailingSkillNote=document.getElementById("sailingSkillNote");
+
+function updateSailingSkillVisibility(){
+  if(!occasionSelect||!sailingSkillField||!sailingSkill)return;
+  const sailingChoice=occasionSelect.value==="sailing"||occasionSelect.value==="morocco";
+  sailingSkillField.hidden=!sailingChoice;
+  sailingSkill.required=sailingChoice;
+
+  if(occasionSelect.value==="morocco"){
+    sailingSkillNote.textContent="Our Morocco sailing experience involves several hours under sail. Tell us your experience and we’ll make sure the trip is a good fit.";
+  }else{
+    sailingSkillNote.textContent="Tell us your experience so we can match the right sailing option.";
+  }
+
+  if(!sailingChoice){
+    sailingSkill.value="";
+  }
+}
+if(occasionSelect){
+  occasionSelect.addEventListener("change",updateSailingSkillVisibility);
+  updateSailingSkillVisibility();
+}
+
 document.getElementById("tripDate").min=new Date().toISOString().split("T")[0];
 </script>
 </body>

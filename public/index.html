@@ -1538,6 +1538,149 @@
 }
 </style>
 
+
+<style id="sotoboats-contact-chooser-styles">
+  .talk-to-soto-trigger {
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  .soto-contact-modal[hidden] {
+    display: none !important;
+  }
+
+  .soto-contact-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: grid;
+    place-items: center;
+    padding: 22px;
+  }
+
+  .soto-contact-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(2, 20, 38, .78);
+    backdrop-filter: blur(5px);
+  }
+
+  .soto-contact-card {
+    position: relative;
+    z-index: 1;
+    width: min(560px, 100%);
+    background: #f7f1e7;
+    color: #08284a;
+    border: 1px solid rgba(211, 170, 90, .55);
+    border-radius: 16px;
+    box-shadow: 0 28px 70px rgba(0, 0, 0, .34);
+    padding: 38px;
+  }
+
+  .soto-contact-close {
+    position: absolute;
+    top: 14px;
+    right: 15px;
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(8, 40, 74, .2);
+    border-radius: 50%;
+    background: transparent;
+    color: #08284a;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .soto-contact-kicker {
+    margin: 0 0 10px;
+    color: #a57b34;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .2em;
+  }
+
+  .soto-contact-card h2 {
+    margin: 0 44px 10px 0;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(38px, 5vw, 54px);
+    line-height: 1;
+    font-weight: 500;
+  }
+
+  .soto-contact-intro {
+    margin: 0 0 25px;
+    color: #536273;
+    line-height: 1.6;
+  }
+
+  .soto-contact-options {
+    display: grid;
+    gap: 12px;
+  }
+
+  .soto-contact-option {
+    display: grid;
+    grid-template-columns: 48px 1fr auto;
+    align-items: center;
+    gap: 14px;
+    min-height: 74px;
+    padding: 13px 16px;
+    border: 1px solid rgba(8, 40, 74, .14);
+    border-radius: 12px;
+    background: #fff;
+    color: #08284a;
+    text-decoration: none;
+    transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease;
+  }
+
+  .soto-contact-option:hover {
+    transform: translateY(-1px);
+    border-color: #d3aa5a;
+    box-shadow: 0 9px 24px rgba(8, 40, 74, .09);
+  }
+
+  .soto-contact-icon {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #08284a;
+    color: #efd18b;
+    font-size: 20px;
+  }
+
+  .soto-contact-option strong {
+    display: block;
+    font-size: 15px;
+  }
+
+  .soto-contact-option small {
+    display: block;
+    margin-top: 3px;
+    color: #6d7984;
+    font-size: 12px;
+  }
+
+  .soto-contact-arrow {
+    color: #b48636;
+    font-size: 19px;
+    font-weight: 800;
+  }
+
+  @media (max-width: 600px) {
+    .soto-contact-card {
+      padding: 30px 20px 22px;
+    }
+
+    .soto-contact-option {
+      grid-template-columns: 42px 1fr auto;
+      padding: 12px;
+    }
+  }
+</style>
+
 </head>
 <body>
   <header class="site-header">
@@ -1579,8 +1722,8 @@
           Private charters, celebrations and unforgettable days on the Mediterranean — all from one trusted local team in Estepona.
         </p>
         <div class="hero-actions">
-          <a class="btn btn-gold" id="primaryHeroCta" href="https://sp-charter-dashboard.onrender.com/book" target="_blank" rel="noopener">View our Charter calendar<br>and book online</a>
-          <a class="btn btn-ghost" href="#contact">Talk to Sotoboats</a>
+          <a class="btn btn-gold booking-link" id="primaryHeroCta" href="https://sp-charter-dashboard.onrender.com/book">View our Charter calendar<br>and book online</a>
+          <button class="btn btn-ghost talk-to-soto-trigger" type="button">Talk to Sotoboats</button>
         </div>
       </div>
 
@@ -1802,7 +1945,7 @@
         <p>Already know what you want? Check available charter options and book directly online.</p>
       </div>
       <div class="self-book-actions">
-        <a class="btn btn-gold" href="https://sp-charter-dashboard.onrender.com/book" target="_blank" rel="noopener">Book a charter</a>
+        <a class="btn btn-gold booking-link" href="https://sp-charter-dashboard.onrender.com/book">Book a charter</a>
         <a class="btn btn-outline-gold" href="/find-a-boat.html">Need help choosing?</a>
       </div>
     </section>
@@ -1912,7 +2055,7 @@
         <p>Lunch at sea, a family day, a birthday, a hen party or simply somewhere beautiful to swim — one enquiry can open up more options.</p>
         <div class="cta-row">
           <a class="btn btn-gold" href="/find-a-boat.html">Find me a boat</a>
-          <a class="btn btn-outline-gold" href="#contact">Talk to Sotoboats</a>
+          <button class="btn btn-outline-gold talk-to-soto-trigger" type="button">Talk to Sotoboats</button>
         </div>
       </div>
     </section>
@@ -2040,5 +2183,95 @@
   </footer>
 
   <script src="/app.js"></script>
+
+<div class="soto-contact-modal" id="sotoContactModal" hidden aria-hidden="true">
+  <div class="soto-contact-backdrop" data-soto-close></div>
+
+  <div class="soto-contact-card" role="dialog" aria-modal="true" aria-labelledby="sotoContactTitle">
+    <button class="soto-contact-close" type="button" aria-label="Close contact options" data-soto-close>×</button>
+
+    <p class="soto-contact-kicker">TALK TO SOTOBOATS</p>
+    <h2 id="sotoContactTitle">How would you like to contact us?</h2>
+    <p class="soto-contact-intro">
+      Choose the easiest option for you and we’ll open it straight away.
+    </p>
+
+    <div class="soto-contact-options">
+      <a class="soto-contact-option" href="tel:+34951507355">
+        <span class="soto-contact-icon">☎</span>
+        <span>
+          <strong>By phone</strong>
+          <small>Call +34 951 507 355</small>
+        </span>
+        <span class="soto-contact-arrow">→</span>
+      </a>
+
+      <a class="soto-contact-option" href="https://wa.me/34644053656?text=Hi%20Sotoboats%2C%20I%27d%20like%20to%20talk%20about%20a%20charter." target="_blank" rel="noopener">
+        <span class="soto-contact-icon">●</span>
+        <span>
+          <strong>By WhatsApp</strong>
+          <small>Message +34 644 05 36 56</small>
+        </span>
+        <span class="soto-contact-arrow">→</span>
+      </a>
+
+      <a class="soto-contact-option" href="mailto:info@sotoboats.com?subject=Sotoboats%20charter%20enquiry">
+        <span class="soto-contact-icon">✉</span>
+        <span>
+          <strong>By email</strong>
+          <small>info@sotoboats.com</small>
+        </span>
+        <span class="soto-contact-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<script id="sotoboats-contact-chooser-script">
+(function () {
+  // Hard fallback for the charter calendar button.
+  document.querySelectorAll(".booking-link").forEach(function (link) {
+    link.addEventListener("click", function (event) {
+      event.preventDefault();
+      window.location.href = "https://sp-charter-dashboard.onrender.com/book";
+    });
+  });
+
+  var modal = document.getElementById("sotoContactModal");
+  var triggers = document.querySelectorAll(".talk-to-soto-trigger");
+
+  function openContactChooser() {
+    if (!modal) return;
+    modal.hidden = false;
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeContactChooser() {
+    if (!modal) return;
+    modal.hidden = true;
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  triggers.forEach(function (button) {
+    button.addEventListener("click", openContactChooser);
+  });
+
+  if (modal) {
+    modal.querySelectorAll("[data-soto-close]").forEach(function (el) {
+      el.addEventListener("click", closeContactChooser);
+    });
+  }
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && modal && !modal.hidden) {
+      closeContactChooser();
+    }
+  });
+})();
+</script>
+
 </body>
 </html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#08284a">
+  <meta name="description" content="Tell Sotoboats what kind of charter day you want and see suitable boat options with indicative pricing.">
+  <title>Find Me a Boat | Sotoboats</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="./finder.css">
+</head>
+<body class="finder-page">
+
+  <header class="finder-header">
+    <a class="finder-brand" href="/">
+      <img src="./media/soto-logo.png" alt="Sotoboats">
+    </a>
+    <a class="finder-back" href="/">← Back to charters</a>
+  </header>
+
+  <main>
+    <section class="finder-hero">
+      <div>
+        <p class="finder-eyebrow">FIND ME A BOAT</p>
+        <h1>Tell us the plan.<br><span>We’ll narrow it down.</span></h1>
+        <p>Answer a few quick questions and we’ll show you suitable charter options with indicative prices.</p>
+      </div>
+      <div class="finder-hero-note">
+        <span>ESTEPONA · COSTA DEL SOL</span>
+        <strong>One enquiry.<br>More options.</strong>
+      </div>
+    </section>
+
+    <section class="finder-shell">
+      <form id="boatFinderForm" class="finder-form">
+        <div class="step-head">
+          <span>01</span>
+          <div>
+            <p class="finder-eyebrow dark">YOUR DAY</p>
+            <h2>What are you planning?</h2>
+          </div>
+        </div>
+
+        <div class="finder-grid">
+          <label class="field">
+            <span>Date</span>
+            <input type="date" name="date" id="tripDate" required>
+          </label>
+
+          <label class="field">
+            <span>How many people?</span>
+            <select name="guests" id="guests" required>
+              <option value="">Choose</option>
+              <option value="2">1–2</option>
+              <option value="4">3–4</option>
+              <option value="6">5–6</option>
+              <option value="8">7–8</option>
+              <option value="10">9–10</option>
+              <option value="12">11–12</option>
+              <option value="13">More than 12</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>What kind of day?</span>
+            <select name="occasion" id="occasion" required>
+              <option value="">Choose</option>
+              <option value="private">Private charter</option>
+              <option value="celebration">Birthday / celebration</option>
+              <option value="henstag">Hen / stag</option>
+              <option value="family">Family & friends</option>
+              <option value="sunset">Sunset</option>
+              <option value="sailing">Proper sailing</option>
+              <option value="waterfun">Water fun</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>How long?</span>
+            <select name="duration" id="duration" required>
+              <option value="">Choose</option>
+              <option value="2">2 hours</option>
+              <option value="4">4 hours</option>
+              <option value="6">6 hours</option>
+              <option value="8">8 hours</option>
+            </select>
+          </label>
+
+          <label class="field budget-field">
+            <span>Approximate budget</span>
+            <select name="budget" id="budget">
+              <option value="99999">Show me all suitable options</option>
+              <option value="600">Up to €600</option>
+              <option value="900">Up to €900</option>
+              <option value="1200">Up to €1,200</option>
+              <option value="1700">Up to €1,700</option>
+              <option value="2500">Up to €2,500</option>
+              <option value="3500">Up to €3,500</option>
+            </select>
+          </label>
+
+          <fieldset class="extras-field">
+            <legend>Anything you particularly want?</legend>
+            <div class="chip-grid">
+              <label><input type="checkbox" name="extras" value="Food & drinks"><span>Food & drinks</span></label>
+              <label><input type="checkbox" name="extras" value="Paddleboards"><span>Paddleboards</span></label>
+              <label><input type="checkbox" name="extras" value="Snorkelling"><span>Snorkelling</span></label>
+              <label><input type="checkbox" name="extras" value="Celebration"><span>Celebration</span></label>
+              <label><input type="checkbox" name="extras" value="Sunset"><span>Sunset</span></label>
+              <label><input type="checkbox" name="extras" value="Dolphin spotting"><span>Dolphin spotting</span></label>
+            </div>
+          </fieldset>
+        </div>
+
+        <button class="finder-submit" type="submit">
+          Show me suitable boats <span>→</span>
+        </button>
+
+        <p class="finder-small">Prices shown are indicative and subject to date, availability and final confirmation.</p>
+      </form>
+
+      <section class="finder-results" id="resultsSection" hidden>
+        <div class="results-heading">
+          <div>
+            <p class="finder-eyebrow dark">YOUR MATCHES</p>
+            <h2 id="resultsTitle">A few good options.</h2>
+          </div>
+          <button type="button" class="start-again" id="startAgain">Change my answers</button>
+        </div>
+
+        <div id="boatResults" class="boat-results"></div>
+
+        <div class="finder-contact">
+          <div>
+            <p class="finder-eyebrow">LIKE ONE OF THESE?</p>
+            <h2>Send Sotoboats your shortlist.</h2>
+            <p>We’ll check the date, confirm the exact price and help you choose.</p>
+          </div>
+
+          <div class="contact-fields">
+            <input id="customerName" type="text" placeholder="Your name">
+            <input id="customerPhone" type="tel" placeholder="WhatsApp / phone">
+            <input id="customerEmail" type="email" placeholder="Email">
+            <button type="button" id="sendWhatsApp">Send enquiry on WhatsApp</button>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="./finder.js"></script>
+</body>
+</html>

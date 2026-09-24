@@ -1681,6 +1681,61 @@
   }
 </style>
 
+
+<style id="soto-morocco-cta-style">
+  .booking-strip-actions{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+
+  .morocco-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    min-height:40px;
+    padding:8px 15px;
+    border:1px solid rgba(239,209,139,.78);
+    border-radius:999px;
+    background:rgba(211,170,90,.12);
+    color:#fff;
+    text-decoration:none;
+    white-space:nowrap;
+    transition:background .18s ease, transform .18s ease, border-color .18s ease;
+  }
+
+  .morocco-pill:hover{
+    background:rgba(211,170,90,.22);
+    border-color:#efd18b;
+    transform:translateY(-1px);
+  }
+
+  .morocco-pill strong{
+    color:#efd18b;
+    font-size:12px;
+    line-height:1.1;
+  }
+
+  .morocco-pill span{
+    color:rgba(255,255,255,.78);
+    font-size:9px;
+    line-height:1.1;
+    letter-spacing:.02em;
+  }
+
+  @media(max-width:760px){
+    .booking-strip-actions{
+      justify-content:flex-start;
+    }
+    .morocco-pill{
+      width:100%;
+      justify-content:center;
+    }
+  }
+</style>
+
 </head>
 <body>
   <header class="site-header">
@@ -1945,7 +2000,8 @@
         <p>Already know what you want? Check available charter options and book directly online.</p>
       </div>
       <div class="self-book-actions">
-        <a class="btn btn-gold booking-link" href="https://sp-charter-dashboard.onrender.com/book">Book a charter</a>
+        <a class="morocco-pill" href="/morocco/"><strong>Sail to Morocco</strong><span>2 days sailing · 2 nights Marina Smir</span></a>
+<a class="btn btn-gold booking-link" href="https://sp-charter-dashboard.onrender.com/book">Book a charter</a>
         <a class="btn btn-outline-gold" href="/find-a-boat.html">Need help choosing?</a>
       </div>
     </section>

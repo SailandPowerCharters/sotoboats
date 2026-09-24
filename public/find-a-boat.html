@@ -221,6 +221,17 @@ if(occasionSelect){
   updateSailingSkillVisibility();
 }
 
+
+const qs=new URLSearchParams(window.location.search);
+const requestedTrip=(qs.get("trip")||qs.get("occasion")||"").toLowerCase();
+if(requestedTrip==="morocco"){
+  const occasionSelect=document.querySelector('select[name="occasion"]');
+  if(occasionSelect){
+    occasionSelect.value="morocco";
+    if(typeof updateSailingSkillVisibility==="function"){ updateSailingSkillVisibility(); }
+  }
+}
+
 document.getElementById("tripDate").min=new Date().toISOString().split("T")[0];
 </script>
 </body>

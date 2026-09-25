@@ -6,6 +6,12 @@ const scenes = [
     lead: "Charter, celebrate, explore and make the Mediterranean yours."
   },
   {
+    image: "./media/morocco-tv-hero.png",
+    eyebrow: "SAIL TO MOROCCO",
+    title: "A DIFFERENT KIND OF<br><span>SAILING ADVENTURE.</span>",
+    lead: "Two days at sea, one night in Marina Smir aboard Jaz II — €250 per person per night."
+  },
+  {
     image: "./media/celebration.jpg",
     eyebrow: "CELEBRATE DIFFERENTLY",
     title: "THE BEST PARTIES<br><span>HAVE A HORIZON.</span>",
@@ -39,7 +45,9 @@ const lead = document.getElementById("sceneLead");
 let current = 0;
 
 function applySceneCrop(imagePath) {
-  if (imagePath.includes("celebration.jpg")) {
+  if (imagePath.includes("morocco-tv-hero.png")) {
+    img.style.objectPosition = "center center";
+  } else if (imagePath.includes("celebration.jpg")) {
     img.style.objectPosition = "center 12%";
   } else if (imagePath.includes("food-hero.jpg")) {
     img.style.objectPosition = "center 58%";

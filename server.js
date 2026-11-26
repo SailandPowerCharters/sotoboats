@@ -27,6 +27,19 @@ const pool = dbEnabled
     })
   : null;
 
+// WhatsApp webhook must receive raw bytes before the global JSON parser.
+const { webhookRouter } = require("./whatsapp");
+app.use("/webhooks/whatsapp", webhookRouter({
+  onEvent: async (payload) => {
+    if (!pool) throw new Error("Database unavailable");
+    const eventKey = require("node:crypto").createHash("sha256").update(JSON.stringify(payload)).digest("hex");
+    await pool.query(
+      "INSERT INTO whatsapp_webhook_events (event_key, payload) VALUES ($1, $2::jsonb) ON CONFLICT (event_key) DO NOTHING",
+      [eventKey, JSON.stringify(payload)]
+    );
+  }
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -91,6 +104,14 @@ async function initDb() {
     console.log("DATABASE_URL not set. Public site will still run, but portal APIs are disabled.");
     return;
   }
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS whatsapp_webhook_events (
+      event_key TEXT PRIMARY KEY,
+      payload JSONB NOT NULL,
+      received_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    )
+  `);
 
   await pool.query(`
     CREATE TABLE IF NOT EXISTS users (
